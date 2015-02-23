@@ -1,0 +1,30 @@
+<head>
+  <title>Meteor-CSS-Editor</title>
+</head>
+
+<body>
+  <h1>I edit myself.</h1>
+  <h2>I edit myself.</h2>
+  <h3>I edit myself.</h3>
+  <h4>I edit myself.</h4>
+  <div class='myclassname'>my classname is myclassname</div>
+  <div>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </p>
+  </div>
+
+  {{> MainTemplate}}
+
+</body>
+
+<Template name="MainTemplate">
+  <button id="loadCSS">Button.</button>
+
+  <div id="cssEditor" contentEditable="true" style="border:1px solid #555;min-height:400px;">
+    {{#each getCSS}}{{css}}{{/each}}
+  </div>
+  
+
+ 
+</Template>
