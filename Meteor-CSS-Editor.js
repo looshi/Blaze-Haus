@@ -43,9 +43,8 @@ Meteor.startup(function(){
         lastCssEditorId = doc.lastModifiedBy;
       }
 
-      if(lastCssEditorId!==userId){
-        console.log("Someone else made an edit to the css!");
-        showAlert("css");
+      if(lastCssEditorId!==userId && doc.css){
+        showAlert("css",lastCssEditorId);
         cssEditor.getDoc().off("change",saveCSS);  // turn off auto save temporarily
         cssEditor.getDoc().setValue(doc.css);
         cssEditor.getDoc().on("change",saveCSS);
@@ -72,9 +71,8 @@ Meteor.startup(function(){
         lastHtmlEditorId = doc.lastModifiedBy;  // only update my editor if someone else made the change
       }
 
-      if(lastHtmlEditorId!==userId){
-        console.log("Someone else made an edit to the html!");
-        showAlert("html");
+      if(lastHtmlEditorId!==userId && doc.html){
+        showAlert("html",lastHtmlEditorId);
         htmlEditor.getDoc().off("change",saveHTML);  // turn off auto save temporarily
         htmlEditor.getDoc().setValue(doc.html);
         htmlEditor.getDoc().on("change",saveHTML);
@@ -155,10 +153,10 @@ Meteor.startup(function(){
     errorPanel.innerHTML = '';
   }
 
-  function showAlert(file){
+  function showAlert(file,user){
     var alert = document.getElementById('alertPanel');
     alert.style.display = "block";
-    alert.innerHTML = "Someone else is editing the " + file + " now!"
+    alert.innerHTML = "User " + user +" is editing the " + file + " now!"
     hideAlert();
   }
   var hideAlert = _.debounce(function(){
@@ -183,11 +181,11 @@ if (Meteor.isServer){
     setDefaults : function(userId){
     
       if(!StylesCollection.findOne({name:'myStyle'})){
-        StylesCollection.insert({name:'myStyle',css:MockCSS,lastModifiedBy:userId});
+        StylesCollection.insert({name:'myStyle',css:MockCSS,lastModifiedBy:'system-set-defaults'});
       }
       
       if(!HTMLCollection.findOne({name:'myHtml'})){
-        HTMLCollection.insert({name:'myHtml',html:MockHTML,lastModifiedBy:userId});
+        HTMLCollection.insert({name:'myHtml',html:MockHTML,lastModifiedBy:'system-set-defaults'});
       }
 
       if(!PeopleCollection.findOne()){
@@ -199,9 +197,9 @@ if (Meteor.isServer){
 
     restoreDefaults : function(userId){
 
-      HTMLCollection.update({name:'myHtml'},{$set:{html:MockHTML,lastModifiedBy:userId}});
+      HTMLCollection.update({name:'myHtml'},{$set:{html:MockHTML,lastModifiedBy:'system-restore'}});
       
-      StylesCollection.update({name:'myStyle'},{$set:{css:MockCSS,lastModifiedBy:userId}});
+      StylesCollection.update({name:'myStyle'},{$set:{css:MockCSS,lastModifiedBy:'system-restore'}});
       
       PeopleCollection.remove({});
       for(var i=0;i<MockPeople.length;i++){
