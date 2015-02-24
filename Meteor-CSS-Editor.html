@@ -1,16 +1,19 @@
 <head>
-  <title>Meteor-CSS-Editor</title>
+  <title>Meteor Live Template Editor</title>
 </head>
 
 <body>
   <h2>Edit Meteor Template Live Example App</h2>
-  <div><a href="https://github.com/looshi/Meteor-CSS-Editor">View source on github</a><br/>This example demonstates a technique to read and write CSS and Blaze Templates via the database and render it while editing.</div>
+  <div>
+    <a href="https://github.com/looshi/Meteor-CSS-Editor">View source on github</a><br/>
+    This example demonstrates a technique to read and write CSS and Blaze Templates via the database and render the changes live.
+  </div>
 
-  <div class="editor-container">
+  <div class="editor-container editor-instructions">
     {{> MainTemplate}}
   </div>
 
-  <div class="editor-container">
+  <div class="editor-container rendered-output">
     <h4>Rendered Result : </h4>
     <div id="htmlOutput"></div>
   </div>
@@ -18,13 +21,25 @@
 </body>
 
 <Template name="MainTemplate">
+
+  <div>The data context for this Template is the 'PeopleCollection' where each item is has the following fields :</div>
+  <div class='mongo'>
+    {&nbsp;&nbsp;country : 'China',<br/>
+    &nbsp;&nbsp;date : '1/1/2014','<br/>
+    &nbsp;&nbsp;city : 'Bijia','<br/>
+    &nbsp;&nbsp;company : 'Skajo',<br/>
+    &nbsp;&nbsp;name : 'Kathy',<br/>
+    &nbsp;&nbsp;color : '#ffff99'}
+  </div>
+  <div><span class='callout'>&#123;&#123;this&#125;&#125;</span> in the spacebars syntax represents the PeopleCollection data we are subscribed to.</div>
+
+  <h4>Edit the Template</h4>
+
+  <textarea id="cmHtml"></textarea>
+  <button id="restoreDefaults">Restore Defaults</button>
   <h4>Edit the CSS</h4>
   <textarea id="cmCss"></textarea>
-  <button id="restoreDefaults">Restore Defaults</button>
-  <h4>Edit the Template</h4>
-  <textarea id="cmHtml"></textarea>
   <div id="errorPanel"></div>
-  <p>The data context for this Template is the 'PeopleCollection', where each item has this structure : 
-  <h5>{"country":"Japan","date":"1/4/2015","city":"Ōmuta","company":"Trunyx","name":"Billy"}</h5></p>
+
 </Template>
 

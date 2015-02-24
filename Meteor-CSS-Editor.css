@@ -1,16 +1,37 @@
+
 .editor-container{
   width:45%;
   display:inline-block;
   vertical-align:top;
   padding:2%;
 }
+
+.editor-instructions h4{
+  margin-bottom:0px;
+  border-bottom:4px solid #000;
+}
+
 #htmlOutput{
   width:100%;
 }
 
 #errorPanel{
-  background-color:#660000;
+  background:#660000;
   color:#ff9900;
   font-size:12px;
   font-family:arial;
+}
+
+.mongo{
+  background-color: #272822;
+  color: #A0E22D;
+  font-size:12px;
+  font-family:Arial;
+  word-wrap: break-word;
+  padding:8px;
+  border-radius:8px;
+}
+
+.callout{
+  font-weight: bold;
 }
