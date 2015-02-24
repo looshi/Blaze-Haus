@@ -1,0 +1,16 @@
+.editor-container{
+  width:45%;
+  display:inline-block;
+  vertical-align:top;
+  padding:2%;
+}
+#htmlOutput{
+  width:100%;
+}
+
+#errorPanel{
+  background-color:#660000;
+  color:#ff9900;
+  font-size:12px;
+  font-family:arial;
+}
