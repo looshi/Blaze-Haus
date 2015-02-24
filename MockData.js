@@ -1,6 +1,6 @@
 MockHTML = "<h2>Template Output</h2>\n\n{{#each this}}\n<div class='nm' style='background:{{color}}'>\n{{name}}\n</div>\n{{/each}}";
 
-MockCSS = "body{\n  background-color:#fff;\n  transition : all 1s ease-out;\n}\n\nh2{\n  font-family:Arial;\n  text-decoration:underline;\n}\n\n.nm{\n  margin:0;\n  padding:2px;\n  text-align:center;\n  font-family:Arial;\n}\n.nm:hover{\n  background-color:#fff !important;\n}";
+MockCSS = "body{\n  background-color:#fff;\n  transition : all 1.0s ease-out;\n}\n\nh2{\n  font-family:Arial;\n  text-decoration:underline;\n}\n\n.nm{\n  margin:0;\n  padding:2px;\n  text-align:center;\n  font-family:Arial;\n  transition : all 1.0s ease-out;\n}\n.nm:hover{\n  background-color:#fff !important;\n}";
 
 MockPeople = [
 {"country":"Japan","date":"1/4/2015","city":"Ōmuta","company":"Trunyx","name":"Billy","color":"#dff2d8"},
