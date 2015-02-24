@@ -169,6 +169,15 @@ Meteor.startup(function(){
 
 if (Meteor.isServer){
 
+  // restore the defaults every hour
+  Meteor.startup(function(){
+    var hour = 1000 * 60 * 60;
+    Meteor.setInterval(function(){
+      Meteor.call('restoreDefaults');
+    },hour); 
+
+  });
+
   Meteor.methods({
 
     setDefaults : function(userId){
