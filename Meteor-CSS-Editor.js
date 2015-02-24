@@ -15,7 +15,7 @@ var parent;                // Dom element which Template renders into
 Meteor.startup(function(){
 
   // fake a user id
-  Meteor.call('setDefaults',userId);
+  Meteor.call('setDefaults','system-startup-set-defaults');
 
   // data we're going to provide to the template
   peopleData = PeopleCollection.find();
@@ -173,7 +173,7 @@ if (Meteor.isServer){
   Meteor.startup(function(){
     var hour = 1000 * 60 * 60;
     Meteor.setInterval(function(){
-      Meteor.call('restoreDefaults');
+      Meteor.call('restoreDefaults','system-auto-restore');
     },hour); 
 
   });
@@ -199,9 +199,9 @@ if (Meteor.isServer){
 
     restoreDefaults : function(userId){
 
-      HTMLCollection.update({name:'myHtml'},{$set:{html:MockHTML,lastModifiedBy:'adminId'}});
+      HTMLCollection.update({name:'myHtml'},{$set:{html:MockHTML,lastModifiedBy:userId}});
       
-      StylesCollection.update({name:'myStyle'},{$set:{css:MockCSS,lastModifiedBy:'adminId'}});
+      StylesCollection.update({name:'myStyle'},{$set:{css:MockCSS,lastModifiedBy:userId}});
       
       PeopleCollection.remove({});
       for(var i=0;i<MockPeople.length;i++){
