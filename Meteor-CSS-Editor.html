@@ -3,10 +3,12 @@
 </head>
 
 <body>
-  <h2>Edit Meteor Template Live Example App</h2>
-  <div>
-    <a href="https://github.com/looshi/Meteor-Template-Live-Editor">View source on github</a><br/>
-    This example demonstrates a technique to read and write CSS and Blaze Templates via the database and render the changes live.<br/>
+  <h2 class='main-title'>Edit Meteor Template Live Example App</h2>
+  <div class='main-description'>
+    Demo application which reads and writes CSS and dynamic Meteor Blaze Templates via the database and renders the changes live.<br/>
+    <a href="https://github.com/looshi/Meteor-Template-Live-Editor" target="_blank">View source on github</a><br/>
+    Directions : Edit the Template and CSS code below.<br/>
+    <br/>
   </div>
 
   <div class="editor-container editor-instructions">
@@ -34,14 +36,15 @@
     &nbsp;&nbsp;name : 'Kathy',<br/>
     &nbsp;&nbsp;color : '#ffff99'}
   </div>
-  <div><span class='callout'>&#123;&#123;this&#125;&#125;</span> in the spacebars syntax represents the PeopleCollection data we are subscribed to.</div>
+  <div><span class='callout'>&#123;&#123;this&#125;&#125;</span> in the Template's editable spacebars syntax below represents the PeopleCollection data we are subscribed to.</div>
 
   <h4>Edit the Template</h4>
-
   <textarea id="cmHtml"></textarea>
+  <div id="errorPanel"></div>
+
   <h4>Edit the CSS</h4>
   <textarea id="cmCss"></textarea>
-  <div id="errorPanel"></div>
+  
 
   <button class="restoreDefaults">Restore Defaults</button>
 
