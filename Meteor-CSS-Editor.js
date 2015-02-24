@@ -4,13 +4,13 @@ PeopleCollection = new Meteor.Collection('PeopleCollection');
 
 if (Meteor.isClient){
 
-var userId = Random.id();
-var lastHtmlEditorId;
-var lastCssEditorId;
-var cssEditor;
-var htmlEditor;
-var peopleData;
-var parent;
+var userId = Random.id();  // mimic we have a logged in user
+var lastHtmlEditorId;      // Last user that edited HTML 
+var lastCssEditorId;       // Last user that edited CSS
+var cssEditor;             // Code Mirror Instance
+var htmlEditor;            // Code Mirror Instance
+var peopleData;            // PeopleCollection cursor
+var parent;                // Dom element which Template renders into
 
 Meteor.startup(function(){
 
@@ -54,18 +54,17 @@ Meteor.startup(function(){
 
   HTMLCollection.find().observeChanges({
     added: function(id, doc) {
-      var html = getRawHtml(doc.html);
+      
       var textArea = document.getElementById('cmHtml');
       htmlEditor = CodeMirror.fromTextArea(textArea);
-      htmlEditor.getDoc().setValue(html);
+      htmlEditor.getDoc().setValue(doc.html);
       htmlEditor.getDoc().on("change",saveHTML);
-      renderHTML(html,peopleData,parent);
+      renderHTML(doc.html,peopleData,parent);
     },
     changed: function(id,doc){
 
       if(doc.html){
-        var html = getRawHtml(doc.html);
-        renderHTML(html,peopleData,parent); 
+        renderHTML(doc.html,peopleData,parent); 
       }
 
       if(doc.lastModifiedBy){
@@ -75,7 +74,7 @@ Meteor.startup(function(){
       if(lastHtmlEditorId!==userId){
         console.log("Someone else made an edit to the html!");
         htmlEditor.getDoc().off("change",saveHTML);  // turn off auto save temporarily
-        htmlEditor.getDoc().setValue(html);
+        htmlEditor.getDoc().setValue(doc.html);
         htmlEditor.getDoc().on("change",saveHTML);
       }
     }
@@ -124,7 +123,7 @@ Meteor.startup(function(){
   function renderHTML(newHTML,dataContext,parent){
 
     clearError();
-    // going to 'try' it all, because we're saving on each edit so
+    // going to 'try' it all, because we're auto-saving on each edit so
     // the malformed Blaze Template syntax will throw a lot of errors
     try{
       // create the 'HTMLjs' which is used internally by the template
@@ -138,7 +137,7 @@ Meteor.startup(function(){
       Blaze.render(view,parent);
       
     }catch(e){ 
-      displaySyntaxError(e); 
+      displaySyntaxError(e);   // display the error to the user
     }
   }
 
@@ -151,12 +150,6 @@ Meteor.startup(function(){
   function clearError(e){
     var errorPanel = document.getElementById('errorPanel');
     errorPanel.innerHTML = '';
-  }
-
-  function getRawHtml(_html){
-    var txt = document.createElement("textarea");
-    txt.innerHTML = _html;
-    return txt.value;
   }
 
 }
@@ -184,9 +177,9 @@ if (Meteor.isServer){
 
     restoreDefaults : function(userId){
 
-      HTMLCollection.update({name:'myHtml'},{$set:{html:MockHTML,lastModifiedBy:userId}});
+      HTMLCollection.update({name:'myHtml'},{$set:{html:MockHTML,lastModifiedBy:'adminId'}});
       
-      StylesCollection.update({name:'myStyle'},{$set:{css:MockCSS,lastModifiedBy:userId}});
+      StylesCollection.update({name:'myStyle'},{$set:{css:MockCSS,lastModifiedBy:'adminId'}});
       
       PeopleCollection.remove({});
       for(var i=0;i<MockPeople.length;i++){
