@@ -6,7 +6,7 @@
   <h2>Edit Meteor Template Live Example App</h2>
   <div>
     <a href="https://github.com/looshi/Meteor-CSS-Editor">View source on github</a><br/>
-    This example demonstrates a technique to read and write CSS and Blaze Templates via the database and render the changes live.
+    This example demonstrates a technique to read and write CSS and Blaze Templates via the database and render the changes live.<br/>
   </div>
 
   <div class="editor-container editor-instructions">
@@ -22,6 +22,9 @@
 
 <Template name="MainTemplate">
 
+  <div id="alertPanel"></div>
+
+  <div>All edits are saved to the db, so if things looks really mess up click here to restore the defaults :  <button class="restoreDefaults">Restore Defaults</button>.  If someone else happens to be editing this page right now, you will see their edits applied.</div><br/>
   <div>The data context for this Template is the 'PeopleCollection' where each item is has the following fields :</div>
   <div class='mongo'>
     {&nbsp;&nbsp;country : 'China',<br/>
@@ -36,10 +39,11 @@
   <h4>Edit the Template</h4>
 
   <textarea id="cmHtml"></textarea>
-  <button id="restoreDefaults">Restore Defaults</button>
   <h4>Edit the CSS</h4>
   <textarea id="cmCss"></textarea>
   <div id="errorPanel"></div>
+
+  <button class="restoreDefaults">Restore Defaults</button>
 
 </Template>
 

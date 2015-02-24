@@ -35,3 +35,16 @@
 .callout{
   font-weight: bold;
 }
+
+#alertPanel{
+  position:fixed;
+  top:12px;
+  right:12px;
+  background-color:#dff2d8;
+  width:45%;
+  border-radius:8px;
+  text-align:center;
+  padding:8px;
+  font-family: Arial;
+  display:none;
+}

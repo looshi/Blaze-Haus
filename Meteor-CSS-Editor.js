@@ -45,9 +45,10 @@ Meteor.startup(function(){
 
       if(lastCssEditorId!==userId){
         console.log("Someone else made an edit to the css!");
-        cssEditor.getDoc().off("change",saveHTML);  // turn off auto save temporarily
+        showAlert("css");
+        cssEditor.getDoc().off("change",saveCSS);  // turn off auto save temporarily
         cssEditor.getDoc().setValue(doc.css);
-        cssEditor.getDoc().on("change",saveHTML);
+        cssEditor.getDoc().on("change",saveCSS);
       }
     }
   });
@@ -73,6 +74,7 @@ Meteor.startup(function(){
 
       if(lastHtmlEditorId!==userId){
         console.log("Someone else made an edit to the html!");
+        showAlert("html");
         htmlEditor.getDoc().off("change",saveHTML);  // turn off auto save temporarily
         htmlEditor.getDoc().setValue(doc.html);
         htmlEditor.getDoc().on("change",saveHTML);
@@ -82,7 +84,8 @@ Meteor.startup(function(){
 
 
   Template.MainTemplate.events({
-    'click #restoreDefaults' : function(){
+    'click .restoreDefaults' : function(e){
+        e.preventDefault();
         Meteor.call('restoreDefaults',userId);
     }
   })
@@ -152,6 +155,16 @@ Meteor.startup(function(){
     errorPanel.innerHTML = '';
   }
 
+  function showAlert(file){
+    var alert = document.getElementById('alertPanel');
+    alert.style.display = "block";
+    alert.innerHTML = "Someone else is editing the " + file + " now!"
+    hideAlert();
+  }
+  var hideAlert = _.debounce(function(){
+    document.getElementById('alertPanel').style.display = 'none';
+  },3000);
+  
 }
 
 if (Meteor.isServer){
