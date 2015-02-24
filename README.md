@@ -1,10 +1,12 @@
-Meteor CSS Editor
+Meteor Live Template Editor
 
-Stores CSS in the database then appends it to the CSSOM.
+Allows user to edit a Meteor Template and see the changes in realtime.
+
+ Stores Template code and CSS in the database. 
 
 This method could be used as part of a CMS, where you need to allow users or admins to customize the appearance of the site using CSS.
 
-[view the demo here]( http://edit-css-live.meteor.com/)
+[view the demo here]( http://live-template-editor.meteor.com/)
 
-![screenshot](https://cloud.githubusercontent.com/assets/1656829/6322774/7872b2d6-bad1-11e4-9156-3d10ee69586b.png)
+![screenshot](https://cloud.githubusercontent.com/assets/1656829/6358463/8cb74b58-bc20-11e4-8fc7-afb96b8785ae.png)
 
