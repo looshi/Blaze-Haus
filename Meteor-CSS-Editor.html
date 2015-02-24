@@ -3,22 +3,28 @@
 </head>
 
 <body>
-  <h1>I edit myself.</h1>
-  <h2>I edit myself.</h2>
-  <h3>I edit myself.</h3>
-  <h4>I edit myself.</h4>
-  <div class='myclassname'>my classname is myclassname</div>
-  <div>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
+  <h2>Edit Meteor Template Live Example App</h2>
+  <div><a href="https://github.com/looshi/Meteor-CSS-Editor">View source on github</a><br/>This example demonstates a technique to read and write CSS and Blaze Templates via the database and render it while editing.</div>
+
+  <div class="editor-container">
+    {{> MainTemplate}}
   </div>
 
-  {{> MainTemplate}}
+  <div class="editor-container">
+    <h4>Rendered Result : </h4>
+    <div id="htmlOutput"></div>
+  </div>
 
 </body>
 
 <Template name="MainTemplate">
-  <button id="loadCSS">Button.</button>
-  <div id="cssEditor" contentEditable="true" style="border:1px solid #555;min-height:400px;"></div>
+  <h4>Edit the CSS</h4>
+  <textarea id="cmCss"></textarea>
+  <button id="restoreDefaults">Restore Defaults</button>
+  <h4>Edit the Template</h4>
+  <textarea id="cmHtml"></textarea>
+  <div id="errorPanel"></div>
+  <p>The data context for this Template is the 'PeopleCollection', where each item has this structure : 
+  <h5>{"country":"Japan","date":"1/4/2015","city":"Ōmuta","company":"Trunyx","name":"Billy"}</h5></p>
 </Template>
+
