@@ -1,6 +1,6 @@
-MockHTML = "<h2>Template Output</h2>\n\n{{#each this}}\n<div class='nm'>{{name}}</div>\n{{/each}}";
+MockHTML = "<h2>Template Output</h2>\n\n{{#each this}}\n<div class='nm' style='background:{{color}}'>\n{{name}}\n</div>\n{{/each}}";
 
-MockCSS = "body{background-color:#ff9900;}\n\nh2{\n  font-family:Arial;\n  text-decoration:underline;\n}\n\n.nm{\n  background-color:#ff4600;\n  width:100px;\n  margin:4px;\n  padding:2px;\n  text-align:center;\n  border-radius:8px;\n  color:white;\n}";
+MockCSS = "body{\n  background-color:#fff;\n  transition : all 1s ease-out;\n}\n\nh2{\n  font-family:Arial;\n  text-decoration:underline;\n}\n\n.nm{\n  margin:0;\n  padding:2px;\n  text-align:center;\n  font-family:Arial;\n}\n.nm:hover{\n  background-color:#fff !important;\n}";
 
 MockPeople = [
 {"country":"Japan","date":"1/4/2015","city":"Ōmuta","company":"Trunyx","name":"Billy","color":"#dff2d8"},
@@ -27,18 +27,18 @@ MockPeople = [
 {"country":"Sweden","date":"3/8/2014","city":"Danderyd","company":"Jetpulse","name":"Eric","color":"#7ebdc3"},
 {"country":"South Africa","date":"1/8/2015","city":"Burgersdorp","company":"Edgewire","name":"Lori","color":"#c19a6b"},
 {"country":"Guinea","date":"12/16/2014","city":"Koubia","company":"Shufflebeat","name":"Phyllis","color":"#78866b"},
-{"country":"China","date":"9/11/2014","city":"Bijia","company":"Skajo","name":"Kathy","color":"#ffff99"},
-{"country":"Portugal","date":"3/18/2014","city":"Amadora","company":"Skidoo","name":"Eric","color":"#ffef00"},
+{"country":"China","date":"9/11/2014","city":"Bijia","company":"Skajo","name":"Kathy","color":"#88aaaa"},
+{"country":"Portugal","date":"3/18/2014","city":"Amadora","company":"Skidoo","name":"Eric","color":"#88aaaa"},
 {"country":"Indonesia","date":"3/12/2015","city":"Karangsari","company":"Feedmix","name":"Dorothy","color":"#c6dea6"},
 {"country":"Israel","date":"6/29/2014","city":"Bu‘eina","company":"Kwideo","name":"Ralph","color":"#e4717a"},
 {"country":"Indonesia","date":"10/29/2014","city":"Pulorejo","company":"Oyondu","name":"Virginia","color":"#dff2d8"},
 {"country":"United Arab Emirates","date":"3/10/2014","city":"Ras al-Khaimah","company":"Devcast","name":"Gary","color":"#447799"},
-{"country":"Malaysia","date":"10/29/2014","city":"Kuala Lumpur","company":"Zooxo","name":"Terry","color":"#c41e3a"},
+{"country":"Malaysia","date":"10/29/2014","city":"Kuala Lumpur","company":"Zooxo","name":"Terry","color":"#88aaaa"},
 {"country":"Finland","date":"10/14/2014","city":"Kaavi","company":"Trupe","name":"Joan","color":"#7a6263"},
 {"country":"China","date":"5/10/2014","city":"Xiangdian","company":"Demivee","name":"Harold","color":"#c6dea6"},
-{"country":"Ireland","date":"5/17/2014","city":"Kill","company":"Divape","name":"Mildred","color":"#eb4c42"},
+{"country":"Ireland","date":"5/17/2014","city":"Kill","company":"Divape","name":"Mildred","color":"#88aaaa"},
 {"country":"Indonesia","date":"4/17/2014","city":"Pangatikan","company":"Mycat","name":"Lillian","color":"#dff2d8"},
-{"country":"Indonesia","date":"2/1/2015","city":"Poteran","company":"Quatz","name":"Nicole","color":"#ffa6c9"},
+{"country":"Indonesia","date":"2/1/2015","city":"Poteran","company":"Quatz","name":"Nicole","color":"#88aaaa"},
 {"country":"Russia","date":"10/18/2014","city":"Nyurba","company":"Einti","name":"Pamela","color":"#7a6263"},
 {"country":"China","date":"4/3/2014","city":"Ning’er","company":"Voonyx","name":"Jane","color":"#99badd"},
 {"country":"Indonesia","date":"8/12/2014","city":"Jenang Selatan","company":"Tazzy","name":"Frances","color":"#ed9121"}
