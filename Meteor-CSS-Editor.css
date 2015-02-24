@@ -1,3 +1,9 @@
+.main-title{
+  margin : 12px 12px 0 12px;
+}
+.main-description{
+  margin : 2px 12px 0;
+}
 
 .editor-container{
   width:45%;
@@ -20,12 +26,17 @@
   color:#ff9900;
   font-size:12px;
   font-family:arial;
+  padding:8px;
+}    
+#errorPanel.ok{
+  background:#c6dea6;
+  color:#006b3c;
 }
 
 .mongo{
   background-color: #272822;
   color: #A0E22D;
-  font-size:12px;
+  font-size:14px;
   font-family:Arial;
   word-wrap: break-word;
   padding:8px;

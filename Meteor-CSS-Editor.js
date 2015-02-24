@@ -145,12 +145,14 @@ Meteor.startup(function(){
   // some helper functions 
   function displaySyntaxError(e){
     var errorPanel = document.getElementById('errorPanel');
+    errorPanel.className = "";
     errorPanel.innerHTML = ''+e;
   }
   
   function clearError(e){
     var errorPanel = document.getElementById('errorPanel');
-    errorPanel.innerHTML = '';
+    errorPanel.className = "ok";
+    errorPanel.innerHTML = 'ok';
   }
 
   function showAlert(file,user){
