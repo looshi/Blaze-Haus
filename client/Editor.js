@@ -26,6 +26,8 @@ Template.Editor.rendered = function(){
     },
     changed: function(id,doc){
 
+      console.log("changed " , id , doc );
+
       if(doc.css){
         renderCSS(doc.css);
       }
@@ -49,7 +51,7 @@ Template.Editor.rendered = function(){
       var textArea = document.getElementById('cmHtml');
       htmlEditor = CodeMirror.fromTextArea(textArea);
       htmlEditor.getDoc().setValue(doc.html);
-      htmlEditor.getDoc().on("change",saveHTML,'dave');
+      htmlEditor.getDoc().on("change",saveHTML);
       renderHTML(doc.html,peopleData,parent);
     },
     changed: function(id,doc){
@@ -75,7 +77,6 @@ Template.Editor.rendered = function(){
  
 Template.Editor.events({
   'click .restoreDefaults' : function(e){
-    e.preventDefault();
     Meteor.call('restoreDefaults');
   }
 });
@@ -97,9 +98,9 @@ function saveCSS(_codeMirror){
 // http://stackoverflow.com/questions/524696/how-to-create-a-style-tag-with-javascript
 function renderCSS(newCSS){
 
-  newCSS = newCSS.split('<br>').join("");
   var head = document.head || document.getElementsByTagName('head')[0];
   var style = document.createElement('style');
+
   style.type = 'text/css';
   if (style.styleSheet){
     style.styleSheet.cssText = newCSS;

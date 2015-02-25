@@ -16,20 +16,26 @@ Meteor.methods({
 
   saveHTML : function(newHTML,userId){
 
-    if(newHTML.length<MAX_CHARS && check(userId,String)){
+    if( newHTML.length<MAX_CHARS && !!userId){
       HTMLCollection.update({name:'myHtml'},{$set:{html:newHTML,lastModifiedBy:userId}},function(err,res){
         if(err||res===0){
           console.log("saveHTML err",err, res);
         }else{
-          console.log("OK!");
+          console.log("saveHTML OK!", res);
         }
       });
     }
   },
 
   saveCSS : function(newCSS,userId){
-    if(newCSS.length<MAX_CHARS && check(userId,String)){
-      StylesCollection.update({name:'myStyle'},{$set:{css:newCSS,lastModifiedBy:userId}});
+    if(newCSS.length<MAX_CHARS && !!userId){
+      StylesCollection.update({name:'myStyle'},{$set:{css:newCSS,lastModifiedBy:userId}},function(err,res){
+        if(err||res===0){
+          console.log("saveHTML err",err, res);
+        }else{
+          console.log("saveCSS OK!",res);
+        }
+      });
     }
   },
 
