@@ -21,6 +21,7 @@
   width:100%;
 }
 
+#cssError,
 #errorPanel{
   background:#660000;
   color:#ff9900;
