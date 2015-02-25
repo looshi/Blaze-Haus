@@ -7,3 +7,4 @@
 meteor-platform
 spacebars-compiler
 perak:codemirror
+mike:mocha
