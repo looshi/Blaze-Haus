@@ -41,12 +41,12 @@ Meteor.methods({
 
   setDefaults : function(){
   
-    if(!StylesCollection.findOne({name:'myStyle'})){
-      StylesCollection.insert({name:'myStyle',css:MockCSS,lastModifiedBy:'system-set-defaults'});
+    if(!StylesCollection.findOne({template:'DefaultTemplate'})){
+      StylesCollection.insert({template:'DefaultTemplate',css:MockCSS,lastModifiedBy:'system-set-defaults'});
     }
     
-    if(!HTMLCollection.findOne({name:'myHtml'})){
-      HTMLCollection.insert({name:'myHtml',html:MockHTML,lastModifiedBy:'system-set-defaults'});
+    if(!HTMLCollection.findOne({template:'DefaultTemplate'})){
+      HTMLCollection.insert({template:'DefaultTemplate',html:MockHTML,lastModifiedBy:'system-set-defaults'});
     }
 
     if(!PeopleCollection.findOne()){
@@ -55,12 +55,12 @@ Meteor.methods({
       }
     }
   },
-
+  // TODO lookup by name
   restoreDefaults : function(){
 
-    HTMLCollection.update({name:'myHtml'},{$set:{html:MockHTML,lastModifiedBy:'system-restore'}});
+    HTMLCollection.update({name:'DefaultTemplate'},{$set:{html:MockHTML,lastModifiedBy:'system-restore'}});
     
-    StylesCollection.update({name:'myStyle'},{$set:{css:MockCSS,lastModifiedBy:'system-restore'}});
+    StylesCollection.update({name:'DefaultTemplate'},{$set:{css:MockCSS,lastModifiedBy:'system-restore'}});
     
     PeopleCollection.remove({});
     for(var i=0;i<MockPeople.length;i++){

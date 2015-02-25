@@ -40,6 +40,7 @@ var setupObservers = function(_templateId,_self){
 
   var self = _self;
 
+
   StylesCollection.find().observeChanges({
     added: function(id, doc) {
       var textArea = document.getElementById('cmCss');
