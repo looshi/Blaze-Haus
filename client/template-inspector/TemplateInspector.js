@@ -6,6 +6,8 @@ saves and retrieves Template code and CSS
 renders a dynamic template
 */
 
+var cssEditor;
+var htmlEditor;
 
 /**
 * constructor
@@ -20,6 +22,12 @@ TemplateInspector = function(_dataContext,_parentElement,_userId) {
   this.userId = _userId;
   this.lastHtmlEditorId = "notset";  // Last user that edited HTML 
   this.lastCssEditorId  = "notset"   // Last user that edited CSS
+
+  cssEditor = new TextEditor('cmCss','css');
+  cssEditor.on("change",saveCSS);
+
+  htmlEditor = new TextEditor('cmHtml','html');
+  htmlEditor.on("change",saveHTML);
 
   setupObservers(this.dataContext,this);
 }
@@ -43,15 +51,11 @@ var setupObservers = function(_templateId,_self){
 
   StylesCollection.find().observeChanges({
     added: function(id, doc) {
-      var textArea = document.getElementById('cmCss');
-      cssEditor = CodeMirror.fromTextArea(textArea);
-      cssEditor.getDoc().setValue(doc.css);
-      cssEditor.getDoc().on("change",saveCSS);
+      
+      cssEditor.setValue(doc.css);
       renderCSS(doc.css);
     },
     changed: function(id,doc){
-
-      console.log("changed " , id , doc );
 
       if(doc.css){
         renderCSS(doc.css);
@@ -63,25 +67,22 @@ var setupObservers = function(_templateId,_self){
 
       if(self.lastCssEditorId!==self.userId && doc.css){
         showAlert("css",self.lastCssEditorId);
-        cssEditor.getDoc().off("change",saveCSS);  // turn off auto save temporarily
-        cssEditor.getDoc().setValue(doc.css);
-        cssEditor.getDoc().on("change",saveCSS);
+        cssEditor.off("change",saveCSS);  // turn off auto save temporarily
+        cssEditor.setValue(doc.css);
+        cssEditor.on("change",saveCSS);
       }
     }
   });
 
   HTMLCollection.find().observeChanges({
     added: function(id, doc) {
-      
-      var textArea = document.getElementById('cmHtml');
-      htmlEditor = CodeMirror.fromTextArea(textArea);
-      htmlEditor.getDoc().setValue(doc.html);
-      htmlEditor.getDoc().on("change",saveHTML);
-      console.log("stuff ",doc.html,self.dataContext,self.parentElement );
+      console.log("html added " , id , doc );
+      htmlEditor.setValue(doc.html);
       renderHTML(doc.html,self.dataContext,self.parentElement);
     },
     changed: function(id,doc){
 
+      console.log("html changed " , id , doc );
       if(doc.html){
         renderHTML(doc.html,self.dataContext,self.parentElement); 
       }
@@ -92,9 +93,9 @@ var setupObservers = function(_templateId,_self){
 
       if(self.lastHtmlEditorId!==self.userId && doc.html){
         showAlert("html",self.lastHtmlEditorId);
-        htmlEditor.getDoc().off("change",saveHTML);  // turn off auto save temporarily
-        htmlEditor.getDoc().setValue(doc.html);
-        htmlEditor.getDoc().on("change",saveHTML);
+        htmlEditor.off("change",saveHTML);  // turn off auto save temporarily
+        htmlEditor.setValue(doc.html);
+        htmlEditor.on("change",saveHTML);
       }
     }
   });
