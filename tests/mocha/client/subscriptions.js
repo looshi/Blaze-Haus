@@ -15,7 +15,7 @@ if ((typeof MochaWeb === 'undefined')){
 
 MochaWeb.testOnly(function(){
 
-  describe("Client Subscriptions", function(){
+  describe.skip("Client Subscriptions", function(){
 
     describe("Default HTML Data", function(){
 

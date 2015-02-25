@@ -17,7 +17,7 @@ Meteor.methods({
   saveHTML : function(newHTML,userId){
 
     if( newHTML.length<MAX_CHARS && !!userId){
-      HTMLCollection.update({name:'myHtml'},{$set:{html:newHTML,lastModifiedBy:userId}},function(err,res){
+      HTMLCollection.update({template:'DefaultTemplate'},{$set:{html:newHTML,lastModifiedBy:userId}},function(err,res){
         if(err||res===0){
           console.log("saveHTML err",err, res);
         }else{
@@ -29,9 +29,9 @@ Meteor.methods({
 
   saveCSS : function(newCSS,userId){
     if(newCSS.length<MAX_CHARS && !!userId){
-      StylesCollection.update({name:'myStyle'},{$set:{css:newCSS,lastModifiedBy:userId}},function(err,res){
+      StylesCollection.update({template:'DefaultTemplate'},{$set:{css:newCSS,lastModifiedBy:userId}},function(err,res){
         if(err||res===0){
-          console.log("saveHTML err",err, res);
+          console.log("saveCSS error",err, res);
         }else{
           console.log("saveCSS OK!",res);
         }

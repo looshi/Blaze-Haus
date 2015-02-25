@@ -11,8 +11,9 @@ Template.Editor.rendered = function(){
   var parentElement = document.getElementById('htmlOutput');
   var userId = Random.id();  // mimic we have a logged in user
 
+
   templateInspector = new TemplateInspector(peopleData,parentElement,userId);
-  
+
 }
 
  
