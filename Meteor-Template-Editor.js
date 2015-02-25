@@ -14,7 +14,6 @@ var parent;                // Dom element which Template renders into
 
 Meteor.startup(function(){
 
-  // fake a user id
   Meteor.call('setDefaults');
 
   // data we're going to provide to the template
