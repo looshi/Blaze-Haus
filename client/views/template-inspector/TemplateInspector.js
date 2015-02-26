@@ -13,9 +13,10 @@ var htmlEditor;
 * constructor
 * @param {Object} _dataContext, can be a Mongo Collection Cursor, or a regular object
 * @param {Object} _parentElement , Dom object where the Template should be rendered
-* @param {String} _userId , user is who is editing this template
+* @param {String} _templateId , the id of the Template Collection to edit
+* @param {String} _userId , id of user is who is editing this template
 */
-TemplateInspector = function(_dataContext,_parentElement,_userId) {
+TemplateInspector = function(_dataContext,_templateId,_parentElement,_userId) {
 
   this.dataContext = _dataContext;
   this.parentElement = _parentElement;
@@ -29,7 +30,7 @@ TemplateInspector = function(_dataContext,_parentElement,_userId) {
   htmlEditor = new TextEditor('cmHtml','html');
   htmlEditor.on("change",saveHTML);
 
-  setupObservers(this.dataContext,this);
+  this.startObservers(this.dataContext,this);
 }
 
 
@@ -43,63 +44,60 @@ TemplateInspector.prototype.restoreDefaults = function (){
 }
 
 
-// this will be scoped to the Id of the Template
-var setupObservers = function(_templateId,_self){
+TemplateInspector.prototype.startObservers = function(_templateId){
 
-  var self = _self;
+  var self = this;
 
-
-  StylesCollection.find().observeChanges({
+  TemplateCollection.find({_id:_templateId}).observeChanges({
     added: function(id, doc) {
-      
+      htmlEditor.setValue(doc.html);
+      renderHTML(doc.html,self.dataContext,self.parentElement);
       cssEditor.setValue(doc.css);
       renderCSS(doc.css);
     },
     changed: function(id,doc){
-
-      if(doc.css){
-        renderCSS(doc.css);
-      }
-      
-      if(doc.lastModifiedBy){
-        self.lastCssEditorId = doc.lastModifiedBy;
-      }
-
-      if(self.lastCssEditorId!==self.userId && doc.css){
-        showAlert("css",self.lastCssEditorId);
-        cssEditor.off("change",saveCSS);  // turn off auto save temporarily
-        cssEditor.setValue(doc.css);
-        cssEditor.on("change",saveCSS);
-      }
-    }
-  });
-
-  HTMLCollection.find().observeChanges({
-    added: function(id, doc) {
-      console.log("html added " , id , doc );
-      htmlEditor.setValue(doc.html);
-      renderHTML(doc.html,self.dataContext,self.parentElement);
-    },
-    changed: function(id,doc){
-
-      console.log("html changed " , id , doc );
-      if(doc.html){
-        renderHTML(doc.html,self.dataContext,self.parentElement); 
-      }
-
-      if(doc.lastModifiedBy){
-        self.lastHtmlEditorId = doc.lastModifiedBy;  // only update my editor if someone else made the change
-      }
-
-      if(self.lastHtmlEditorId!==self.userId && doc.html){
-        showAlert("html",self.lastHtmlEditorId);
-        htmlEditor.off("change",saveHTML);  // turn off auto save temporarily
-        htmlEditor.setValue(doc.html);
-        htmlEditor.on("change",saveHTML);
-      }
+      onCssDataChanged(id,doc,self);
+      onHtmlDataChanged(id,doc,self);
     }
   });
 }
+
+var onCssDataChanged = function(id,doc,self){
+
+  if(doc.css){
+    renderCSS(doc.css);
+  }
+  
+  if(doc.lastModifiedBy){
+    self.lastCssEditorId = doc.lastModifiedBy;
+  }
+
+  if(self.lastCssEditorId!==self.userId && doc.css){
+    showAlert("css",self.lastCssEditorId);
+    cssEditor.off("change",saveCSS);  // turn off auto save temporarily
+    cssEditor.setValue(doc.css);
+    cssEditor.on("change",saveCSS);
+  }
+}
+
+var onHtmlDataChanged = function(id,doc,self){
+
+  if(doc.html){
+    renderHTML(doc.html,self.dataContext,self.parentElement); 
+  }
+
+  if(doc.lastModifiedBy){
+    self.lastHtmlEditorId = doc.lastModifiedBy;  // only update my editor if someone else made the change
+  }
+
+  if(self.lastHtmlEditorId!==self.userId && doc.html){
+    showAlert("html",self.lastHtmlEditorId);
+    htmlEditor.off("change",saveHTML);  // turn off auto save temporarily
+    htmlEditor.setValue(doc.html);
+    htmlEditor.on("change",saveHTML);
+  }
+}
+
 
 function saveCSS(_codeMirror){
   clearCssError();

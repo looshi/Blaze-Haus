@@ -8,3 +8,4 @@ meteor-platform
 spacebars-compiler
 perak:codemirror
 mike:mocha
+aldeed:simple-schema
