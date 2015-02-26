@@ -2,6 +2,7 @@ var MAX_CHARS = 800;
 
 Meteor.startup(function(){
 
+
   Meteor.call('setDefaults');
 
   // restore the defaults every hour
@@ -40,10 +41,11 @@ Meteor.methods({
   },
 
   setDefaults : function(){
-  
-    if(!STemplateCollection.findOne({template:'DefaultTemplate'})){
-      TemplateCollection.insert({name:'DefaultTemplate',css:MockCSS,lastModifiedBy:'system-set-defaults'});
-    }
+
+    defaultTemplate.lastModified = new Date();
+    defaultTemplate.created = new Date();
+
+    TemplateCollection.upsert({name:'DefaultTemplate'},{$set:defaultTemplate});
 
     if(!PeopleCollection.findOne()){
       for(var i=0;i<MockPeople.length;i++){
@@ -54,14 +56,28 @@ Meteor.methods({
   // TODO lookup by name
   restoreDefaults : function(){
 
-    HTMLCollection.update({name:'DefaultTemplate'},{$set:{html:MockHTML,lastModifiedBy:'system-restore'}});
-    
-    StylesCollection.update({name:'DefaultTemplate'},{$set:{css:MockCSS,lastModifiedBy:'system-restore'}});
-    
+    defaultTemplate.modified = new Date();
+
+    TemplateCollection.update({name:'DefaultTemplate'},{$set:defaultTemplate});
+
     PeopleCollection.remove({});
     for(var i=0;i<MockPeople.length;i++){
       PeopleCollection.insert(MockPeople[i]);
     }
   }
-})
+});
+
+defaultTemplate = {
+  //created: new Date(),
+  css: MockCSS,
+  dataContext: 'peopleCollectionId', // TODO look this up in the restore routine
+  html: MockHTML,
+  //modified: new Date(),  // set these dates inside the methods
+  lastModifiedBy: 'System',
+  name:'DefaultTemplate',
+  owner:'System'
+}
+
+
+
 
