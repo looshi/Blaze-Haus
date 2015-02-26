@@ -22,17 +22,15 @@ MochaWeb.testOnly(function(){
       var defaultTemplate;
       
       before(function(done){
-        var data = TemplateCollection.find({name:"DefaultTemplate"},null,function(err,res){
-          if(err||res===0){
-            done(err);
-          }else{
-            defaultTemplate = data.fetch();
+        Meteor.autorun(function(){
+          var data = TemplateCollection.findOne({name:"DefaultTemplate"});
+          if (data){
+            defaultTemplate = data;
             done();
           }
         });
       });
 
-    
       it("should contain default html", function(){
         chai.assert.equal(defaultTemplate.html,MockHTML);
       });
@@ -49,15 +47,15 @@ MochaWeb.testOnly(function(){
       var defaultSampleData;
 
       before(function(done){
-        var data = PeopleCollection.find({},null,function(err,res){
-          if(err||res===0){
-            done(err);
-          }else{
-            defaultSampleData = data.fetch().count();
+        Meteor.autorun(function(){
+          var data = PeopleCollection.find({});
+          if (data){
+            defaultSampleData = data.fetch();
             done();
           }
         });
       });
+
 
       it("should be available to the client and in tact", function(){
         chai.assert.equal(defaultSampleData.length,39);
