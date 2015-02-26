@@ -5,7 +5,7 @@ used as a default to populate the editor
 also used for testing against , since it should never change
 */
 
-PeopleCollection = new Meteor.Collection('PeopleCollection');
+PeopleCollection = new Mongo.Collection('PeopleCollection');
 
 
 // different rules for People

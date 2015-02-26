@@ -6,10 +6,12 @@ eventually helper functions too
 */
 
 
-TemplateCollection = new Meteor.Collection('TemplateCollection');
+TemplateCollection = new Mongo.Collection('TemplateCollection');
 
+if(!Schemas)
+var Schemas = {};
 
-TemplateCollectionSchema = new SimpleSchema({
+Schemas.TemplateCollection = new SimpleSchema({
 
   created: {
     type: Date,
@@ -29,7 +31,7 @@ TemplateCollectionSchema = new SimpleSchema({
     label:"html",
     max: 1000
   },
-  lastModified:{
+  modified:{
     type:Date,
     label:"lastModified - Date last update occured"
   },
@@ -41,15 +43,15 @@ TemplateCollectionSchema = new SimpleSchema({
     type:String,
     label:"title of this template",
     max: 100
-  }
+  },
   owner:{
     type:String,
     label:"owner - user id"
   }
 });
 
-
-TemplateCollection.attachSchema(TemplateCollectionSchema);
+// not sure why but simple schema is not working, disabling for now
+//TemplateCollection.attachSchema(Schemas.TemplateCollection);
 
 // allow it all for now
 TemplateCollection.allow({
