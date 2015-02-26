@@ -15,55 +15,45 @@ if ((typeof MochaWeb === 'undefined')){
 
 MochaWeb.testOnly(function(){
 
-  describe.skip("Client Subscriptions", function(){
+  describe("Client Subscriptions", function(){
 
     describe("Default HTML Data", function(){
 
-      var defaultHTML;
-
+      var defaultTemplate;
+      
       before(function(done){
-        Meteor.autorun(function(){
-          var html = HTMLCollection.findOne({template:"DefaultTemplate"});
-          if (html){
-            defaultHTML = html;
+        var data = TemplateCollection.find({name:"DefaultTemplate"},null,function(err,res){
+          if(err||res===0){
+            done(err);
+          }else{
+            defaultTemplate = data.fetch();
             done();
           }
         });
       });
 
-      it("should be available to the client", function(){
-        chai.assert.equal(defaultHTML.html,MockHTML);
+    
+      it("should contain default html", function(){
+        chai.assert.equal(defaultTemplate.html,MockHTML);
       });
+
+      it("should contain default css", function(){
+        chai.assert.equal(defaultTemplate.css,MockCSS);
+      });
+
     });
 
-    describe("Default CSS Data", function(){
-
-      var defaultCSS;
-
-      before(function(done){
-        Meteor.autorun(function(){
-          var css = StylesCollection.findOne({template:"DefaultTemplate"});
-          if (css){
-            defaultCSS = css;
-            done();
-          }
-        });
-      });
-
-      it("should be available to the client", function(){
-        chai.assert.equal(defaultCSS.css,MockCSS);
-      });
-    });
 
     describe("Default Sample Data Set", function(){
 
       var defaultSampleData;
 
       before(function(done){
-        Meteor.autorun(function(){
-          var data = PeopleCollection.find().fetch();
-          if (data){
-            defaultSampleData = data;
+        var data = PeopleCollection.find({},null,function(err,res){
+          if(err||res===0){
+            done(err);
+          }else{
+            defaultSampleData = data.fetch().count();
             done();
           }
         });
