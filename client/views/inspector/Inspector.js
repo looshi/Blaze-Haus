@@ -6,23 +6,27 @@ saves and retrieves Template code and CSS
 renders a dynamic template
 */
 
+// these should be scoped to this template instance
 var cssEditor;
 var htmlEditor;
+var dataContext;
+var userId;
+var lastHtmlEditorId;
+var lastCssEditorId;
 
 /**
-* constructor
+* constructor-ish
 * @param {Object} _dataContext, can be a Mongo Collection Cursor, or a regular object
 * @param {Object} _parentElement , Dom object where the Template should be rendered
 * @param {String} _templateId , the id of the Template Collection to edit
 * @param {String} _userId , id of user is who is editing this template
 */
-Inspector = function(_dataContext,_templateId,_parentElement,_userId) {
+Template.Inspector.rendered = function() {
 
-  this.dataContext = _dataContext;
-  this.parentElement = _parentElement;
-  this.userId = _userId;
-  this.lastHtmlEditorId = "notset";  // Last user that edited HTML 
-  this.lastCssEditorId  = "notset"   // Last user that edited CSS
+  dataContext = this.data;
+  userId = Random.id();         // just fake it here for now
+  lastHtmlEditorId = "notset";  // Last user that edited HTML 
+  lastCssEditorId  = "notset"   // Last user that edited CSS
 
   cssEditor = new TextEditor('cmCss','css');
   cssEditor.on("change",saveCSS);
@@ -30,7 +34,7 @@ Inspector = function(_dataContext,_templateId,_parentElement,_userId) {
   htmlEditor = new TextEditor('cmHtml','html');
   htmlEditor.on("change",saveHTML);
 
-  this.startObservers(this.dataContext,this);
+  startObservers(this.dataContext,this);
 }
 
 
@@ -41,16 +45,13 @@ Template.Inspector.events({
 });
 
 
-Inspector.prototype.render = function (){
 
-}
-
-Inspector.prototype.restoreDefaults = function (){
+var restoreDefaults = function (){
   Meteor.call('restoreDefaults');
 }
 
 
-Inspector.prototype.startObservers = function(_templateId){
+var startObservers = function(_templateId){
 
   var self = this;
 
@@ -105,7 +106,7 @@ var onHtmlDataChanged = function(id,doc,self){
 }
 
 
-function saveCSS(_codeMirror){
+var saveCSS = function(_codeMirror){
   clearCssError();
   var newCSS = _codeMirror.getValue();
   if(newCSS && newCSS.length>800){
