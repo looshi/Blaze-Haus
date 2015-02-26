@@ -14,6 +14,13 @@ var userId;
 var lastHtmlEditorId;
 var lastCssEditorId;
 
+Template.Inspector.created = function(){
+
+  // this.cssError = new ReactiveVar("ok");
+  // this.htmlError = new ReactiveVar("ok");
+
+}
+
 /**
 * constructor-ish
 * @param {Object} _dataContext, can be a Mongo Collection Cursor, or a regular object
@@ -21,7 +28,7 @@ var lastCssEditorId;
 * @param {String} _templateId , the id of the Template Collection to edit
 * @param {String} _userId , id of user is who is editing this template
 */
-Template.Inspector.rendered = function() {
+Template.Inspector.rendered = function(){
 
   dataContext = this.data;
   userId = Random.id();         // just fake it here for now
@@ -37,6 +44,17 @@ Template.Inspector.rendered = function() {
   startObservers(this.dataContext,this);
 }
 
+Template.Inspector.helpers({
+
+  htmlError : function(){
+    return Template.instance().htmlError.get();
+  },
+  cssError : function(){
+    return Template.instance().cssError.get();
+  }
+
+})
+
 
 Template.Inspector.events({
   'click .restoreDefaults' : function(e){
@@ -51,14 +69,12 @@ var restoreDefaults = function (){
 }
 
 
-var startObservers = function(_templateId){
-
-  var self = this;
+var startObservers = function(_templateId,self){
 
   TemplateCollection.find({_id:_templateId}).observeChanges({
     added: function(id, doc) {
       htmlEditor.setValue(doc.html);
-      renderHTML(doc.html,self.dataContext,self.parentElement);
+      renderHTML(doc.html,self);
       cssEditor.setValue(doc.css);
       renderCSS(doc.css);
     },
@@ -90,7 +106,7 @@ var onCssDataChanged = function(id,doc,self){
 var onHtmlDataChanged = function(id,doc,self){
 
   if(doc.html){
-    renderHTML(doc.html,self.dataContext,self.parentElement); 
+    renderHTML(doc.html,self); 
   }
 
   if(doc.lastModifiedBy){
@@ -140,9 +156,12 @@ var saveHTML = function(_codeMirror){
 
 // renders html with a data context into the parent Dom object
 // you can use spacebars {{ }} template tags in newHTML
-var renderHTML = function(_newHTML,_dataContext,_parent){
+var renderHTML = function(_newHTML,self){
 
-  clearHtmlError();
+  var dataContext = self.data.html;
+  var parent = document.getElementById('htmlOutput');
+
+  Template.instance().htmlError.set('ok');
   // going to 'try' it all, because we're auto-saving on each edit so
   // the malformed Blaze Template syntax will throw a lot of errors
   try{
@@ -150,40 +169,20 @@ var renderHTML = function(_newHTML,_dataContext,_parent){
     // https://meteorhacks.com/how-blaze-works.html
     var htmlJS = SpacebarsCompiler.compile(_newHTML);
     var evaled = eval(htmlJS);
-    var view = Blaze.With(_dataContext,evaled);
+    var view = Blaze.With(dataContext,evaled);
 
     // clear the output and re-render it
     _parent.innerHTML = "";
-    Blaze.render(view,_parent);
+    Blaze.render(view,parent);
     
   }catch(e){ 
-    displayHtmlError(e);
+    Template.instance().htmlError.set(e);
   }
 }
 
 
 
-// status messages 
-var displayHtmlError = function(error,type){
-  var el = document.getElementById('htmlError');
-  el.className = "";
-  el.innerHTML = ''+error;
-}
-var clearHtmlError = function(e){
-  var el = document.getElementById('htmlError');
-  el.className = 'ok';
-  el.innerHTML = 'ok';
-}
-var displayCssError = function(error,type){
-  var el = document.getElementById('cssError');
-  el.className = "";
-  el.innerHTML = ''+error;
-}
-var clearCssError = function(e){
-  var el = document.getElementById('cssError');
-  el.className = 'ok';
-  el.innerHTML = 'ok';
-}
+
 
 // displays a message if another user besides currentuser is editing this Template
 var showAlert = function(file,user){
