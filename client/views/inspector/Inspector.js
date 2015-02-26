@@ -1,5 +1,5 @@
 /*
-TemplateInspector
+Inspector
 
 wraps an instance of CodeMirror
 saves and retrieves Template code and CSS
@@ -16,7 +16,7 @@ var htmlEditor;
 * @param {String} _templateId , the id of the Template Collection to edit
 * @param {String} _userId , id of user is who is editing this template
 */
-TemplateInspector = function(_dataContext,_templateId,_parentElement,_userId) {
+Inspector = function(_dataContext,_templateId,_parentElement,_userId) {
 
   this.dataContext = _dataContext;
   this.parentElement = _parentElement;
@@ -34,17 +34,23 @@ TemplateInspector = function(_dataContext,_templateId,_parentElement,_userId) {
 }
 
 
+Template.Inspector.events({
+  'click .restoreDefaults' : function(e){
+    Meteor.call('restoreDefaults');
+  }
+});
 
-TemplateInspector.prototype.render = function (){
+
+Inspector.prototype.render = function (){
 
 }
 
-TemplateInspector.prototype.restoreDefaults = function (){
+Inspector.prototype.restoreDefaults = function (){
   Meteor.call('restoreDefaults');
 }
 
 
-TemplateInspector.prototype.startObservers = function(_templateId){
+Inspector.prototype.startObservers = function(_templateId){
 
   var self = this;
 
