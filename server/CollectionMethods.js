@@ -14,10 +14,10 @@ Meteor.startup(function(){
 
 Meteor.methods({
 
-  saveHTML : function(newHTML,userId){
+  saveHTML : function(newHTML,templateId,userId){
 
     if( newHTML.length<MAX_CHARS && !!userId){
-      HTMLCollection.update({template:'DefaultTemplate'},{$set:{html:newHTML,lastModifiedBy:userId}},function(err,res){
+      TemplateCollection.update({_id:templateId},{$set:{html:newHTML,lastModifiedBy:userId}},function(err,res){
         if(err||res===0){
           console.log("saveHTML err",err, res);
         }else{
@@ -27,9 +27,9 @@ Meteor.methods({
     }
   },
 
-  saveCSS : function(newCSS,userId){
+  saveCSS : function(newCSS,templateId,userId){
     if(newCSS.length<MAX_CHARS && !!userId){
-      StylesCollection.update({template:'DefaultTemplate'},{$set:{css:newCSS,lastModifiedBy:userId}},function(err,res){
+      TemplateCollection.update({_id:templateId},{$set:{css:newCSS,lastModifiedBy:userId}},function(err,res){
         if(err||res===0){
           console.log("saveCSS error",err, res);
         }else{
@@ -41,12 +41,8 @@ Meteor.methods({
 
   setDefaults : function(){
   
-    if(!StylesCollection.findOne({template:'DefaultTemplate'})){
-      StylesCollection.insert({template:'DefaultTemplate',css:MockCSS,lastModifiedBy:'system-set-defaults'});
-    }
-    
-    if(!HTMLCollection.findOne({template:'DefaultTemplate'})){
-      HTMLCollection.insert({template:'DefaultTemplate',html:MockHTML,lastModifiedBy:'system-set-defaults'});
+    if(!STemplateCollection.findOne({template:'DefaultTemplate'})){
+      TemplateCollection.insert({name:'DefaultTemplate',css:MockCSS,lastModifiedBy:'system-set-defaults'});
     }
 
     if(!PeopleCollection.findOne()){
