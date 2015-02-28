@@ -10,6 +10,7 @@ wraps an instance of CodeMirror
 * @param {Object} _textArea, DOM id for the TextArea to apply this editor, e.g. "myTextArea"
 * @param {String} _type , only "css" , "html" are supported now
 */
+
 TextEditor = function(_textArea,_type) {
 
   if(_type!=="css"&&_type!=="html"){
@@ -20,44 +21,32 @@ TextEditor = function(_textArea,_type) {
     error("selector required : "+_textArea);
   }
 
-  var textArea = document.getElementById(_textArea);
-  if(!textArea && !textArea.tagName){
-    error('element '+_textArea+'not found, double check you are passing id and not classname');
-  }
-  if(textArea.tagName.toUpperCase()!=='TEXTAREA'){
-    error('textarea '+textArea+ 'is not a <TextArea>');
+  var textArea = document.getElementsByClassName(_textArea)[0];
+  if(!textArea){
+    error('element '+_textArea+' not found');
   }
 
   this.editor = CodeMirror.fromTextArea(textArea);
 
 }
 
+
 TextEditor.prototype.setValue = function(_text){
   this.editor.getDoc().setValue(_text);
 }
 
-TextEditor.prototype.getValue = function(){
-  return this.editor.getDoc().getValue();
-}
 
-TextEditor.prototype.on = function(_type,_handler){
+TextEditor.prototype.on = function(_type,_handler,_templateId,_userId){
   if(_type!=="change"){
     error("error unsupported event : " + _type);
   }
-  this.editor.on(_type,_handler);
+  this.editor.getDoc().on(_type,function(e){
+    _handler(e.getValue(),_templateId,_userId);
+  });
 }
 
-TextEditor.prototype.off = function(_type,_handler){
-  if(_type!=="change"){
-    error("error unsupported event : " + _type);
-  }
-  this.editor.off(_type,_handler);
-}
 
 var error = function(msg){
   console.warn(msg);
   throw new Error(msg);
 }
-
-
-

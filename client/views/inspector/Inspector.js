@@ -1,47 +1,47 @@
 /*
 Inspector
+Similar to a Browser HTML Inspector like firebug,
+the Inspector displays source code and allows the user to edit it.
 
-wraps an instance of CodeMirror
-saves and retrieves Template code and CSS
-renders a dynamic template
+The DOM will be updated as the user makes edits.
+
+The editable CSS, Template HTML, and other code blocks are stored in 
+the database as simple string fields on a TemplateCollection document.
+The code is then 'rendered' into an output div.
+
+The text editors are CodeMirror instances.
+
 */
 
-// these should be scoped to this template instance
-var cssEditor;
-var htmlEditor;
-var dataContext;
-var userId;
-var lastHtmlEditorId;
-var lastCssEditorId;
 
 Template.Inspector.created = function(){
 
-  // this.cssError = new ReactiveVar("ok");
-  // this.htmlError = new ReactiveVar("ok");
+  this.htmlError = new ReactiveVar;
+  this.htmlError.set("html error");
+
+  this.cssError = new ReactiveVar;
+  this.cssError.set("css error");
+
 
 }
 
-/**
-* constructor-ish
-* @param {Object} _dataContext, can be a Mongo Collection Cursor, or a regular object
-* @param {Object} _parentElement , Dom object where the Template should be rendered
-* @param {String} _templateId , the id of the Template Collection to edit
-* @param {String} _userId , id of user is who is editing this template
-*/
+// using this flag instead of CodeMirrorInstance.off("event") -- which won't work for some reason
+var CAN_SAVE_HTML = true; 
+var CAN_SAVE_CSS = true; 
+
 Template.Inspector.rendered = function(){
 
-  dataContext = this.data;
-  userId = Random.id();         // just fake it here for now
-  lastHtmlEditorId = "notset";  // Last user that edited HTML 
-  lastCssEditorId  = "notset"   // Last user that edited CSS
+  var templateId = Router.current().params._id;
 
-  cssEditor = new TextEditor('cmCss','css');
-  cssEditor.on("change",saveCSS);
+  this['userId'] = Random.id(); 
+  this['cssEditor'] = 'not set';
+  this['htmlEditor'] = 'not set';
+  this['lastHtmlEditorId'] = 'not set';
+  this['lastCssEditorId'] = 'not set';
+  this['templateId'] = templateId;
 
-  htmlEditor = new TextEditor('cmHtml','html');
-  htmlEditor.on("change",saveHTML);
-
-  startObservers(this.dataContext,this);
+  startObservers(templateId,this);
+ 
 }
 
 Template.Inspector.helpers({
@@ -53,7 +53,7 @@ Template.Inspector.helpers({
     return Template.instance().cssError.get();
   }
 
-})
+});
 
 
 Template.Inspector.events({
@@ -63,27 +63,57 @@ Template.Inspector.events({
 });
 
 
-
-var restoreDefaults = function (){
-  Meteor.call('restoreDefaults');
-}
-
-
 var startObservers = function(_templateId,self){
 
   TemplateCollection.find({_id:_templateId}).observeChanges({
-    added: function(id, doc) {
-      htmlEditor.setValue(doc.html);
+
+    added : function(id,doc){
+
+      self.htmlEditor = new TextEditor('html-editor','html'); 
+      self.htmlEditor.setValue(doc.html);
+      self.htmlEditor.on("change",handleHtmlEdit,self.templateId,self.userId);
       renderHTML(doc.html,self);
-      cssEditor.setValue(doc.css);
+
+      self.cssEditor = new TextEditor('css-editor','css');
+      self.cssEditor.setValue(doc.css);
+      self.cssEditor.on("change",handleCssEdit,self.templateId,self.userId);
       renderCSS(doc.css);
+
     },
     changed: function(id,doc){
+      console.log("item changed " , id , doc );
       onCssDataChanged(id,doc,self);
       onHtmlDataChanged(id,doc,self);
     }
   });
 }
+
+
+var onHtmlDataChanged = function(id,doc,self){
+
+  if(doc.html){
+    renderHTML(doc.html,self); 
+  }
+
+  if(doc.lastModifiedBy){
+    self.lastHtmlEditorId = doc.lastModifiedBy;  // only update my editor if someone else made the change
+  }
+ 
+  if(self.lastHtmlEditorId!==self.userId && doc.html){
+    showAlert("html",self.lastHtmlEditorId);
+    CAN_SAVE_HTML = false;
+    self.htmlEditor.setValue(doc.html);
+    CAN_SAVE_HTML = true;
+  }
+}
+
+var handleHtmlEdit = function(text,templateId,userId){
+
+  if(!CAN_SAVE_HTML){return;}
+
+  Meteor.call('saveHTML',text,templateId,userId);
+}
+
 
 var onCssDataChanged = function(id,doc,self){
 
@@ -97,41 +127,18 @@ var onCssDataChanged = function(id,doc,self){
 
   if(self.lastCssEditorId!==self.userId && doc.css){
     showAlert("css",self.lastCssEditorId);
-    cssEditor.off("change",saveCSS);  // turn off auto save temporarily
-    cssEditor.setValue(doc.css);
-    cssEditor.on("change",saveCSS);
+    CAN_SAVE_CSS = false;
+    self.cssEditor.setValue(doc.css);
+    CAN_SAVE_CSS = true;
   }
 }
 
-var onHtmlDataChanged = function(id,doc,self){
+var handleCssEdit = function(text,templateId,userId){
 
-  if(doc.html){
-    renderHTML(doc.html,self); 
-  }
+  if(!CAN_SAVE_CSS){return;}
 
-  if(doc.lastModifiedBy){
-    self.lastHtmlEditorId = doc.lastModifiedBy;  // only update my editor if someone else made the change
-  }
+  Meteor.call('saveCSS',text,templateId,userId);
 
-  if(self.lastHtmlEditorId!==self.userId && doc.html){
-    showAlert("html",self.lastHtmlEditorId);
-    htmlEditor.off("change",saveHTML);  // turn off auto save temporarily
-    htmlEditor.setValue(doc.html);
-    htmlEditor.on("change",saveHTML);
-  }
-}
-
-
-var saveCSS = function(_codeMirror){
-  clearCssError();
-  var newCSS = _codeMirror.getValue();
-  if(newCSS && newCSS.length>800){
-    displayCssError('Too long, must be less than 800 chars.','css'); 
-    return;
-  }
-  if(newCSS){
-    Meteor.call('saveCSS',newCSS,'NEED_TO_SCOPE_THIS');
-  }
 }
 
 
@@ -149,19 +156,15 @@ var renderCSS = function(_newCSS){
   head.appendChild(style);
 }
 
-var saveHTML = function(_codeMirror){
-  var newHTML = _codeMirror.getValue();
-  Meteor.call('saveHTML',newHTML,'NEED_TO_SCOPE_THIS');
-}
+
 
 // renders html with a data context into the parent Dom object
 // you can use spacebars {{ }} template tags in newHTML
-var renderHTML = function(_newHTML,self){
+var renderHTML = function(_newHTML,_collectionID){
 
-  var dataContext = self.data.html;
+  var dataContext = PeopleCollection.find();    //  TODO get passed in collection vs. default only
   var parent = document.getElementById('htmlOutput');
 
-  Template.instance().htmlError.set('ok');
   // going to 'try' it all, because we're auto-saving on each edit so
   // the malformed Blaze Template syntax will throw a lot of errors
   try{
@@ -172,15 +175,14 @@ var renderHTML = function(_newHTML,self){
     var view = Blaze.With(dataContext,evaled);
 
     // clear the output and re-render it
-    _parent.innerHTML = "";
+    parent.innerHTML = "";
     Blaze.render(view,parent);
     
   }catch(e){ 
-    Template.instance().htmlError.set(e);
+    
+    console.warn("HTML ERROR " , e );
   }
 }
-
-
 
 
 

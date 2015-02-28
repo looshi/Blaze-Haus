@@ -11,20 +11,22 @@
     <br/>
   </div>
 
-  <div class="editor-container editor-instructions">
 
-    <div id="alertPanel"></div>
+</body>
 
-    {{> Instructions}}
+<Template name='MainLayout'>
 
+  <div id="alertPanel"></div>
+  {{> Instructions}}
+
+  <div class="editor-container">
     {{> Inspector}}
   </div>
-
   <div class="editor-container rendered-output">
     <h4>Rendered Result : </h4>
     <div id="htmlOutput"></div>
   </div>
 
-</body>
+</Template>
 
 
