@@ -41,10 +41,12 @@ Meteor.methods({
 
   setDefaults : function(){
 
+    TemplateCollection.remove({});
+    
     defaultTemplate.lastModified = new Date();
     defaultTemplate.created = new Date();
 
-    TemplateCollection.upsert({name:'DefaultTemplate'},{$set:defaultTemplate});
+    TemplateCollection.insert(defaultTemplate);
 
     if(!PeopleCollection.findOne()){
       for(var i=0;i<MockPeople.length;i++){
@@ -57,7 +59,7 @@ Meteor.methods({
 
     defaultTemplate.modified = new Date();
 
-    TemplateCollection.update({name:'DefaultTemplate'},{$set:defaultTemplate});
+    TemplateCollection.update({name:'Default Template'},{$set:defaultTemplate});
 
     PeopleCollection.remove({});
     for(var i=0;i<MockPeople.length;i++){
@@ -73,7 +75,7 @@ defaultTemplate = {
   html: MockHTML,
   //modified: new Date(),  // set these dates inside the methods
   lastModifiedBy: 'System',
-  name:'DefaultTemplate',
+  name : "Default Template",
   owner:'System'
 }
 
