@@ -12,7 +12,7 @@ describe("Inspector", function(){
       var defaultTemplate;
 
       Meteor.autorun(function(){
-        var data = TemplateCollection.findOne({name:"DefaultTemplate"});
+        var data = TemplateCollection.findOne({name:"Default Template"});
         if (data){
           defaultTemplate = data;
           done();

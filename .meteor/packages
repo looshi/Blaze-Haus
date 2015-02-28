@@ -10,3 +10,4 @@ perak:codemirror
 aldeed:simple-schema
 reactive-var
 iron:router
+mike:mocha
