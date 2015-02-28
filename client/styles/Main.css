@@ -4,12 +4,23 @@
 .main-description{
   margin : 2px 12px 0;
 }
-
+.instructions-container{
+  background-color:#ccc;
+  border-radius: 8px;
+  padding:8px;
+}
 .editor-container{
   width:45%;
   display:inline-block;
   vertical-align:top;
   padding:2%;
+}
+.editor-container a{
+  font-size:18px;
+}
+.editor-container a:hover{
+  background-color:#000;
+  color:#fff;
 }
 
 .editor-instructions h4{

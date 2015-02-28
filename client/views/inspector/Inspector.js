@@ -11,7 +11,6 @@ The text editors are CodeMirror instances : http://codemirror.net/
 
 */
 
-
 Template.Inspector.created = function(){
 
   this.htmlError = new ReactiveVar;
@@ -20,18 +19,20 @@ Template.Inspector.created = function(){
   this.cssError = new ReactiveVar;
   this.cssError.set("ok");
 
-
 }
 
-// using this flag instead of CodeMirrorInstance.off("event") -- which won't work for some reason
+/*
+These flags are used so that changes to the HTML or CSS by a different user
+won't redundantly be autosaved by "this" user.  We autosave when a user is editing.
+Ideally this would be done by switching off the Codemirror change event
+but for some reason I couldn't get it to work, so use these flags for now
+*/
 var CAN_SAVE_HTML = true; 
 var CAN_SAVE_CSS = true; 
 
 Template.Inspector.rendered = function(){
 
   var templateId = Router.current().params._id;
-
-  console.log("my data!!! " , this.data );
 
   this['userId'] = Random.id(); 
   this['cssEditor'] = 'not set';
@@ -87,7 +88,6 @@ var startObservers = function(_templateId,self){
 
     },
     changed: function(id,doc){
-      console.log("item changed " , id , doc );
       onCssDataChanged(id,doc,self);
       onHtmlDataChanged(id,doc,self);
     }
@@ -113,6 +113,7 @@ var onHtmlDataChanged = function(id,doc,self){
   }
 }
 
+// TODO debounce
 var handleHtmlEdit = function(text,templateId,userId){
 
   if(!CAN_SAVE_HTML){return;}
@@ -139,6 +140,7 @@ var onCssDataChanged = function(id,doc,self){
   }
 }
 
+// TODO debounce
 var handleCssEdit = function(text,templateId,userId){
 
   if(!CAN_SAVE_CSS){return;}
@@ -147,15 +149,19 @@ var handleCssEdit = function(text,templateId,userId){
 
 }
 
-
+/**
+* applies CSS to the CSSOM, right now it will just continually append 
+* and override everything on the page, TODO, scope CSS to a given container
+* @param {String} newCSS,  css string
+* @param {Object} self , this Inspector Template instance
+*/
 var renderCSS = function(newCSS,self){
 
   var head = document.head || document.getElementsByTagName('head')[0];
   var style = document.createElement('style');
 
   self.cssError.set("ok");
-
-  // TODO : validate CSS here 
+  // TODO - validate CSS before applying it
 
   style.type = 'text/css';
   if (style.styleSheet){
@@ -166,10 +172,11 @@ var renderCSS = function(newCSS,self){
   head.appendChild(style);
 }
 
-
-
-// renders html with a data context into the parent Dom object
-// you can use spacebars {{ }} template tags in newHTML
+/**
+* renders html with a data context into the parent Dom object
+* @param {String} newHTML, html string to render
+* @param {Object} self , this Inspector Template instance
+*/
 var renderHTML = function(newHTML,self){
 
   self.htmlError.set("ok");
@@ -196,8 +203,11 @@ var renderHTML = function(newHTML,self){
 }
 
 
-
-// displays a message if another user besides currentuser is editing this Template
+/**
+* displays a message if another user besides currentuser is editing this Template
+* @param {String} file,  either css , html , js ( js coming soon )
+* @param {String} user, userId who is editing
+*/
 var showAlert = function(file,user){
   var alert = document.getElementById('alertPanel');
   alert.style.display = "block";
