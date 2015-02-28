@@ -21,15 +21,15 @@
   width:100%;
 }
 
-#cssError,
-#errorPanel{
+
+.errorPanel{
   background:#660000;
   color:#ff9900;
   font-size:12px;
   font-family:arial;
   padding:8px;
 }    
-#errorPanel.ok{
+.errorPanel.ok{
   background:#c6dea6;
   color:#006b3c;
 }

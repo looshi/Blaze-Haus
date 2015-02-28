@@ -1,13 +1,21 @@
 <Template name="Inspector">
 
-  <button class="restoreDefaults">Restore Defaults</button>
-  <h4>Edit the Template</h4>
-  <textarea class="html-editor"></textarea>
-  <div>{{htmlError}}</div>
+  <div class="editor-container">
+    {{> Instructions}}
+    <button class="restoreDefaults">Restore Defaults</button>
 
+    <h4>Edit the Template</h4>
+    <textarea class="html-editor"></textarea>
+    <div class="{{htmlErrorClass}}">{{htmlError}}</div>
 
-  <h4>Edit the CSS</h4>
-  <textarea class="css-editor"></textarea>
-  <div>{{cssError}}</div>
+    <h4>Edit the CSS</h4>
+    <textarea class="css-editor"></textarea>
+    <div class="{{cssErrorClass}}">{{cssError}}</div>
+  </div>
+
+  <div class="editor-container rendered-output">
+    <h4>Rendered Result : </h4>
+    <div id="htmlOutput"></div>
+  </div>
 
 </Template>
