@@ -17,16 +17,16 @@
 <Template name='MainLayout'>
 
   <div id="alertPanel"></div>
-  {{> Instructions}}
+  
 
-  <div class="editor-container">
-    {{> Inspector}}
-  </div>
-  <div class="editor-container rendered-output">
-    <h4>Rendered Result : </h4>
-    <div id="htmlOutput"></div>
-  </div>
+    {{> yield}}
+    
+  
 
 </Template>
 
+<Template name='LoadingTemplate'>
 
+  loading...
+
+</Template>

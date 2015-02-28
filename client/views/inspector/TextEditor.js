@@ -1,7 +1,6 @@
 /*
 TextEditor
-editable text field
-wraps an instance of CodeMirror
+Wraps an instance of CodeMirror.
 */
 
 
@@ -10,7 +9,6 @@ wraps an instance of CodeMirror
 * @param {Object} _textArea, DOM id for the TextArea to apply this editor, e.g. "myTextArea"
 * @param {String} _type , only "css" , "html" are supported now
 */
-
 TextEditor = function(_textArea,_type) {
 
   if(_type!=="css"&&_type!=="html"){
@@ -30,12 +28,19 @@ TextEditor = function(_textArea,_type) {
 
 }
 
-
 TextEditor.prototype.setValue = function(_text){
   this.editor.getDoc().setValue(_text);
 }
 
-
+/**
+* adds event handlers to the Codemirror instance
+* this is wonky, but couldn't figure out how to append parameters onto a Codemirror event
+* this just wraps an internal event handler, then calls the callback with results + extra params
+* @param {String} _type, "change" is the only one we use right now, but there are many available
+* @param {Function} _handler , callback
+* @param {String} _templateId , _id of document from TemplateCollection
+* @param {String} _userId, which user made the change
+*/
 TextEditor.prototype.on = function(_type,_handler,_templateId,_userId){
   if(_type!=="change"){
     error("error unsupported event : " + _type);
@@ -45,8 +50,11 @@ TextEditor.prototype.on = function(_type,_handler,_templateId,_userId){
   });
 }
 
-
-var error = function(msg){
+/**
+* logs an error to the console
+* @param {String} _msg, the error message
+*/
+var error = function(_msg){
   console.warn(msg);
-  throw new Error(msg);
+  //throw new Error(_msg);
 }

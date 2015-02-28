@@ -1,15 +1,13 @@
 /*
 Inspector
-Similar to a Browser HTML Inspector like firebug,
-the Inspector displays source code and allows the user to edit it.
-
-The DOM will be updated as the user makes edits.
+Eitable source code for a given template.
+Updates the DOM as the user makes edits.
 
 The editable CSS, Template HTML, and other code blocks are stored in 
 the database as simple string fields on a TemplateCollection document.
 The code is then 'rendered' into an output div.
 
-The text editors are CodeMirror instances.
+The text editors are CodeMirror instances : http://codemirror.net/
 
 */
 
@@ -17,10 +15,10 @@ The text editors are CodeMirror instances.
 Template.Inspector.created = function(){
 
   this.htmlError = new ReactiveVar;
-  this.htmlError.set("html error");
+  this.htmlError.set("ok");
 
   this.cssError = new ReactiveVar;
-  this.cssError.set("css error");
+  this.cssError.set("ok");
 
 
 }
@@ -32,6 +30,8 @@ var CAN_SAVE_CSS = true;
 Template.Inspector.rendered = function(){
 
   var templateId = Router.current().params._id;
+
+  console.log("my data!!! " , this.data );
 
   this['userId'] = Random.id(); 
   this['cssEditor'] = 'not set';
@@ -51,6 +51,12 @@ Template.Inspector.helpers({
   },
   cssError : function(){
     return Template.instance().cssError.get();
+  },
+  htmlErrorClass : function(){
+    return Template.instance().htmlError.get()=="ok" ? "errorPanel ok" : "errorPanel";
+  },
+  cssErrorClass : function(){
+    return Template.instance().cssError.get()=="ok" ? "errorPanel ok" : "errorPanel";
   }
 
 });
@@ -77,7 +83,7 @@ var startObservers = function(_templateId,self){
       self.cssEditor = new TextEditor('css-editor','css');
       self.cssEditor.setValue(doc.css);
       self.cssEditor.on("change",handleCssEdit,self.templateId,self.userId);
-      renderCSS(doc.css);
+      renderCSS(doc.css,self);
 
     },
     changed: function(id,doc){
@@ -118,7 +124,7 @@ var handleHtmlEdit = function(text,templateId,userId){
 var onCssDataChanged = function(id,doc,self){
 
   if(doc.css){
-    renderCSS(doc.css);
+    renderCSS(doc.css,self);
   }
   
   if(doc.lastModifiedBy){
@@ -142,16 +148,20 @@ var handleCssEdit = function(text,templateId,userId){
 }
 
 
-var renderCSS = function(_newCSS){
+var renderCSS = function(newCSS,self){
 
   var head = document.head || document.getElementsByTagName('head')[0];
   var style = document.createElement('style');
+
+  self.cssError.set("ok");
+
+  // TODO : validate CSS here 
 
   style.type = 'text/css';
   if (style.styleSheet){
     style.styleSheet.cssText = _newCSS;
   } else {
-    style.appendChild(document.createTextNode(_newCSS));
+    style.appendChild(document.createTextNode(newCSS));
   }
   head.appendChild(style);
 }
@@ -160,7 +170,9 @@ var renderCSS = function(_newCSS){
 
 // renders html with a data context into the parent Dom object
 // you can use spacebars {{ }} template tags in newHTML
-var renderHTML = function(_newHTML,_collectionID){
+var renderHTML = function(newHTML,self){
+
+  self.htmlError.set("ok");
 
   var dataContext = PeopleCollection.find();    //  TODO get passed in collection vs. default only
   var parent = document.getElementById('htmlOutput');
@@ -170,7 +182,7 @@ var renderHTML = function(_newHTML,_collectionID){
   try{
     // create the 'HTMLjs' which is used internally by the template
     // https://meteorhacks.com/how-blaze-works.html
-    var htmlJS = SpacebarsCompiler.compile(_newHTML);
+    var htmlJS = SpacebarsCompiler.compile(newHTML);
     var evaled = eval(htmlJS);
     var view = Blaze.With(dataContext,evaled);
 
@@ -179,8 +191,7 @@ var renderHTML = function(_newHTML,_collectionID){
     Blaze.render(view,parent);
     
   }catch(e){ 
-    
-    console.warn("HTML ERROR " , e );
+    self.htmlError.set(e);
   }
 }
 
