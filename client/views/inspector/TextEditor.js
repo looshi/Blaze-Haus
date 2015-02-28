@@ -34,8 +34,8 @@ TextEditor.prototype.setValue = function(_text){
 
 /**
 * adds event handlers to the Codemirror instance
-* this is wonky, but couldn't figure out how to append parameters onto a Codemirror event
-* this just wraps an internal event handler, then calls the callback with results + extra params
+* can't seem to append parameters onto a Codemirror event
+* so, this wraps an internal event handler, then calls the callback with results + extra params
 * @param {String} _type, "change" is the only one we use right now, but there are many available
 * @param {Function} _handler , callback
 * @param {String} _templateId , _id of document from TemplateCollection
