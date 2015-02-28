@@ -61,11 +61,19 @@ Meteor.methods({
 
     TemplateCollection.update({name:'Default Template'},{$set:defaultTemplate});
 
-    PeopleCollection.remove({});
-    for(var i=0;i<MockPeople.length;i++){
-      PeopleCollection.insert(MockPeople[i]);
-    }
+    PeopleCollection.remove({},function(err,res){
+     if(err){
+        console.warn("PeopleCollection remove error " , err );
+      }else{
+        console.warn("PeopleCollection remove ok " , res );
+        for(var i=0;i<MockPeople.length;i++){
+          PeopleCollection.insert(MockPeople[i]);
+        }
+      }
+    });
+
   }
+
 });
 
 defaultTemplate = {

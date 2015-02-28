@@ -1,8 +1,11 @@
 <Template name="Inspector">
 
   <div class="editor-container">
-    {{> Instructions}}
 
+    {{> Instructions}}
+    
+    <div>Click here to restore the defaults :  <button class="restoreDefaults">Restore Defaults</button></div>
+    
     <h4>Edit the Template</h4>
     <textarea class="html-editor"></textarea>
     <div class="{{htmlErrorClass}}">{{htmlError}}</div>

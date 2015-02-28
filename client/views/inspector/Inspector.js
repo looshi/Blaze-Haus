@@ -18,30 +18,26 @@ Template.Inspector.created = function(){
 
   this.cssError = new ReactiveVar;
   this.cssError.set("ok");
-
+  
 }
 
 /*
-These flags are used so that changes to the HTML or CSS by a different user
-won't redundantly be autosaved by "this" user.  We autosave when a user is editing.
-Ideally this would be done by switching off the Codemirror change event
-but for some reason I couldn't get it to work, so use these flags for now
+These flags are used so that changes to the HTML or CSS 
+by a different user won't redundantly be autosaved by "this" user.
 */
 var CAN_SAVE_HTML = true; 
 var CAN_SAVE_CSS = true; 
 
 Template.Inspector.rendered = function(){
 
-  var templateId = Router.current().params._id;
-
   this['userId'] = Random.id(); 
   this['cssEditor'] = 'not set';
   this['htmlEditor'] = 'not set';
   this['lastHtmlEditorId'] = 'not set';
   this['lastCssEditorId'] = 'not set';
-  this['templateId'] = templateId;
+  this['subscription'] = Meteor.subscribe("peopleData");  // this is the default sample data set
 
-  startObservers(templateId,this);
+  startObservers(this);
  
 }
 
@@ -59,46 +55,68 @@ Template.Inspector.helpers({
   cssErrorClass : function(){
     return Template.instance().cssError.get()=="ok" ? "errorPanel ok" : "errorPanel";
   }
-
 });
 
-
 Template.Inspector.events({
-  'click .restoreDefaults' : function(e){
-    Meteor.call('restoreDefaults');
+
+  'click .restoreDefaults' : function(e,self){
+    
+    self.subscription.stop();  // pause the subscription
+
+    if(this.lastHtmlEditorId!=="System" && this.lastCssEditorId!=="System"){
+
+      this.lastHtmlEditorId = "System";
+      this.lastCssEditorId = "System";
+
+      var parent = document.getElementById('htmlOutput');
+      parent.innerHTML = "";
+      
+      Meteor.call('restoreDefaults',function(err,res){
+        if(!err){
+          self.subscription = Meteor.subscribe("peopleData");   // restart the subscription
+          setTimeout(function(){
+            var dataContext = PeopleCollection.find();  // TODO put this server method into Fiber
+            renderHTML(self.data.html,self,dataContext); // remove this settimeout
+          },300); 
+        }
+      });
+    }
   }
 });
 
+var startObservers = function(self){
 
-var startObservers = function(_templateId,self){
+  var dataContext = PeopleCollection.find();
+  var templateId  = self.data._id; 
 
-  TemplateCollection.find({_id:_templateId}).observeChanges({
+  TemplateCollection.find({_id:templateId}).observeChanges({
 
     added : function(id,doc){
 
       self.htmlEditor = new TextEditor('html-editor','html'); 
       self.htmlEditor.setValue(doc.html);
-      self.htmlEditor.on("change",handleHtmlEdit,self.templateId,self.userId);
-      renderHTML(doc.html,self);
+      self.htmlEditor.on("change",handleHtmlEdit,templateId,self.userId);
+      renderHTML(doc.html,self,dataContext);
 
       self.cssEditor = new TextEditor('css-editor','css');
       self.cssEditor.setValue(doc.css);
-      self.cssEditor.on("change",handleCssEdit,self.templateId,self.userId);
+      self.cssEditor.on("change",handleCssEdit,templateId,self.userId);
       renderCSS(doc.css,self);
 
     },
     changed: function(id,doc){
       onCssDataChanged(id,doc,self);
-      onHtmlDataChanged(id,doc,self);
+      onHtmlDataChanged(id,doc,self,dataContext);
     }
   });
 }
 
 
-var onHtmlDataChanged = function(id,doc,self){
+var onHtmlDataChanged = function(id,doc,self,dataContext){
 
   if(doc.html){
-    renderHTML(doc.html,self); 
+    console.log("html changed ");
+    renderHTML(doc.html,self,dataContext); 
   }
 
   if(doc.lastModifiedBy){
@@ -177,11 +195,11 @@ var renderCSS = function(newCSS,self){
 * @param {String} newHTML, html string to render
 * @param {Object} self , this Inspector Template instance
 */
-var renderHTML = function(newHTML,self){
+var renderHTML = function(newHTML,self,dataContext){
 
   self.htmlError.set("ok");
 
-  var dataContext = PeopleCollection.find();    //  TODO get passed in collection vs. default only
+  console.log("rendering HTML :: " , dataContext.count() );
   var parent = document.getElementById('htmlOutput');
 
   // going to 'try' it all, because we're auto-saving on each edit so
@@ -195,7 +213,12 @@ var renderHTML = function(newHTML,self){
 
     // clear the output and re-render it
     parent.innerHTML = "";
-    Blaze.render(view,parent);
+    var rendered = Blaze.render(view,parent);
+
+    rendered._domrange.destroy();   // <-- renders a view then destroys it every single time
+                                    //  is it possible to create one view and re-render it ?
+                                    //  Otherwise these views stay in memory and keep running it seems, so destroying for now.
+                                    //  Is possible to re-render only the parts that changed ? this redraws the whole template. 
     
   }catch(e){ 
     self.htmlError.set(e);
