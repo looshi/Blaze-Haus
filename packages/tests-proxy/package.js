@@ -9,6 +9,5 @@ Package.onUse(function (api) {
 	api.use("coffeescript", ["client", "server"]);
 	api.add_files("tests/mocha/client/inspector.js",["client"]);
 	api.add_files("tests/mocha/client/subscriptions.js",["client"]);
-	api.add_files("tests/mocha/client/templateInspector.js",["client"]);
 	api.add_files("tests/mocha/server/methods.js",["server"]);
 });

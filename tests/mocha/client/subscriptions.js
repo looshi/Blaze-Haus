@@ -1,17 +1,7 @@
 if ((typeof MochaWeb === 'undefined')){
   return;
 }
-  /*
-  TODO ask if it's possible to stop this query
-  before(function(done){
-    var query = PeopleCollection.find().observeChanges({
-      added: function (id, fields) {
-        query.stop();
-        done();
-      }
-    });
-  });
-  */
+
 
 MochaWeb.testOnly(function(){
 
@@ -23,7 +13,7 @@ MochaWeb.testOnly(function(){
       
       before(function(done){
         Meteor.autorun(function(){
-          var data = TemplateCollection.findOne({name:"DefaultTemplate"});
+          var data = TemplateCollection.findOne({name:"Default Template"});
           if (data){
             defaultTemplate = data;
             done();
