@@ -6,7 +6,7 @@ Stores Template code and CSS in the database.
 
 <a href="http://live-template-editor.meteor.com/" target="_blank">view the demo here</a>
 
-![screenshot](https://cloud.githubusercontent.com/assets/1656829/6429594/ef9c5f50-bf91-11e4-80ca-3d4f6b45f177.png)
+![screenshot](https://cloud.githubusercontent.com/assets/1656829/6429598/4510a7a2-bf92-11e4-90c5-f0bd7c44b855.png)
 
 
 Use at own risk!  I think the way this is implemented really goes against the grain of Meteor constructs, but in some cases it might be useful as a meta sort of approach to Template coding.
