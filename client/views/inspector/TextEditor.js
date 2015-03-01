@@ -11,9 +11,6 @@ Wraps an instance of CodeMirror.
 */
 TextEditor = function(_textArea,_type) {
 
-  if(_type!=="css"&&_type!=="html"){
-    error("error unsupported type : " + _type);
-  }
 
   if(!Utils.isPosString(_textArea)){
     error("selector required : "+_textArea);
@@ -24,7 +21,12 @@ TextEditor = function(_textArea,_type) {
     error('element '+_textArea+' not found');
   }
 
-  this.editor = CodeMirror.fromTextArea(textArea);
+  var options = {
+    mode : _type,
+    theme : 'monokai',
+    lineNumbers : true,
+  }
+  this.editor = CodeMirror.fromTextArea(textArea,options);
 
 }
 

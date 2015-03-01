@@ -107,7 +107,7 @@ var startObservers = function(self){
 
     added : function(id,doc){
 
-      self.htmlEditor = new TextEditor('html-editor','html'); 
+      self.htmlEditor = new TextEditor('html-editor','text/html'); 
       self.htmlEditor.setValue(doc.html);
       self.htmlEditor.on("change",handleHtmlEdit,templateId,self.userId);
       renderHTML(doc.html,self,dataContext);
