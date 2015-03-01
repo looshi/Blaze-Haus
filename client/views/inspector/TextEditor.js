@@ -9,7 +9,7 @@ Wraps an instance of CodeMirror.
 * @param {Object} _textArea, DOM id for the TextArea to apply this editor, e.g. "myTextArea"
 * @param {String} _type , only "css" , "html" are supported now
 */
-TextEditor = function(_textArea,_type) {
+TextEditor = function(_textArea,_type,_id) {
 
 
   if(!Utils.isPosString(_textArea)){
@@ -27,6 +27,8 @@ TextEditor = function(_textArea,_type) {
     lineNumbers : true,
   }
   this.editor = CodeMirror.fromTextArea(textArea,options);
+  this.editor.display.wrapper.id = _id;
+  console.log("editor",this.editor,this.editor.getDoc());
 
 }
 
