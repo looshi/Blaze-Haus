@@ -107,12 +107,12 @@ var startObservers = function(self){
 
     added : function(id,doc){
 
-      self.htmlEditor = new TextEditor('html-editor','text/html'); 
+      self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
       self.htmlEditor.setValue(doc.html);
       self.htmlEditor.on("change",handleHtmlEdit,templateId,self.userId);
       renderHTML(doc.html,self,dataContext);
 
-      self.cssEditor = new TextEditor('css-editor','css');
+      self.cssEditor = new TextEditor('css-editor','text/css','css'+templateId);
       self.cssEditor.setValue(doc.css);
       self.cssEditor.on("change",handleCssEdit,templateId,self.userId);
       renderCSS(doc.css,self);

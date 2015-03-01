@@ -7,19 +7,28 @@ MochaWeb.testOnly(function(){
 
   describe("Client Subscriptions", function(){
 
-    describe("Default HTML Data", function(){
+    describe("Default Template Data", function(){
 
       var defaultTemplate;
+      var selector='';
       
       before(function(done){
         Meteor.autorun(function(){
           var data = TemplateCollection.findOne({name:"Default Template"});
+
           if (data){
             Router.go("/"+data._id);
             defaultTemplate = data;
-            done();
+            selector = data._id;
           }
         });
+
+        setInterval(function() { 
+          if(  !!$('html'+selector) && !!$('css'+selector) ){
+            done();
+          }
+        }, 200);
+
       });
 
       it("should contain default html", function(){
@@ -29,6 +38,21 @@ MochaWeb.testOnly(function(){
       it("should contain default css", function(){
         chai.assert.equal(defaultTemplate.css,MockCSS);
       });
+
+      it("should set Codemirror html editor", function(){
+        var id = 'html'+defaultTemplate._id;
+        var text = document.getElementById(id).innerHTML; 
+        var html = '<span class="cm-tag">h2</span><span class="cm-tag cm-bracket">&gt;</span>Template Output';
+        chai.assert.include( text , html );
+      });
+
+      it("should set Codemirror css editor", function(){
+        var id = '#css'+defaultTemplate._id;
+        var text = document.getElementById(id).innerHTML; 
+        var css = 'important';   // for some reason can't get the full rendered css out of the div, perhaps it's not fully rendered yet
+        chai.assert.include( text , css );
+      });
+
 
     });
 
