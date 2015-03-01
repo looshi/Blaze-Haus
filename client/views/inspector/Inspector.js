@@ -36,6 +36,7 @@ Template.Inspector.rendered = function(){
   this['lastHtmlEditorId'] = 'not set';
   this['lastCssEditorId'] = 'not set';
   this['subscription'] = Meteor.subscribe("peopleData");  // this is the default sample data set
+  this['renderedView'] = null; // Blaze View object we are rendering dynamically
 
   startObservers(this);
  
@@ -50,10 +51,10 @@ Template.Inspector.helpers({
     return Template.instance().cssError.get();
   },
   htmlErrorClass : function(){
-    return Template.instance().htmlError.get()=="ok" ? "errorPanel ok" : "errorPanel";
+    return Template.instance().htmlError.get()==="ok" ? "errorPanel ok" : "errorPanel";
   },
   cssErrorClass : function(){
-    return Template.instance().cssError.get()=="ok" ? "errorPanel ok" : "errorPanel";
+    return Template.instance().cssError.get()==="ok" ? "errorPanel ok" : "errorPanel";
   }
 });
 
@@ -84,10 +85,23 @@ Template.Inspector.events({
   }
 });
 
+Template.Inspector.destroyed = function(){
+  if(!!this.renderedView){
+    // this.renderedView._domrange.destroyMembers();
+    // this.renderedView._domrange.detach();
+    // this.renderedView._domrange.destroy();
+    Blaze._destroyView(this.renderedView);
+    this.renderedView._domrange = null;
+    this.renderedView = null;
+  }
+};
+
 var startObservers = function(self){
 
-  var dataContext = PeopleCollection.find();
+  
   var templateId  = self.data._id; 
+
+  var dataContext = PeopleCollection.find(); // Router waits for this as well
 
   TemplateCollection.find({_id:templateId}).observeChanges({
 
@@ -213,13 +227,12 @@ var renderHTML = function(newHTML,self,dataContext){
 
     // clear the output and re-render it
     parent.innerHTML = "";
-    var rendered = Blaze.render(view,parent);
-
-    rendered._domrange.destroy();   // <-- renders a view then destroys it every single time
-                                    //  is it possible to create one view and re-render it ?
-                                    //  Otherwise these views stay in memory and keep running it seems, so destroying for now.
-                                    //  Is possible to re-render only the parts that changed ? this redraws the whole template. 
     
+    self.renderedView =  Blaze.render(view,parent);
+
+    self.renderedView._domrange.destroy();   // <-- renders a view then destroys it every single time
+                                             // possible to re-render only the parts that changed ?
+                                             // what's best destroy method(s) to call here ? there are many destroy,detach methods
   }catch(e){ 
     self.htmlError.set(e);
   }
