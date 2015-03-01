@@ -37,6 +37,12 @@
   border-bottom:4px solid #000;
 }
 
+.form-error-message{
+  color:#ff1100;
+  padding:4px;
+  font-size:14px;
+}
+
 #htmlOutput{
   width:100%;
 }

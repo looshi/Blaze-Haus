@@ -1,18 +1,16 @@
-var MAX_CHARS = 800; 
-
 Meteor.startup(function(){
 
-  Meteor.call('createDefaultTemplate');
+  Meteor.call('CreateDefaultTemplate');
 
 });
 
 Meteor.methods({
 
-  createDefaultTemplate : function(){
+  CreateDefaultTemplate : function(){
 
     TemplateCollection.remove({});
     
-    defaultTemplate.lastModified = new Date();
+    defaultTemplate.modified = new Date();
     defaultTemplate.created = new Date();
 
     TemplateCollection.insert(defaultTemplate);
@@ -24,7 +22,7 @@ Meteor.methods({
     }
   },
 
-  restoreDefaultTemplate : function(){
+  RestoreDefaultTemplate : function(){
 
     defaultTemplate.modified = new Date();
 
