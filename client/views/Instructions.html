@@ -1,12 +1,15 @@
 <Template name="Instructions">
-
-  <div class='instructions-container'>
+  <a id="toggle-directions" href="#">show directions</a>
+  <div class='instructions-container' style="display:none;">
     <div>
-      Directions : Edit the HTML and CSS below.
+      Edit the HTML and CSS below.  The template displayed will be re-rendered as you make edits.
     </div>
 
     <div>
       If another user is currently editing this page, you will see their edits applied.
+      Observe this behavior by 
+      <a href="/{{_id}}" onclick="window.open('/{{_id}}', 'newwindow', 'width=600, height=600');return false;">
+      opening this URL in a new window</a> and make some edits.
     </div>
     <div>
     The data context for this template is the 'PeopleCollection'.<br/>
