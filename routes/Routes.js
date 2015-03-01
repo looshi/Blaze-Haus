@@ -20,7 +20,10 @@ Router.route('TemplateList', {
 var InspectorController=RouteController.extend({
   template:"Inspector",
   waitOn:function(){
-    return Meteor.subscribe("singleTemplateData",this.params._id);
+    return [
+      Meteor.subscribe("singleTemplateData",this.params._id),
+      Meteor.subscribe("peopleData") 
+    ]
   },
   data: function(){
     return TemplateCollection.findOne( this.params._id );
