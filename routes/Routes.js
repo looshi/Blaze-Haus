@@ -31,6 +31,9 @@ var InspectorController=RouteController.extend({
   onBeforeAction:function(){
     if(this.data()){      
       this.next(); 
+    }else{
+      // console.warn("template not found!!",this.params._id);
+      Router.go('/');
     }
   }
 });
@@ -43,7 +46,4 @@ Router.route('Inspector', {
     this.render('Inspector');
   }
 });
-
-
-
 

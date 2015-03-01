@@ -40,10 +40,10 @@ MochaWeb.testOnly(function(){
       before(function(done){
 
         Meteor.autorun(function(){
-          var data = TemplateCollection.findOne({name:"Default Template"});
+          var template = TemplateCollection.findOne({name:"Default Template"});
           var people = PeopleCollection.find();
-          if (data && people.count()===39){
-            Router.go("/"+data._id);
+          if (template._id && people.count()===39){
+            Router.go("/"+template._id);
             defaultSampleData = people.fetch();
             done();
           }
