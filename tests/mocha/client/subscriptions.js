@@ -15,6 +15,7 @@ MochaWeb.testOnly(function(){
         Meteor.autorun(function(){
           var data = TemplateCollection.findOne({name:"Default Template"});
           if (data){
+            Router.go("/"+data._id);
             defaultTemplate = data;
             done();
           }
@@ -37,10 +38,13 @@ MochaWeb.testOnly(function(){
       var defaultSampleData;
 
       before(function(done){
+
         Meteor.autorun(function(){
-          var data = PeopleCollection.find({});
-          if (data){
-            defaultSampleData = data.fetch();
+          var data = TemplateCollection.findOne({name:"Default Template"});
+          var people = PeopleCollection.find();
+          if (data && people.count()===39){
+            Router.go("/"+data._id);
+            defaultSampleData = people.fetch();
             done();
           }
         });
@@ -48,22 +52,24 @@ MochaWeb.testOnly(function(){
 
 
       it("should be available to the client and in tact", function(){
-        chai.assert.equal(defaultSampleData.length,39);
-        for(var i=0;i<defaultSampleData.length;i++){
+        var data = defaultSampleData;
 
-          chai.assert(defaultSampleData[i].country.length>3,'every country has a value'+defaultSampleData[i].country);
-          chai.assert(defaultSampleData[i].date.length>3,'every date has a value'+defaultSampleData[i].date);
-          chai.assert(defaultSampleData[i].city.length>3,'every city has a value'+defaultSampleData[i].city);
-          chai.assert(defaultSampleData[i].company.length>3,'every company has a value'+defaultSampleData[i].company);
-          chai.assert(defaultSampleData[i].name.length>2,'every name has a value '+defaultSampleData[i].name);
-          chai.assert(defaultSampleData[i].color.length>3,'every color has a value'+defaultSampleData[i].color);
+        chai.assert.equal(data.length,39);
+        for(var i=0;i<data.length;i++){
 
-          chai.assert.isString(defaultSampleData[i].country,'every country is a string'+defaultSampleData[i].country);
-          chai.assert.isString(defaultSampleData[i].date,'every date is a string'+defaultSampleData[i].date);
-          chai.assert.isString(defaultSampleData[i].city,'every city is a string'+defaultSampleData[i].city);
-          chai.assert.isString(defaultSampleData[i].company,'every company is a string'+defaultSampleData[i].company);
-          chai.assert.isString(defaultSampleData[i].name,'every name is a string'+defaultSampleData[i].name);
-          chai.assert.isString(defaultSampleData[i].color,'every color is a string'+defaultSampleData[i].color);
+          chai.assert(data[i].country.length>3,'every country has a value'+data[i].country);
+          chai.assert(data[i].date.length>3,'every date has a value'+data[i].date);
+          chai.assert(data[i].city.length>3,'every city has a value'+data[i].city);
+          chai.assert(data[i].company.length>3,'every company has a value'+data[i].company);
+          chai.assert(data[i].name.length>2,'every name has a value '+data[i].name);
+          chai.assert(data[i].color.length>3,'every color has a value'+data[i].color);
+
+          chai.assert.isString(data[i].country,'every country is a string'+data[i].country);
+          chai.assert.isString(data[i].date,'every date is a string'+data[i].date);
+          chai.assert.isString(data[i].city,'every city is a string'+data[i].city);
+          chai.assert.isString(data[i].company,'every company is a string'+data[i].company);
+          chai.assert.isString(data[i].name,'every name is a string'+data[i].name);
+          chai.assert.isString(data[i].color,'every color is a string'+data[i].color);
         }
       });
     });
