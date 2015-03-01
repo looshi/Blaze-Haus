@@ -72,7 +72,7 @@ Template.Inspector.events({
       var parent = document.getElementById('htmlOutput');
       parent.innerHTML = "";
       
-      Meteor.call('restoreDefaults',function(err,res){
+      Meteor.call('RestoreDefaultTemplate',function(err,res){
         if(!err){
           self.subscription = Meteor.subscribe("peopleData");   // restart the subscription
           setTimeout(function(){

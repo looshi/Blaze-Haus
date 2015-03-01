@@ -11,5 +11,5 @@ Template.Instructions.events({
     }else{
       $(e.target).html('hide directions');
     }
-  }
+  },
 });
