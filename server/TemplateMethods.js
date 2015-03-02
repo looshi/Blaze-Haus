@@ -6,11 +6,13 @@ var MAX_CHARS = 800;
 Meteor.methods({
 
   /*
-  creates a copy of Default Template
+  creates a copy of 'Default' Template
   */
   CreateNewTemplate : function(name){
     
-    if(name==='Default Template'){
+    console.log( " CreateNewTemplate " , name );
+    
+    if(name==='Default'){
       throw new Error("error, cannot use default name")
     }
     var template = TemplateCollection.findOne({name:'Default'});
@@ -52,7 +54,7 @@ Meteor.methods({
         if(err||res===0){
           console.log("saveHTML err",err, res);
         }else{
-          console.log("saveHTML OK!", res);
+          //console.log("saveHTML OK!", res);
         }
       });
     }
@@ -64,7 +66,7 @@ Meteor.methods({
         if(err||res===0){
           console.log("saveCSS error",err, res);
         }else{
-          console.log("saveCSS OK!",res);
+          //console.log("saveCSS OK!",res);
         }
       });
     }

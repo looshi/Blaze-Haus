@@ -20,7 +20,20 @@ header{
   background-color:#DDDDDD;
 }
 
+a.template-list{
+  min-width:200px;
+}
+.template-list{
+  text-decoration: none;
+  display:inline-block;
+  padding:0px 12px;
+}
 
+.template-list.name{
+}
+.template-list.date{
+  float:right;
+}
 
 .instructions-container{
  

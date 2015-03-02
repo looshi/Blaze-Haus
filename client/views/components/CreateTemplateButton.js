@@ -11,7 +11,8 @@ Template.CreateTemplateButton.events({
     $('#new-template-controls').show();
   },
 
-  'click #confirm-new-template-btn' : function(e){
+  'mouseup #confirm-new-template-btn' : function(e){
+
     var name = $('#template-name-field').val();
     if(name.length<2 || name.length>100){
       $('#new-template-error').html('Must be between 2 and 100 chars.');
