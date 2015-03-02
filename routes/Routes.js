@@ -17,8 +17,8 @@ Router.route('TemplateList', {
   path:'/',     
 });
 
-var InspectorController=RouteController.extend({
-  template:"Inspector",
+var EditorController=RouteController.extend({
+  template:"Editor",
   waitOn:function(){
     return [
       Meteor.subscribe("singleTemplateData",this.params._id),
@@ -39,11 +39,11 @@ var InspectorController=RouteController.extend({
 });
 
 
-Router.route('Inspector', {
+Router.route('Editor', {
   path:'/:_id',     
-  controller:InspectorController,
+  controller:EditorController,
   action:function(){
-    this.render('Inspector');
+    this.render('Editor');
   }
 });
 
