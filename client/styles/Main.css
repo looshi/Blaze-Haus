@@ -28,7 +28,10 @@ button:hover{
 }
 .template-menu.delete-template{
   float:right;
-
+}
+.template-title{
+  display:inline;
+  padding-left:18px;
 }
 a.template-list{
   min-width:200px;

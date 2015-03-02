@@ -2,8 +2,11 @@
 
   <div class="editor-menu">
     {{> Instructions}} 
-    {{> CreateTemplateButton}}
+    <div class="template-title">{{name}}</div> &nbsp;
     {{> LikeButton}}
+     <div class="template-title">last modified : 
+      {{modified.getMonth}}/{{modified.getDate}}/{{modified.getUTCFullYear}}</div> &nbsp;
+    {{> CreateTemplateButton}}
     {{> DeleteTemplateButton}}
   </div>
 
