@@ -47,7 +47,6 @@ Template.Editor.rendered = function(){
   this['jsEditor'] = 'not set';
   this['lastHtmlEditorId'] = 'not set';
   this['lastCssEditorId'] = 'not set';
-  this['subscription'] = Meteor.subscribe("peopleData");  // this is the default sample data set
   this['renderedView'] = null; // Blaze View object we are rendering dynamically
 
   startObservers(this);
@@ -77,7 +76,6 @@ Template.Editor.events({
 
   'click .restoreDefaults' : function(e,self){
     
-    self.subscription.stop();  // pause the subscription
 
     if(this.lastHtmlEditorId!=="System" && this.lastCssEditorId!=="System"){
 
@@ -89,10 +87,8 @@ Template.Editor.events({
       
       Meteor.call('RestoreDefaultTemplate',function(err,res){
         if(!err){
-          self.subscription = Meteor.subscribe("peopleData");   // restart the subscription
           setTimeout(function(){
-            var dataContext = PeopleCollection.find();  // TODO put this server method into Fiber
-            renderHTML(self.data.html,null,self,dataContext); // remove this settimeout
+            renderHTML(self.data.html,null,self); // remove this settimeout
           },300); 
         }
       });
@@ -116,9 +112,6 @@ var startObservers = function(self){
   
   var templateId  = self.data._id; 
 
-  // I think I can totally remove this, and just provide data through
-  // the helper block instead
-  var dataContext = PeopleCollection.find(); // Router waits for this as well
 
   TemplateCollection.find({_id:templateId}).observeChanges({
 
@@ -127,7 +120,7 @@ var startObservers = function(self){
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
       self.htmlEditor.setValue(doc.html);
       self.htmlEditor.on("change",handleHtmlEdit,templateId,self.userId);
-      renderHTML(doc.html,null,self,dataContext);
+      renderHTML(doc.html,null,self);
 
       self.cssEditor = new TextEditor('css-editor','text/css','css'+templateId);
       self.cssEditor.setValue(doc.css);
@@ -137,26 +130,26 @@ var startObservers = function(self){
       self.jsEditor = new TextEditor('js-editor','text/javascript','js'+templateId);
       self.jsEditor.setValue(doc.js);
       self.jsEditor.on("change",handleJsEdit,templateId,self.userId);
-      renderHTML(doc.html,doc.js,self,dataContext);
+      renderHTML(doc.html,doc.js,self);
     },
     changed: function(id,doc){
       onCssDataChanged(id,doc,self);
-      onHtmlDataChanged(id,doc,self,dataContext);
+      onHtmlDataChanged(id,doc,self);
     }
   });
 }
 
 
-var onHtmlDataChanged = function(id,doc,self,dataContext){
+var onHtmlDataChanged = function(id,doc,self){
 
   console.log("html change " , doc );
 
   if(doc.html){
-    renderHTML(doc.html,null,self,dataContext); 
+    renderHTML(doc.html,null,self); 
   }
 
   if(doc.js){
-    renderHTML(null,doc.js,self,dataContext); 
+    renderHTML(null,doc.js,self); 
   }
 
   if(doc.lastModifiedBy){
@@ -249,7 +242,7 @@ var renderCSS = function(newCSS,self){
 */
 var lastHTML = "";
 var lastJS = "";
-var renderHTML = function(newHTML,newJS,self,dataContext){
+var renderHTML = function(newHTML,newJS,self){
 
   self.htmlError.set("ok");
   self.jsError.set("ok");
@@ -276,7 +269,7 @@ var renderHTML = function(newHTML,newJS,self,dataContext){
     // https://meteorhacks.com/how-blaze-works.html
     var htmlJS = SpacebarsCompiler.compile(newHTML);
     var evaled = eval(htmlJS);
-    var view = Blaze.With(dataContext,evaled);
+    var view = Blaze.View(evaled);  // DL 3/2 removed Blaze.With(dataContext,evaled) template must fetch using helpers now
 
     // clear the output and re-render it
     parent.innerHTML = "";
