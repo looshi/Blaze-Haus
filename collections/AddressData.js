@@ -1,0 +1,47 @@
+/*
+MockData
+Set of default data for each collection.
+Written to the db on startup, on a restore routine every hour, and when any user clicks 'restore defaults';
+*/
+
+
+AddressData = [{"name":"Lèi","address":"572 Bultman Plaza","color":"#ec92fe","order":1,"description":"viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet","ip_address":"26.10.5.242"},
+{"name":"Naëlle","address":"14283 Goodland Circle","color":"#2bc2c0","order":2,"description":"in magna bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt eu felis","ip_address":"81.146.147.104"},
+{"name":"Mén","address":"4 Garrison Plaza","color":"#4d8686","order":3,"description":"lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis non","ip_address":"49.184.98.65"},
+{"name":"Léandre","address":"481 Sutteridge Pass","color":"#561c9c","order":4,"description":"dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae","ip_address":"101.103.168.117"},
+{"name":"Uò","address":"68 Golf Center","color":"#d5a7b3","order":5,"description":"porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis","ip_address":"68.26.147.188"},
+{"name":"Maïlis","address":"536 Cascade Way","color":"#e7e677","order":6,"description":"felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in","ip_address":"67.62.78.148"},
+{"name":"Bérangère","address":"5 Surrey Center","color":"#1d3346","order":7,"description":"gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin","ip_address":"161.47.60.102"},
+{"name":"Célestine","address":"2 Northridge Lane","color":"#7ee429","order":8,"description":"suspendisse potenti nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam","ip_address":"116.27.75.235"},
+{"name":"Åsa","address":"16 Sheridan Drive","color":"#ac6bd3","order":9,"description":"adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis","ip_address":"168.146.174.65"},
+{"name":"Marie-thérèse","address":"374 Red Cloud Terrace","color":"#6e4acb","order":10,"description":"lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede","ip_address":"116.188.25.180"},
+{"name":"Léonore","address":"0242 Huxley Road","color":"#d9b2e8","order":11,"description":"ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh","ip_address":"142.174.92.248"},
+{"name":"Åsa","address":"84443 Victoria Plaza","color":"#6fc05d","order":12,"description":"justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non","ip_address":"100.21.60.5"},
+{"name":"Cécilia","address":"80141 Jenifer Hill","color":"#dd937d","order":13,"description":"quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus","ip_address":"238.79.100.231"},
+{"name":"Agnès","address":"803 East Hill","color":"#ae7bee","order":14,"description":"in libero ut massa volutpat convallis morbi odio odio elementum","ip_address":"216.56.78.127"},
+{"name":"Clémence","address":"0404 Westend Road","color":"#02bb2d","order":15,"description":"luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et","ip_address":"243.36.12.79"},
+{"name":"Adélaïde","address":"5 Jenna Terrace","color":"#d75119","order":16,"description":"luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis","ip_address":"135.13.113.25"},
+{"name":"Uò","address":"04792 2nd Drive","color":"#73e6f0","order":17,"description":"sapien urna pretium nisl ut volutpat sapien arcu sed augue","ip_address":"114.163.199.203"},
+{"name":"Maï","address":"96297 Farmco Place","color":"#351306","order":18,"description":"lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi","ip_address":"239.254.135.199"},
+{"name":"Lèi","address":"442 Eagle Crest Trail","color":"#9b578c","order":19,"description":"mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam","ip_address":"78.49.77.73"},
+{"name":"Ophélie","address":"37 Hansons Parkway","color":"#ff55d1","order":20,"description":"vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus","ip_address":"69.66.228.47"},
+{"name":"Laurélie","address":"9 Forest Junction","color":"#3f74e3","order":21,"description":"velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros","ip_address":"71.240.203.68"},
+{"name":"Andréa","address":"5 Sommers Lane","color":"#e6372a","order":22,"description":"eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis","ip_address":"34.235.76.45"},
+{"name":"Gaëlle","address":"14 Toban Pass","color":"#eedf05","order":23,"description":"sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus","ip_address":"27.23.206.217"},
+{"name":"Séverine","address":"3481 Crowley Avenue","color":"#38bc36","order":24,"description":"integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci","ip_address":"126.225.9.111"},
+{"name":"Yè","address":"143 Kennedy Junction","color":"#0f8470","order":25,"description":"ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed","ip_address":"145.33.210.214"},
+{"name":"Géraldine","address":"48529 Calypso Lane","color":"#582be0","order":26,"description":"vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis bibendum","ip_address":"137.4.59.248"},
+{"name":"Joséphine","address":"7 Dryden Trail","color":"#1d8045","order":27,"description":"libero nam dui proin leo odio porttitor id consequat in consequat","ip_address":"27.73.134.162"},
+{"name":"Desirée","address":"6547 Schlimgen Center","color":"#8f5944","order":28,"description":"nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at","ip_address":"2.99.62.125"},
+{"name":"Alizée","address":"1364 Bashford Road","color":"#8b41a9","order":29,"description":"suscipit nulla elit ac nulla sed vel enim sit amet","ip_address":"141.204.243.29"},
+{"name":"Maëlann","address":"5 Esker Way","color":"#a527ac","order":30,"description":"a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem","ip_address":"87.168.209.34"},
+{"name":"Hélène","address":"472 Huxley Center","color":"#8495cd","order":31,"description":"dapibus duis at velit eu est congue elementum in hac habitasse platea dictumst morbi vestibulum velit id","ip_address":"38.106.42.136"},
+{"name":"Lauréna","address":"657 Bartelt Court","color":"#14e9ea","order":32,"description":"praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi","ip_address":"128.164.254.252"},
+{"name":"Adélie","address":"9 Dawn Lane","color":"#b75b89","order":33,"description":"est phasellus sit amet erat nulla tempus vivamus in felis eu sapien","ip_address":"240.195.206.107"},
+{"name":"Joséphine","address":"5 Ilene Alley","color":"#472469","order":34,"description":"erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam","ip_address":"242.151.54.162"},
+{"name":"Almérinda","address":"086 Bashford Place","color":"#b8648c","order":35,"description":"quis odio consequat varius integer ac leo pellentesque ultrices mattis odio","ip_address":"255.95.163.13"},
+{"name":"Danièle","address":"9955 Corry Street","color":"#25016d","order":36,"description":"pulvinar sed nisl nunc rhoncus dui vel sem sed sagittis nam congue","ip_address":"57.93.24.112"},
+{"name":"Pélagie","address":"41 Commercial Trail","color":"#404f40","order":37,"description":"sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum","ip_address":"99.129.182.239"},
+{"name":"Stéphanie","address":"5901 Pennsylvania Park","color":"#ce7a22","order":38,"description":"habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec","ip_address":"20.130.174.152"},
+{"name":"Cécile","address":"0 7th Trail","color":"#fc8048","order":39,"description":"non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus","ip_address":"237.150.111.49"},
+{"name":"Océane","address":"1188 Northland Trail","color":"#6fcfea","order":40,"description":"eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor","ip_address":"221.195.221.255"}]

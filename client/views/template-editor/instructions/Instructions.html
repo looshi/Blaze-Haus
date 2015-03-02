@@ -8,7 +8,7 @@
       </div>
 
       <div>
-      The data context for the Template is the 'PeopleCollection'.<br/>
+      There are two collections available in the database, the 'PeopleCollection', and the 'AddressCollection'.<br/>
       One document from the PeopleCollection looks like this : 
       </div>
       <div class='mongo'>
@@ -18,6 +18,16 @@
         &nbsp;&nbsp;company : 'Skajo',<br/>
         &nbsp;&nbsp;name : 'Kathy',<br/>
         &nbsp;&nbsp;color : '#ffff99' }
+      <br/>
+      </div>
+      One document from the AddressCollection looks like this : 
+      <div class='mongo'>
+        { &nbsp;&nbsp;name : 'Océane',<br/>
+        &nbsp;&nbsp;address : '1188 Northland Trail','<br/>
+        &nbsp;&nbsp;color : '#6fcfea','<br/>
+        &nbsp;&nbsp;order : '40',<br/>
+        &nbsp;&nbsp;description : 'eros suspen...',<br/>
+        &nbsp;&nbsp;ip_address : '221.195.221.255' }
       </div><br/>
       <div>
         The template will be re-rendered as you make edits.
@@ -26,14 +36,14 @@
         opening this URL in a new window</a> and make some edits.
         <br/>
         <br/>
-        Support for data import is coming, right now this is the only data model available.
+        Support for data import is coming, right now these is the only data model available.
       </div>
     </div>
     <div class="editor-container">
       <div>
         <br/>
-        Display each person using a loop like so : <br/><br/>
-        <span class='callout'>&#123;&#123;#each this&#125;&#125;</span><br/>
+        If you define a helper to return a cursor to a Collection, you can loop through it like this : <br/><br/>
+        <span class='callout'>&#123;&#123;#each person&#125;&#125;</span><br/>
         &nbsp;&nbsp;&nbsp; &lt;div&gt;the person's name is &#123;&#123;name&#125;&#125;&lt;/div&gt;<br/>
         &nbsp;&nbsp;&nbsp; &lt;div&gt;and they are from &#123;&#123;country&#125;&#125;&lt;/div&gt;<br/>
         <span class='callout'>&#123;&#123;/each&#125;&#125;</span><br/><br/>

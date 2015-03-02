@@ -116,6 +116,8 @@ var startObservers = function(self){
   
   var templateId  = self.data._id; 
 
+  // I think I can totally remove this, and just provide data through
+  // the helper block instead
   var dataContext = PeopleCollection.find(); // Router waits for this as well
 
   TemplateCollection.find({_id:templateId}).observeChanges({

@@ -14,7 +14,7 @@ Meteor.methods({
     if(name==='Default'){
       throw new Error("error, cannot use default name")
     }
-    var template = TemplateCollection.findOne({name:'Default'});
+    var template = defaultTemplate;
     template.name = name;
     template.created = new Date();
     template.modified = new Date();
@@ -54,6 +54,9 @@ Meteor.methods({
         throw new Error("only admins can delete Templates with more than 10 likes.");
       }
     }
+    if(template.name==='Default'){
+      throw new Error("Cannot delete default.");
+    }
 
     return TemplateCollection.remove({_id:id});
 
@@ -61,6 +64,10 @@ Meteor.methods({
 
   LikeTemplate : function(id){
     
+    if(options.name==='Default'){
+       future.throw("error, cannot like default");
+    }
+
     TemplateCollection.update({_id:id}, {$inc:{likes:1}});
     
   },
