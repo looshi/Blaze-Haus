@@ -40,7 +40,7 @@ MochaWeb.testOnly(function(){
     it("should set Codemirror html editor", function(){
       var id = 'html'+defaultTemplate._id;
       var text = document.getElementById(id).innerHTML; 
-      var html = '<span class="cm-tag">h2</span><span class="cm-tag cm-bracket">&gt;</span>Template Output';
+      var html = '<span class="cm-tag">h2</span><span class="cm-tag cm-bracket">&gt;</span>Default Template';
       chai.assert.include( text , html );
     });
 

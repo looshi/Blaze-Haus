@@ -32,7 +32,7 @@ var CAN_SAVE_CSS = true;
 
 Template.Editor.rendered = function(){
 
-  var userId;
+  var userId;  // fake a userId
 
   if( !Session.get('userId') ){
     userId =  Random.id();
