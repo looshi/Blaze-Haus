@@ -6,9 +6,12 @@
   </div>
 
   <div class="editor-container">
-    
+
     {{#each templates}}
-    <div><a href="/{{_id}}">{{name}}</a></div>
+      <a class='template-list' href="/{{_id}}">
+        <div class='template-list name'>{{name}}</div>
+        <div class='template-list date'>{{created.getDate}}/{{created.getDate}}/{{created.getUTCFullYear}}</div>
+      </a>
     {{/each}}
   </div>
 
