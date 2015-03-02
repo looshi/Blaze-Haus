@@ -31,6 +31,11 @@ Schemas.TemplateCollection = new SimpleSchema({
     label:"html",
     max: 1000
   },
+  js:{
+    type:String,
+    label:"html",
+    max: 1000
+  },
   modified:{
     type:Date,
     label:"lastModified - Date last update occured"
