@@ -64,10 +64,6 @@ Meteor.methods({
 
   LikeTemplate : function(id){
     
-    if(options.name==='Default'){
-       future.throw("error, cannot like default");
-    }
-
     TemplateCollection.update({_id:id}, {$inc:{likes:1}});
     
   },
