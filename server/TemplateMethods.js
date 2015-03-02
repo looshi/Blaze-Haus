@@ -13,7 +13,7 @@ Meteor.methods({
     if(name==='Default Template'){
       throw new Error("error, cannot use default name")
     }
-    var template = TemplateCollection.findOne({name:'Default Template'});
+    var template = TemplateCollection.findOne({name:'Default'});
     template.name = name;
     template.created = new Date();
     template.modified = new Date();
@@ -27,7 +27,7 @@ Meteor.methods({
 
     var future = new Future();
 
-    if(options.name==='Default Template'){
+    if(options.name==='Default'){
        future.throw("error, cannot use default name");
     }
 

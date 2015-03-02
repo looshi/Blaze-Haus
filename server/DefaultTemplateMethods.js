@@ -26,7 +26,7 @@ Meteor.methods({
 
     defaultTemplate.modified = new Date();
 
-    TemplateCollection.update({name:'Default Template'},{$set:defaultTemplate});
+    TemplateCollection.update({name:'Default'},{$set:defaultTemplate});
 
     PeopleCollection.remove({},function(err,res){
      if(err){
@@ -50,7 +50,7 @@ defaultTemplate = {
   html: MockHTML,
   //modified: new Date(),  // set these dates inside the methods
   lastModifiedBy: 'System',
-  name : "Default Template",
+  name : "Default",
   owner:'System'
 }
 

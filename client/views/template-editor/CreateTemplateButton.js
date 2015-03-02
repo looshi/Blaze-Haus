@@ -1,10 +1,10 @@
-Template.Menu.rendered = function(){
+Template.CreateTemplateButton.rendered = function(){
 
   $('#new-template-controls').hide();
 
 }
 
-Template.Menu.events({
+Template.CreateTemplateButton.events({
 
   'click #create-new-template-btn' : function(e){
     $('#create-new-template-btn').hide();
