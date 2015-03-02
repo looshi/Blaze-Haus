@@ -1,16 +1,14 @@
 /*
-People Collection
+Address Collection
 sample test data set
-used as a default to populate the editor
-also used for testing against , since it should never change
 */
 
-PeopleCollection = new Mongo.Collection('PeopleCollection');
+AddressCollection = new Mongo.Collection('AddressCollection');
 
 
 // different rules for People
 if(Meteor.isClient){
-  PeopleCollection.allow({
+  AddressCollection.allow({
     insert: function () {
       return false;
     },
@@ -23,7 +21,7 @@ if(Meteor.isClient){
   });
 }
 if(Meteor.isServer){
-  PeopleCollection.allow({
+  AddressCollection.allow({
     insert: function () {
       return false;
     },

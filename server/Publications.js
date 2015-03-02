@@ -10,3 +10,7 @@ Meteor.publish("summaryTemplateData", function () {
 Meteor.publish("peopleData", function () {
    return PeopleCollection.find({});
 });
+
+Meteor.publish("addressData", function () {
+   return AddressCollection.find({});
+});
