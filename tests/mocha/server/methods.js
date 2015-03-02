@@ -43,7 +43,7 @@ MochaWeb.testOnly(function(){
     var response;
     var name = "myname";
     var savedTemplate;
-    var createdDate = new Date();
+    var createdDate = new Date(0);
 
     var options = {
         created: createdDate,
@@ -68,21 +68,21 @@ MochaWeb.testOnly(function(){
     before(function(done){  
 
       var id = TemplateCollection.insert(options);
-      savedTemplate = TemplateCollection.findOne(id);
-
+     
       Meteor.call('SaveTemplate',id,edits,function(err,res){
         if(err){
           response = err;
           done();
         }else{
           response = res;
+          savedTemplate = TemplateCollection.findOne(id);
           done();
         }
       });
     });
 
-    it('should send a string back as OK response' , function(){
-      chai.assert.equal(response,'dave');
+    it('response should be 1' , function(){
+      chai.assert.equal(response,1);
     });
     it('should be able to save html' , function(){
       chai.assert.equal(savedTemplate.html,edits.html);
@@ -100,7 +100,7 @@ MochaWeb.testOnly(function(){
       chai.assert.notEqual(savedTemplate.modified,edits.modified);
     });
     it('should not update created field' , function(){
-      chai.assert.equal(savedTemplate.created,createdDate);
+      chai.assert.equal(savedTemplate.created.toString(),createdDate.toString());
     });
 
   });

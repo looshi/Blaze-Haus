@@ -1,3 +1,6 @@
+Fiber = Npm.require('fibers');
+Future = Npm.require('fibers/future');
+
 var MAX_CHARS = 800;
 
 Meteor.methods({
@@ -21,17 +24,26 @@ Meteor.methods({
 
   SaveTemplate : function(id,options){
     
+
+    var future = new Future();
+
     if(options.name==='Default Template'){
-      throw new Error("error, cannot use default name")
+       future.throw("error, cannot use default name");
+    }
+
+    if(options.created){
+      delete options.created;
     }
     
     TemplateCollection.update({_id:id}, {$set:options}, function(err,res){
       if(err||res===0){
-        throw new Error("Error saving template ", err);
+        future.throw("Error saving template ", err);
       }else{
-        return res;
+        future.return(res);
       }
     });
+
+    return future.wait();
   },
 
   saveHTML : function(newHTML,templateId,userId){
