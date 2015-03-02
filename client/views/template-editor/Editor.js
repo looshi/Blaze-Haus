@@ -1,5 +1,5 @@
 /*
-Inspector
+Editor
 Eitable source code for a given template.
 Updates the DOM as the user makes edits.
 
@@ -11,7 +11,7 @@ The text editors are CodeMirror instances : http://codemirror.net/
 
 */
 
-Template.Inspector.created = function(){
+Template.Editor.created = function(){
 
   this.htmlError = new ReactiveVar;
   this.htmlError.set("ok");
@@ -28,7 +28,7 @@ by a different user won't redundantly be autosaved by "this" user.
 var CAN_SAVE_HTML = true; 
 var CAN_SAVE_CSS = true; 
 
-Template.Inspector.rendered = function(){
+Template.Editor.rendered = function(){
 
   this['userId'] = Random.id(); 
   this['cssEditor'] = 'not set';
@@ -42,7 +42,7 @@ Template.Inspector.rendered = function(){
  
 }
 
-Template.Inspector.helpers({
+Template.Editor.helpers({
 
   htmlError : function(){
     return Template.instance().htmlError.get();
@@ -58,7 +58,7 @@ Template.Inspector.helpers({
   }
 });
 
-Template.Inspector.events({
+Template.Editor.events({
 
   'click .restoreDefaults' : function(e,self){
     
@@ -85,7 +85,7 @@ Template.Inspector.events({
   }
 });
 
-Template.Inspector.destroyed = function(){
+Template.Editor.destroyed = function(){
   if(!!this.renderedView){
     // this.renderedView._domrange.destroyMembers();
     // this.renderedView._domrange.detach();
@@ -185,7 +185,7 @@ var handleCssEdit = function(text,templateId,userId){
 * applies CSS to the CSSOM, right now it will just continually append 
 * and override everything on the page, TODO, scope CSS to a given container
 * @param {String} newCSS,  css string
-* @param {Object} self , this Inspector Template instance
+* @param {Object} self , this Editor's Template instance
 */
 var renderCSS = function(newCSS,self){
 
@@ -207,7 +207,7 @@ var renderCSS = function(newCSS,self){
 /**
 * renders html with a data context into the parent Dom object
 * @param {String} newHTML, html string to render
-* @param {Object} self , this Inspector Template instance
+* @param {Object} self , this Editor's Template instance
 */
 var renderHTML = function(newHTML,self,dataContext){
 
