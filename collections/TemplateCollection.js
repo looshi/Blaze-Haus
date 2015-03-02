@@ -50,7 +50,6 @@ Schemas.TemplateCollection = new SimpleSchema({
   }
 });
 
-// not sure why but simple schema is not working, disabling for now
 TemplateCollection.attachSchema(Schemas.TemplateCollection);
 
 // allow it all for now

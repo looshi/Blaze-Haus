@@ -1,7 +1,12 @@
 <Template name='TemplateList'>
 
+  <div class="editor-menu">
+    
+   {{> CreateTemplateButton}}
+  </div>
+
   <div class="editor-container">
-    Select a Template from the list below : <br/>
+    
     {{#each templates}}
     <div><a href="/{{_id}}">{{name}}</a></div>
     {{/each}}

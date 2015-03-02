@@ -12,7 +12,7 @@ MochaWeb.testOnly(function(){
     
     before(function(done){
       Meteor.autorun(function(){
-        var data = TemplateCollection.findOne({name:"Default Template"});
+        var data = TemplateCollection.findOne({name:"Default"});
 
         if (data){
           Router.go("/"+data._id);
@@ -64,7 +64,7 @@ MochaWeb.testOnly(function(){
     before(function(done){
 
       Meteor.autorun(function(){
-        var template = TemplateCollection.findOne({name:"Default Template"});
+        var template = TemplateCollection.findOne({name:"Default"});
         var people = PeopleCollection.find();
         if (template._id && people.count()===39){
           Router.go("/"+template._id);
