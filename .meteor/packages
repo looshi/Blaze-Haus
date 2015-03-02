@@ -10,5 +10,5 @@ perak:codemirror
 aldeed:simple-schema
 reactive-var
 iron:router
-mike:mocha
 aldeed:collection2
+mike:mocha
