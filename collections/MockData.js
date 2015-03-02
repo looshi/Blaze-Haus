@@ -4,11 +4,11 @@ Set of default data for each collection.
 Written to the db on startup, on a restore routine every hour, and when any user clicks 'restore defaults';
 */
 
-MockHTML = "<h2>Template Output</h2>\n\n{{#each this}}\n<div class='nm' style='background:{{color}}'>\n{{name}}\n</div>\n{{/each}}";
+MockHTML = "<h2>Template Output</h2>\n\nToday is : {{currentDate}}\n\n{{#each this}}\n<div class='nm' style='background:{{color}}'>\n{{name}}\n</div>\n{{/each}}";
 
 MockCSS = "body{\n  background-color:#fff;\n  transition : all 1.0s ease-out;\n}\n\nh2{\n  font-family:Arial;\n  text-decoration:underline;\n}\n\n.nm{\n  margin:0;\n  padding:2px;\n  text-align:center;\n  font-family:Arial;\n  transition : all 1.0s ease-out;\n}\n.nm:hover{\n  background-color:#fff !important;\n}";
 
-MockJS = "helpers = {\n  currentTime : function(){\n    return new Date().getHours();\n   }\n }"
+MockJS = "helpers = {\n  currentDate : function(){\n    return new Date();\n   }\n }"
 
 MockPeople = [
 {"country":"Japan","date":"1/4/2015","city":"Ōmuta","company":"Trunyx","name":"Billy","color":"#dff2d8"},
