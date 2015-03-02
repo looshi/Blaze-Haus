@@ -1,11 +1,59 @@
+body{
+  margin:0;
+  padding:0;
+}
+
+header{
+  background-color:#EBEBEB;
+  margin:0;
+  padding:12px;
+}
+button:hover{
+  cursor:pointer;
+  color:#A6344A;
+}
 .main-title{
   margin : 12px 12px 0 12px;
 }
 .main-description{
   margin : 2px 12px 0;
 }
+
+.editor-menu{
+  padding:12px;
+  background-color:#DDDDDD;
+}
+.template-menu{
+  display:inline-block;
+}
+.template-menu.delete-template{
+  float:right;
+}
+.template-title{
+  display:inline;
+  padding-left:18px;
+}
+a.template-list{
+  min-width:200px;
+}
+.template-list{
+  text-decoration: none;
+  display:inline-block;
+  padding:0px 12px;
+}
+
+.template-list.date{
+  float:right;
+}
+
+#like-template-btn{
+  width:60px !important;
+  height:18px !important;
+
+}
+
 .instructions-container{
-  background-color:#ccc;
+ 
   color:#272822;
   border-radius: 8px;
   padding:12px;
@@ -18,6 +66,13 @@
   font-family: monospace;  
   font-size:14px !important;
 }
+a#toggle-directions {
+  text-align: right;
+  float: right;
+  display: block;
+  margin-top:-32px;
+}
+
 .editor-container{
   width:45%;
   display:inline-block;
@@ -39,7 +94,6 @@
 
 .form-error-message{
   color:#ff1100;
-  padding:4px;
   font-size:14px;
 }
 

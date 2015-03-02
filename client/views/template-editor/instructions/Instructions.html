@@ -1,34 +1,56 @@
 <Template name="Instructions">
 
-
-
-
   <a id="toggle-directions" href="#">show directions</a>
   <div class='instructions-container' style="display:none;">
-    <div>
-      Edit the HTML and CSS below.<br/>
-      The template will be re-rendered as you make edits.
-    </div>
+    <div class="editor-container">
+      <div>
+        Edit the HTML and CSS files for the template.<br/>
+      </div>
 
-    <div>
-      If another user is editing this template, you will see their edits applied.<br/>
-      Try <a href="/{{_id}}" onclick="window.open('/{{_id}}', 'newwindow', 'width=600, height=600');return false;">
-      opening this URL in a new window</a> and make some edits.
+      <div>
+      The data context for the Template is the 'PeopleCollection'.<br/>
+      One document from the PeopleCollection looks like this : 
+      </div>
+      <div class='mongo'>
+        { &nbsp;&nbsp;country : 'China',<br/>
+        &nbsp;&nbsp;date : '1/1/2014','<br/>
+        &nbsp;&nbsp;city : 'Bijia','<br/>
+        &nbsp;&nbsp;company : 'Skajo',<br/>
+        &nbsp;&nbsp;name : 'Kathy',<br/>
+        &nbsp;&nbsp;color : '#ffff99' }
+      </div><br/>
+      <div>
+        The template will be re-rendered as you make edits.
+        If another user is editing the same template, you will see their edits applied.<br/>
+        Try <a href="/{{_id}}" onclick="window.open('/{{_id}}', 'newwindow', 'width=600, height=600');return false;">
+        opening this URL in a new window</a> and make some edits.
+        <br/>
+        <br/>
+        Support for data import is coming, right now this is the only data model available.
+      </div>
     </div>
-    <div>
-    The data context for this template is the 'PeopleCollection'.<br/>
-    One document from the PeopleCollection looks like this : 
-    </div>
-    <div class='mongo'>
-      { &nbsp;&nbsp;country : 'China',<br/>
-      &nbsp;&nbsp;date : '1/1/2014','<br/>
-      &nbsp;&nbsp;city : 'Bijia','<br/>
-      &nbsp;&nbsp;company : 'Skajo',<br/>
-      &nbsp;&nbsp;name : 'Kathy',<br/>
-      &nbsp;&nbsp;color : '#ffff99' }
-    </div>
-    <div>
-      <span class='callout'>&#123;&#123;this&#125;&#125;</span> in the Template's editable spacebars syntax below represents the PeopleCollection data we are subscribed to.
+    <div class="editor-container">
+      <div>
+        <br/>
+        Display each person using a loop like so : <br/><br/>
+        <span class='callout'>&#123;&#123;#each this&#125;&#125;</span><br/>
+        &nbsp;&nbsp;&nbsp; &lt;div&gt;the person's name is &#123;&#123;name&#125;&#125;&lt;/div&gt;<br/>
+        &nbsp;&nbsp;&nbsp; &lt;div&gt;and they are from &#123;&#123;country&#125;&#125;&lt;/div&gt;<br/>
+        <span class='callout'>&#123;&#123;/each&#125;&#125;</span><br/><br/>
+
+         <br/>
+        Add helpers as members of the helpers block like so : <br/><br/>
+        helpers = &#123;<br/>
+        &nbsp;&nbsp;timesThree : function(num)&#123;<br/>
+        &nbsp;&nbsp;&nbsp; return num*3;<br/>
+        &nbsp;&nbsp;&#125;,<br/>
+        &nbsp;&nbsp;timesFour : function(num)&#123;<br/>
+        &nbsp;&nbsp;&nbsp; return num*4;<br/>
+        &nbsp;&nbsp;&#125;,<br/>
+        &#125;<br/>
+        <br/>
+
+      </div>
     </div>
   </div>
 

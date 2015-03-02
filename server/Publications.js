@@ -4,7 +4,7 @@ Meteor.publish("singleTemplateData", function (_id) {
 });
 
 Meteor.publish("summaryTemplateData", function () {
-  return TemplateCollection.find(); 
+  return TemplateCollection.find({}, {fields: {'name': 1,'likes':1 }} );
 });
 
 Meteor.publish("peopleData", function () {
