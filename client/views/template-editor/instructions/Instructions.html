@@ -5,30 +5,43 @@
 
   <a id="toggle-directions" href="#">show directions</a>
   <div class='instructions-container' style="display:none;">
-    <div>
-      Edit the HTML and CSS below.<br/>
-      The template will be re-rendered as you make edits.
-    </div>
+    <div class="editor-container">
+      <div>
+        Edit the HTML and CSS below.<br/>
+        The template will be re-rendered as you make edits.
+      </div>
 
-    <div>
-      If another user is editing this template, you will see their edits applied.<br/>
-      Try <a href="/{{_id}}" onclick="window.open('/{{_id}}', 'newwindow', 'width=600, height=600');return false;">
-      opening this URL in a new window</a> and make some edits.
+      <div>
+        If another user is editing this template, you will see their edits applied.<br/>
+        Try <a href="/{{_id}}" onclick="window.open('/{{_id}}', 'newwindow', 'width=600, height=600');return false;">
+        opening this URL in a new window</a> and make some edits.
+      </div>
+      <div>
+      The data context for the 'Default Template' is the 'PeopleCollection'.<br/>
+      One document from the PeopleCollection looks like this : 
+      </div>
+      <div class='mongo'>
+        { &nbsp;&nbsp;country : 'China',<br/>
+        &nbsp;&nbsp;date : '1/1/2014','<br/>
+        &nbsp;&nbsp;city : 'Bijia','<br/>
+        &nbsp;&nbsp;company : 'Skajo',<br/>
+        &nbsp;&nbsp;name : 'Kathy',<br/>
+        &nbsp;&nbsp;color : '#ffff99' }
+      </div>
     </div>
-    <div>
-    The data context for this template is the 'PeopleCollection'.<br/>
-    One document from the PeopleCollection looks like this : 
-    </div>
-    <div class='mongo'>
-      { &nbsp;&nbsp;country : 'China',<br/>
-      &nbsp;&nbsp;date : '1/1/2014','<br/>
-      &nbsp;&nbsp;city : 'Bijia','<br/>
-      &nbsp;&nbsp;company : 'Skajo',<br/>
-      &nbsp;&nbsp;name : 'Kathy',<br/>
-      &nbsp;&nbsp;color : '#ffff99' }
-    </div>
-    <div>
-      <span class='callout'>&#123;&#123;this&#125;&#125;</span> in the Template's editable spacebars syntax below represents the PeopleCollection data we are subscribed to.
+    <div class="editor-container">
+      <div>
+        You can display each person using a loop like so : <br/>
+        <span class='callout'>&#123;&#123;#each this&#125;&#125;</span><br/>
+        &nbsp;&nbsp;&nbsp; &lt;div&gt;the person's name is &#123;&#123;name&#125;&#125;&lt;/div&gt;<br/>
+        <span class='callout'>&#123;&#123;/each this&#125;&#125;</span><br/><br/>
+       
+
+        Inside the loop you can display the attributes of each person like so :<br/>
+        <span class='callout'>&#123;&#123;name&#125;&#125;</span> 
+        <span class='callout'>&#123;&#123;company&#125;&#125;</span> 
+
+      </div>
     </div>
   </div>
 
