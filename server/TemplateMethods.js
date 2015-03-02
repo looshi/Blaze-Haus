@@ -48,6 +48,13 @@ Meteor.methods({
 
   DeleteTemplate : function(id){
 
+    var template = TemplateCollection.findOne(id);
+    if(template){
+      if(template.likes>10){
+        throw new Error("only admins can delete Templates with more than 10 likes.");
+      }
+    }
+
     return TemplateCollection.remove({_id:id});
 
   },

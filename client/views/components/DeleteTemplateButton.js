@@ -12,6 +12,12 @@ Template.DeleteTemplateButton.events({
 
   'mouseup #confirm-delete-template-btn' : function(e){
 
+    if(this.likes>10){
+      $('#delete-template-btn').hide();
+      $('#delete-confirm-message').html('Only admins can delete Templates with more than 10 likes.');
+      return;
+    }
+
     Meteor.call('DeleteTemplate',this._id,function(err,res){
       if(err || res === 0){
         $('#delete-template-error').html('error, cannot delete');
