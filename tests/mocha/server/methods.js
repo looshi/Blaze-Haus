@@ -36,6 +36,10 @@ MochaWeb.testOnly(function(){
       chai.assert.equal(newTemplate.css,MockCSS);
     });
 
+     it("should contain default js", function(){
+      chai.assert.equal(newTemplate.js,MockJS);
+    });
+
   });
   
   describe("SaveTemplate", function(){
@@ -50,6 +54,7 @@ MochaWeb.testOnly(function(){
         css: 'mycss',
         dataContext: 'mydata', 
         html: 'myhtml',
+        js: 'myjs',
         modified: new Date(), 
         lastModifiedBy: 'System',
         name : 'myname',
@@ -60,6 +65,7 @@ MochaWeb.testOnly(function(){
         css: 'emycss',
         dataContext: 'emydata', 
         html: 'emyhtml',
+        js: 'emyjs',
         modified: new Date(), 
         lastModifiedBy: 'eSystem',
         name : 'emyname',
@@ -87,6 +93,9 @@ MochaWeb.testOnly(function(){
     it('should be able to save html' , function(){
       chai.assert.equal(savedTemplate.html,edits.html);
     });
+    it('should be able to save js' , function(){
+      chai.assert.equal(savedTemplate.js,edits.js);
+    });
     it('should be able to save css' , function(){
       chai.assert.equal(savedTemplate.css,edits.css);
     });
@@ -105,6 +114,47 @@ MochaWeb.testOnly(function(){
 
   });
 
+  describe("DeleteTemplate", function(){
+
+    var deletedTemplate;
+
+    var options = {
+        created: new Date(),
+        css: 'mycss',
+        dataContext: 'mydata', 
+        html: 'myhtml',
+        js: 'myjs',
+        modified: new Date(), 
+        lastModifiedBy: 'System',
+        name : 'DeleteMe',
+        owner:'System'
+      }
+
+    before(function(done){  
+
+      var id = TemplateCollection.insert(options);
+     
+      Meteor.call('DeleteTemplate',id,function(err,res){
+        if(err){
+          response = err;
+          done();
+        }else{
+          response = res;
+          deletedTemplate = TemplateCollection.findOne(id);
+          done();
+        }
+      });
+    });
+
+    it("should respond with 1" , function(){
+      chai.assert.equal(1,response);
+    });
+
+    it("should delete the template" , function(){
+      chai.assert.equal(null,deletedTemplate);
+    });
+
+  });
   
 });
 

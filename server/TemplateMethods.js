@@ -47,6 +47,12 @@ Meteor.methods({
     return future.wait();
   },
 
+  DeleteTemplate : function(id){
+
+    return TemplateCollection.remove({_id:id});
+
+  },
+
   saveHTML : function(newHTML,templateId,userId){
     if( newHTML.length<MAX_CHARS && !!userId){
       TemplateCollection.update({_id:templateId},{$set:{html:newHTML,lastModifiedBy:userId}},function(err,res){
