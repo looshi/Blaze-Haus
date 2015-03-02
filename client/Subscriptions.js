@@ -1,4 +1,10 @@
 Tracker.autorun(function () {
-  Meteor.subscribe("summaryTemplateData"); // summary information for template documents in TemplateCollection
-  Meteor.subscribe("addressData"); // summary information for template documents in TemplateCollection
+  // the data that populates the list of Templates on the homepage
+  Meteor.subscribe("summaryTemplateData"); 
+  
+  // the data that Templates can retrieve via helpers 
+  // These subscriptions will be managed individually 
+  // once we allow data import https://github.com/looshi/Meteor-Live-Template-Editor/issues/7
+  Meteor.subscribe("addressData");
+  Meteor.subscribe("peopleData") ;
 });
