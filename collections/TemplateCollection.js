@@ -33,8 +33,12 @@ Schemas.TemplateCollection = new SimpleSchema({
   },
   js:{
     type:String,
-    label:"html",
+    label:"js code",
     max: 1000
+  },
+  likes:{
+    type:Number,
+    label:"likes"
   },
   modified:{
     type:Date,

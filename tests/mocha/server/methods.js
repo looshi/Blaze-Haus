@@ -57,6 +57,7 @@ MochaWeb.testOnly(function(){
         js: 'myjs',
         modified: new Date(), 
         lastModifiedBy: 'System',
+        likes:2,
         name : 'myname',
         owner:'System'
       }
@@ -66,6 +67,7 @@ MochaWeb.testOnly(function(){
         dataContext: 'emydata', 
         html: 'emyhtml',
         js: 'emyjs',
+        likes:3,
         modified: new Date(), 
         lastModifiedBy: 'eSystem',
         name : 'emyname',
@@ -105,6 +107,9 @@ MochaWeb.testOnly(function(){
     it('should be able to save lastModifiedBy' , function(){
       chai.assert.equal(savedTemplate.lastModifiedBy,edits.lastModifiedBy);
     });
+    it('should be able to save likes' , function(){
+      chai.assert.equal(savedTemplate.likes,edits.likes);
+    });
     it('should be able to save modified' , function(){
       chai.assert.notEqual(savedTemplate.modified,edits.modified);
     });
@@ -124,6 +129,7 @@ MochaWeb.testOnly(function(){
         dataContext: 'mydata', 
         html: 'myhtml',
         js: 'myjs',
+        likes:0,
         modified: new Date(), 
         lastModifiedBy: 'System',
         name : 'DeleteMe',
