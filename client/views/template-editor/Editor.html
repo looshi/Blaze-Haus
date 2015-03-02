@@ -1,13 +1,14 @@
 <Template name="Editor">
 
+  <div class="editor-menu">
+    {{> Instructions}} 
+    {{> Menu}}
+  </div>
+
   <div class="editor-container">
 
-    {{> Menu}}
-
-    <!-- {{> Instructions}} 
-    
-    <div><button class="restoreDefaults">Restore Default Styles and HTML</button></div>
-    -->
+    <!--<div><button class="restoreDefaults">Restore Default Styles and HTML</button></div>-->
+   
     <h4>{{name}}</h4>
 
     <div class="file-name-header">Template.html</div>
