@@ -9,6 +9,9 @@ Template.CreateTemplateButton.events({
   'click #create-new-template-btn' : function(e){
     $('#create-new-template-btn').hide();
     $('#new-template-controls').show();
+    $('#template-name-field').val('');
+    $('#template-name-field').focus();
+    $('#new-template-error').html('');
   },
 
   'mouseup #confirm-new-template-btn' : function(e){
