@@ -1,20 +1,28 @@
 <Template name="Editor">
 
+  <div class="editor-menu">
+    {{> Instructions}} 
+    <div class="template-title">{{name}}</div> &nbsp;
+    {{> LikeButton}}
+     <div class="template-title">last modified : 
+      {{modified.getMonth}}/{{modified.getDate}}/{{modified.getUTCFullYear}}</div> &nbsp;
+    {{> CreateTemplateButton}}
+    {{> DeleteTemplateButton}}
+  </div>
+
   <div class="editor-container">
 
-    {{> Menu}}
-
-    <!-- {{> Instructions}} 
-    
-    <div><button class="restoreDefaults">Restore Default Styles and HTML</button></div>
-    -->
-    <h4>{{name}}</h4>
-
-    <div class="file-name-header">Template.html</div>
+    <!--<div><button class="restoreDefaults">Restore Default Styles and HTML</button></div>-->
+   
+    <div class="file-name-header">{{name}}.html</div>
     <textarea class="html-editor"></textarea>
     <div class="{{htmlErrorClass}}">{{htmlError}}</div>
 
-    <div class="file-name-header">Template.css</div>
+    <div class="file-name-header">Helpers.js</div>
+    <textarea class="js-editor"></textarea>
+    <div class="{{jsErrorClass}}">{{cssError}}</div>
+
+    <div class="file-name-header">{{name}}.css</div>
     <textarea class="css-editor"></textarea>
     <div class="{{cssErrorClass}}">{{cssError}}</div>
   </div>

@@ -1,9 +1,17 @@
 <Template name='TemplateList'>
 
+  <div class="editor-menu">
+    
+   {{> CreateTemplateButton}}
+  </div>
+
   <div class="editor-container">
-    Select a Template from the list below : <br/>
+
     {{#each templates}}
-    <div><a href="/{{_id}}">{{name}}</a></div>
+      <a class='template-list' href="/{{_id}}">
+        <div class='template-list name'>{{name}}</div>
+        <div class='template-list date'>&#9829; {{likes}}</div>
+      </a>
     {{/each}}
   </div>
 

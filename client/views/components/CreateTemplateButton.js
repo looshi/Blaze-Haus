@@ -1,20 +1,24 @@
-Template.Menu.rendered = function(){
+Template.CreateTemplateButton.rendered = function(){
 
   $('#new-template-controls').hide();
 
 }
 
-Template.Menu.events({
+Template.CreateTemplateButton.events({
 
   'click #create-new-template-btn' : function(e){
     $('#create-new-template-btn').hide();
     $('#new-template-controls').show();
+    $('#template-name-field').val('');
+    $('#template-name-field').focus();
+    $('#new-template-error').html('');
   },
 
-  'click #confirm-new-template-btn' : function(e){
+  'mouseup #confirm-new-template-btn' : function(e){
+
     var name = $('#template-name-field').val();
-    if(name.length<2 || name.length>100){
-      $('#new-template-error').html('Must be between 2 and 100 chars.');
+    if(name.length<2 || name.length>20){
+      $('#new-template-error').html('Must be between 2 and 20 chars.');
       return;
     }
     Meteor.call('CreateNewTemplate',name,function(err,res){

@@ -31,6 +31,15 @@ Schemas.TemplateCollection = new SimpleSchema({
     label:"html",
     max: 1000
   },
+  js:{
+    type:String,
+    label:"js code",
+    max: 1000
+  },
+  likes:{
+    type:Number,
+    label:"likes"
+  },
   modified:{
     type:Date,
     label:"lastModified - Date last update occured"
@@ -50,7 +59,6 @@ Schemas.TemplateCollection = new SimpleSchema({
   }
 });
 
-// not sure why but simple schema is not working, disabling for now
 TemplateCollection.attachSchema(Schemas.TemplateCollection);
 
 // allow it all for now
