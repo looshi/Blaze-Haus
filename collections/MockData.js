@@ -8,6 +8,8 @@ MockHTML = "<h2>Template Output</h2>\n\n{{#each this}}\n<div class='nm' style='b
 
 MockCSS = "body{\n  background-color:#fff;\n  transition : all 1.0s ease-out;\n}\n\nh2{\n  font-family:Arial;\n  text-decoration:underline;\n}\n\n.nm{\n  margin:0;\n  padding:2px;\n  text-align:center;\n  font-family:Arial;\n  transition : all 1.0s ease-out;\n}\n.nm:hover{\n  background-color:#fff !important;\n}";
 
+MockJS = "helpers = {\n  currentTime : function(){\n    return new Date().getHours();\n   }\n }"
+
 MockPeople = [
 {"country":"Japan","date":"1/4/2015","city":"Ōmuta","company":"Trunyx","name":"Billy","color":"#dff2d8"},
 {"country":"Cambodia","date":"10/3/2014","city":"Koh Kong","company":"Topdrive","name":"Nancy","color":"#c6dea6"},
@@ -49,3 +51,4 @@ MockPeople = [
 {"country":"China","date":"4/3/2014","city":"Ning’er","company":"Voonyx","name":"Jane","color":"#99badd"},
 {"country":"Indonesia","date":"8/12/2014","city":"Jenang Selatan","company":"Tazzy","name":"Frances","color":"#ed9121"}
 ];
+

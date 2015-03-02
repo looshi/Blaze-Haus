@@ -19,6 +19,8 @@ Template.Editor.created = function(){
   this.cssError = new ReactiveVar;
   this.cssError.set("ok");
   
+  this.jsError = new ReactiveVar;
+  this.jsError.set("ok");
 }
 
 /*
@@ -33,6 +35,7 @@ Template.Editor.rendered = function(){
   this['userId'] = Random.id(); 
   this['cssEditor'] = 'not set';
   this['htmlEditor'] = 'not set';
+  this['jsEditor'] = 'not set';
   this['lastHtmlEditorId'] = 'not set';
   this['lastCssEditorId'] = 'not set';
   this['subscription'] = Meteor.subscribe("peopleData");  // this is the default sample data set
@@ -55,6 +58,9 @@ Template.Editor.helpers({
   },
   cssErrorClass : function(){
     return Template.instance().cssError.get()==="ok" ? "errorPanel ok" : "errorPanel";
+  },
+  jsErrorClass : function(){
+    return Template.instance().jsError.get()==="ok" ? "errorPanel ok" : "errorPanel";
   }
 });
 
@@ -77,7 +83,7 @@ Template.Editor.events({
           self.subscription = Meteor.subscribe("peopleData");   // restart the subscription
           setTimeout(function(){
             var dataContext = PeopleCollection.find();  // TODO put this server method into Fiber
-            renderHTML(self.data.html,self,dataContext); // remove this settimeout
+            renderHTML(self.data.html,null,self,dataContext); // remove this settimeout
           },300); 
         }
       });
@@ -110,13 +116,17 @@ var startObservers = function(self){
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
       self.htmlEditor.setValue(doc.html);
       self.htmlEditor.on("change",handleHtmlEdit,templateId,self.userId);
-      renderHTML(doc.html,self,dataContext);
+      renderHTML(doc.html,null,self,dataContext);
 
       self.cssEditor = new TextEditor('css-editor','text/css','css'+templateId);
       self.cssEditor.setValue(doc.css);
       self.cssEditor.on("change",handleCssEdit,templateId,self.userId);
       renderCSS(doc.css,self);
 
+      self.jsEditor = new TextEditor('js-editor','text/javascript','js'+templateId);
+      self.jsEditor.setValue(doc.js);
+      self.jsEditor.on("change",handleJsEdit,templateId,self.userId);
+      renderHTML(doc.html,doc.js,self,dataContext);
     },
     changed: function(id,doc){
       onCssDataChanged(id,doc,self);
@@ -128,19 +138,29 @@ var startObservers = function(self){
 
 var onHtmlDataChanged = function(id,doc,self,dataContext){
 
+  console.log("html change " , doc );
+
   if(doc.html){
-    console.log("html changed ");
-    renderHTML(doc.html,self,dataContext); 
+    renderHTML(doc.html,null,self,dataContext); 
+  }
+
+  if(doc.js){
+    renderHTML(null,doc.js,self,dataContext); 
   }
 
   if(doc.lastModifiedBy){
     self.lastHtmlEditorId = doc.lastModifiedBy;  // only update my editor if someone else made the change
   }
  
-  if(self.lastHtmlEditorId!==self.userId && doc.html){
-    showAlert("html",self.lastHtmlEditorId);
+  if(self.lastHtmlEditorId!==self.userId && (doc.html||doc.js)){
     CAN_SAVE_HTML = false;
-    self.htmlEditor.setValue(doc.html);
+    showAlert("html",self.lastHtmlEditorId);
+    if(doc.html){
+      self.htmlEditor.setValue(doc.html);
+    }
+    if(doc.js){
+      self.jsEditor.setValue(doc.js);
+    }
     CAN_SAVE_HTML = true;
   }
 }
@@ -153,6 +173,12 @@ var handleHtmlEdit = function(text,templateId,userId){
   Meteor.call('saveHTML',text,templateId,userId);
 }
 
+var handleJsEdit = function(text,templateId,userId){
+
+  if(!CAN_SAVE_HTML){return;}
+
+  Meteor.call('saveJS',text,templateId,userId);
+}
 
 var onCssDataChanged = function(id,doc,self){
 
@@ -206,14 +232,30 @@ var renderCSS = function(newCSS,self){
 
 /**
 * renders html with a data context into the parent Dom object
-* @param {String} newHTML, html string to render
+* @param {String} newHTML, (if any) html string to render
+* @param {String} newJS, (if any) js string helper block should be an object
 * @param {Object} self , this Editor's Template instance
 */
-var renderHTML = function(newHTML,self,dataContext){
+var lastHTML = "";
+var lastJS = "";
+var renderHTML = function(newHTML,newJS,self,dataContext){
 
   self.htmlError.set("ok");
+  self.jsError.set("ok");
 
-  console.log("rendering HTML :: " , dataContext.count() );
+  // js changes send null for html
+  // we still want to render on each js change
+  if(newHTML===null){
+    newHTML = lastHTML;
+  }else{
+    lastHTML=newHTML;
+  }
+  if(newJS===null){
+    newJS = lastJS;
+  }else{
+    lastJS=newJS;
+  }
+
   var parent = document.getElementById('htmlOutput');
 
   // going to 'try' it all, because we're auto-saving on each edit so
@@ -228,6 +270,15 @@ var renderHTML = function(newHTML,self,dataContext){
     // clear the output and re-render it
     parent.innerHTML = "";
     
+    // remove old helpers
+    Blaze._globalHelpers = {};  // TODO : scope helpers to template instance or name
+
+    var helpers = eval(newJS);
+    for(var key in helpers){
+
+      Blaze.registerHelper(key, createHelper(helpers,key));
+    }
+
     self.renderedView =  Blaze.render(view,parent);
 
     self.renderedView._domrange.destroy();   // <-- renders a view then destroys it every single time
@@ -238,6 +289,13 @@ var renderHTML = function(newHTML,self,dataContext){
   }
 }
 
+function createHelper(helpers,key){
+  return function(args){ 
+    try{
+      return helpers[key](args);
+    }catch(e){return e;} 
+  }
+}
 
 /**
 * displays a message if another user besides currentuser is editing this Template

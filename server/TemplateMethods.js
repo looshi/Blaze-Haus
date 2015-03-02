@@ -26,7 +26,6 @@ Meteor.methods({
 
   SaveTemplate : function(id,options){
     
-
     var future = new Future();
 
     if(options.name==='Default'){
@@ -53,6 +52,18 @@ Meteor.methods({
       TemplateCollection.update({_id:templateId},{$set:{html:newHTML,lastModifiedBy:userId}},function(err,res){
         if(err||res===0){
           console.log("saveHTML err",err, res);
+        }else{
+          //console.log("saveHTML OK!", res);
+        }
+      });
+    }
+  },
+
+  saveJS : function(newJS,templateId,userId){
+    if( newJS.length<MAX_CHARS && !!userId){
+      TemplateCollection.update({_id:templateId},{$set:{js:newJS,lastModifiedBy:userId}},function(err,res){
+        if(err||res===0){
+          console.log("saveJS err",err, res);
         }else{
           //console.log("saveHTML OK!", res);
         }
