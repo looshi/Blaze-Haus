@@ -48,6 +48,7 @@ defaultTemplate = {
   css: MockCSS,
   dataContext: 'peopleCollectionId', // TODO look this up in the restore routine
   html: MockHTML,
+  likes:3,
   js : MockJS,
   //modified: new Date(),  // set these dates inside the methods
   lastModifiedBy: 'System',

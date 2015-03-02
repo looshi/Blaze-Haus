@@ -8,6 +8,10 @@ header{
   margin:0;
   padding:12px;
 }
+button:hover{
+  cursor:pointer;
+  color:#A6344A;
+}
 .main-title{
   margin : 12px 12px 0 12px;
 }
@@ -19,7 +23,13 @@ header{
   padding:12px;
   background-color:#DDDDDD;
 }
+.template-menu{
+  display:inline-block;
+}
+.template-menu.delete-template{
+  float:right;
 
+}
 a.template-list{
   min-width:200px;
 }
@@ -29,10 +39,14 @@ a.template-list{
   padding:0px 12px;
 }
 
-.template-list.name{
-}
 .template-list.date{
   float:right;
+}
+
+#like-template-btn{
+  width:60px !important;
+  height:18px !important;
+
 }
 
 .instructions-container{
@@ -53,6 +67,7 @@ a#toggle-directions {
   text-align: right;
   float: right;
   display: block;
+  margin-top:-32px;
 }
 
 .editor-container{

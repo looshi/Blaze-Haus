@@ -32,7 +32,16 @@ var CAN_SAVE_CSS = true;
 
 Template.Editor.rendered = function(){
 
-  this['userId'] = Random.id(); 
+  var userId;
+
+  if( !Session.get('userId') ){
+    userId =  Random.id();
+    Session.set('userId',userId); 
+  }else{
+    userId = Session.get('userId');
+  }
+
+  this['userId'] = userId;
   this['cssEditor'] = 'not set';
   this['htmlEditor'] = 'not set';
   this['jsEditor'] = 'not set';

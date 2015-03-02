@@ -3,15 +3,14 @@ Future = Npm.require('fibers/future');
 
 var MAX_CHARS = 800;
 
+
 Meteor.methods({
 
   /*
   creates a copy of 'Default' Template
   */
   CreateNewTemplate : function(name){
-    
-    console.log( " CreateNewTemplate " , name );
-    
+
     if(name==='Default'){
       throw new Error("error, cannot use default name")
     }
@@ -51,6 +50,12 @@ Meteor.methods({
 
     return TemplateCollection.remove({_id:id});
 
+  },
+
+  LikeTemplate : function(id){
+    
+    TemplateCollection.update({_id:id}, {$inc:{likes:1}});
+    
   },
 
   saveHTML : function(newHTML,templateId,userId){
