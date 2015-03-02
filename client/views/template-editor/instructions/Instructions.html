@@ -1,0 +1,35 @@
+<Template name="Instructions">
+
+
+
+
+  <a id="toggle-directions" href="#">show directions</a>
+  <div class='instructions-container' style="display:none;">
+    <div>
+      Edit the HTML and CSS below.<br/>
+      The template will be re-rendered as you make edits.
+    </div>
+
+    <div>
+      If another user is editing this template, you will see their edits applied.<br/>
+      Try <a href="/{{_id}}" onclick="window.open('/{{_id}}', 'newwindow', 'width=600, height=600');return false;">
+      opening this URL in a new window</a> and make some edits.
+    </div>
+    <div>
+    The data context for this template is the 'PeopleCollection'.<br/>
+    One document from the PeopleCollection looks like this : 
+    </div>
+    <div class='mongo'>
+      { &nbsp;&nbsp;country : 'China',<br/>
+      &nbsp;&nbsp;date : '1/1/2014','<br/>
+      &nbsp;&nbsp;city : 'Bijia','<br/>
+      &nbsp;&nbsp;company : 'Skajo',<br/>
+      &nbsp;&nbsp;name : 'Kathy',<br/>
+      &nbsp;&nbsp;color : '#ffff99' }
+    </div>
+    <div>
+      <span class='callout'>&#123;&#123;this&#125;&#125;</span> in the Template's editable spacebars syntax below represents the PeopleCollection data we are subscribed to.
+    </div>
+  </div>
+
+</Template>
