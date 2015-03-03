@@ -102,7 +102,21 @@ Meteor.methods({
     });
     
   },
+  RenameTemplate : function(newName,templateId,userId){
+    
+    if(newName==='Default'){
+       throw new Error("error, cannot use default name");
+    }
 
+    TemplateCollection.update({_id:templateId},{$set:{name:newName,lastModifiedBy:userId}},function(err,res){
+      if(err||res===0){
+        console.log("rename error",err, res);
+      }else{
+        //console.log("saveCSS OK!",res);
+      }
+    });
+    
+  },
 
 
 });
