@@ -129,8 +129,8 @@ var startObservers = function(self){
         self.LAST_EDITOR = doc.lastModifiedBy; 
       }
      
-      // we don't handle a case where someone else empties the file, like Ctrl A, Ctrl X
-      // when that happens no changed fires
+      // when someone completely empties out a whole file, so that the html is an empty string,
+      // our simple schema won't allow it, we can set it to one space character i suppose
 
       if( self.LAST_EDITOR!==userId && (!!doc.html||!!doc.js)){
         
