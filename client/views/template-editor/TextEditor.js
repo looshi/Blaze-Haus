@@ -28,7 +28,8 @@ TextEditor = function(_textArea,_type,_id) {
   }
   this.editor = CodeMirror.fromTextArea(textArea,options);
   this.editor.display.wrapper.id = _id;
-  console.log("editor",this.editor,this.editor.getDoc());
+
+  this.CAN_DEBOUNCE = false;  // allows us to do something like Event.off() for text change
 
 }
 
@@ -36,23 +37,59 @@ TextEditor.prototype.setValue = function(_text){
   this.editor.getDoc().setValue(_text);
 }
 
+
+// debounce listeners will fire
+TextEditor.prototype.startDebounce = function(){
+  this.CAN_DEBOUNCE = true;
+}
+
+// debounce listeners will not fire
+TextEditor.prototype.stopDebounce = function(){
+  this.CAN_DEBOUNCE = true;
+}
+
 /**
-* adds event handlers to the Codemirror instance
-* can't seem to append parameters onto a Codemirror event
-* so, this wraps an internal event handler, then calls the callback with results + extra params
-* @param {String} _type, "change" is the only one we use right now, but there are many available
+* debounce
+* wraps event handler in a debounce, calls callback with params
+* @param {String} _eventName, "change" is the only one we use right now, but there are many available
 * @param {Function} _handler , callback
 * @param {String} _templateId , _id of document from TemplateCollection
 * @param {String} _userId, which user made the change
 */
-TextEditor.prototype.on = function(_type,_handler,_templateId,_userId){
-  if(_type!=="change"){
-    error("error unsupported event : " + _type);
-  }
-  this.editor.getDoc().on(_type,function(e){
-    _handler(e.getValue(),_templateId,_userId);
+TextEditor.prototype.debounce = function(_eventName,_handler,_templateId,_userId){
+  
+  var self = this;
+
+  this.editor.getDoc().on(_eventName, 
+
+    _.debounce(  
+      function(e){
+          if(!self.CAN_DEBOUNCE){
+            _handler(e.getValue(),_templateId,_userId);
+          }
+         
+      }, 300 )  // no semicolon
+    
+  );
+}
+
+/**
+* on
+* wraps event handler, calls callback with params
+* @param {String} _eventName, "change" is the only one we use right now, but there are many available
+* @param {Function} _handler , callback
+* @param {String} _codeType , _id of document from TemplateCollection
+* @param {String} _self, Template instance
+*/
+TextEditor.prototype.on = function(_eventName,_handler,_codeType,_self){
+  this.editor.getDoc().on(_eventName,function(e){
+    _handler(e.getValue(),_codeType,_self);
   });
 }
+  
+
+
+
 
 /**
 * logs an error to the console
