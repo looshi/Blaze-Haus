@@ -43,18 +43,7 @@ button:hover{
   display:inline;
   padding-left:18px;
 }
-a.template-list{
-  min-width:200px;
-}
-.template-list{
-  text-decoration: none;
-  display:inline-block;
-  padding:0px 12px;
-}
 
-.template-list.date{
-  float:right;
-}
 
 #like-template-btn{
   width:60px !important;
@@ -89,12 +78,26 @@ a#toggle-directions {
   vertical-align:top;
   padding:2%;
 }
-.editor-container a{
-  font-size:18px;
+
+.template-list{
+  text-decoration: none;
+  display:inline-block;
+  
 }
-.editor-container a:hover{
+a.template-list-item{
+  padding:0px 12px;
+  display:inline-block;
+  min-width:200px;
+}
+a.template-list-item:hover{
   background-color:#000;
   color:#fff;
+}
+.template-list-item.name{
+  float:left;
+}
+.template-list-item.date{
+  float:right;
 }
 
 .editor-instructions h4{
@@ -111,31 +114,7 @@ a#toggle-directions {
   width:100%;
 }
 
-.file-name-header{
-  font-family: monospace;
-  background-color: #272822;
-  color:#fff;
-  font-weight:normal;
-  width:160px;
-  margin-top:16px;
-  padding:4px 4px 4px 18px;
-  border-bottom:1px solid #34352D;
--webkit-box-shadow: inset 0px 18px 16px -13px rgba(255, 255, 255, 0.24);
--moz-box-shadow:    inset 0px 18px 16px -13px rgba(255, 255, 255, 0.24);
-box-shadow:         inset 0px 18px 16px -13px rgba(255, 255, 255, 0.24);
-}
 
-.errorPanel{
-  background:#660000;
-  color:#ff9900;
-  font-size:12px;
-  font-family:arial;
-  padding:8px;
-}    
-.errorPanel.ok{
-  background:#c6dea6;
-  color:#006b3c;
-}
 
 .mongo{
   background-color: #272822;

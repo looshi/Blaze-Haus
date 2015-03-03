@@ -25,19 +25,25 @@
 
   <div class="editor-container">
 
-    <!--<div><button class="restoreDefaults">Restore Default Styles and HTML</button></div>-->
-   
-    <div class="file-name-header">{{name}}.html</div>
-    <textarea class="html-editor"></textarea>
-    <div class="{{htmlErrorClass}}">{{htmlError}}</div>
+    {{> Tabs}}
+    <div class="tab">
+      <div id="tab-1" class="tab-content">
+        <textarea class="html-editor"></textarea>
+        <div class="{{htmlErrorClass}}">{{htmlError}}</div>
+      </div>
+      <div id="tab-2" class="tab-content">
+        <textarea class="js-editor"></textarea>
+        <div class="{{jsErrorClass}}">{{cssError}}</div>
+      
+      </div>
+      <div id="tab-3" class="tab-content">
+        <textarea class="css-editor"></textarea>
+        <div class="{{cssErrorClass}}">{{cssError}}</div>
+      </div>
+    </div>
 
-    <div class="file-name-header">{{name}}.js</div>
-    <textarea class="js-editor"></textarea>
-    <div class="{{jsErrorClass}}">{{cssError}}</div>
 
-    <div class="file-name-header">{{name}}.css</div>
-    <textarea class="css-editor"></textarea>
-    <div class="{{cssErrorClass}}">{{cssError}}</div>
+    
   </div>
 
   <div class="editor-container rendered-output">

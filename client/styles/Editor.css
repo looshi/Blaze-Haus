@@ -1,0 +1,88 @@
+/*
+  menu by : 
+  http://jsfiddle.net/syahrasi/Us8uc/ 
+*/
+
+
+.CodeMirror {
+
+    height: 500px;
+}
+
+.tabs-menu {
+  height: 30px;
+  float: left;
+  clear: both;
+  margin: 0;
+  padding: 0;
+}
+.tabs-container a{
+  font-size:12px;
+}
+
+.tabs-menu li {
+  height: 30px;
+  line-height: 30px;
+  float: left;
+  margin-right: 1px;
+  font-family: monospace;
+  background-color: #3A3A38;
+  border-top: 1px solid #272822;
+  border-right: 1px solid #272822;
+  border-left: 1px solid #272822;
+  list-style-type: none;
+  -webkit-box-shadow: inset 0px 18px 16px -13px rgba(255, 255, 255, 0.24);
+  -moz-box-shadow:    inset 0px 18px 16px -13px rgba(255, 255, 255, 0.24);
+  box-shadow:         inset 0px 18px 16px -13px rgba(255, 255, 255, 0.24);
+}
+
+.tabs-menu li.current {
+  position: relative;
+  background-color: #272822;
+  z-index: 5;
+}
+
+.tabs-menu li a {
+  padding: 10px;
+  color: #fff;
+  text-decoration: none; 
+}
+.tabs-menu li a:hover,
+.tabs-menu li a:visited,
+.tabs-menu li a:active {
+  color:#ccc;
+}
+
+.tabs-menu .current a {
+  color: #fff;
+}
+
+.tab {
+  float: left;
+  margin-bottom: 0;
+  width:100%;
+}
+
+.tab-content {
+  display: block;
+  width:100%;
+}
+
+#tab-1 {
+  display: block;   
+}
+
+
+.errorPanel{
+  background:#660000;
+  color:#ff9900;
+  font-size:12px;
+  font-family:arial;
+  padding:8px;
+}    
+.errorPanel.ok{
+  background:#c6dea6;
+  color:#006b3c;
+}
+
+
