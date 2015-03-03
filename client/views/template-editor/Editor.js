@@ -73,6 +73,7 @@ Template.Editor.destroyed = function(){
 var startObservers = function(self){
 
   var templateId  = self.data._id; 
+  var userId = Session.get('userId'); 
 
   TemplateCollection.find({_id:templateId}).observeChanges({
 
@@ -80,58 +81,51 @@ var startObservers = function(self){
 
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
       self.htmlEditor.setValue(doc.html);
-      self.htmlEditor.debounce("change",saveHTML,templateId);
+      self.htmlEditor.debounce("change",saveHTML,templateId,userId);
       self.htmlEditor.on("change",renderHTML,"html",self);  
       renderHTML(doc.html,"html",self);
 
       self.jsEditor = new TextEditor('js-editor','text/javascript','js'+templateId);
       self.jsEditor.setValue(doc.js);
-      self.jsEditor.debounce("change",saveJS,templateId);
+      self.jsEditor.debounce("change",saveJS,templateId,userId);
       self.jsEditor.on("change",renderHTML,"js",self);  
       renderHTML(doc.js,"js",self);  
 
       self.cssEditor = new TextEditor('css-editor','text/css','css'+templateId);
       self.cssEditor.setValue(doc.css);
-      self.cssEditor.debounce("change",saveCSS,templateId);
+      self.cssEditor.debounce("change",saveCSS,templateId,userId);
       self.cssEditor.on("change",renderCSS,"css",self);  
       renderCSS(doc.css,"css",self);
     },
 
     changed: function(id,doc){
 
-      var userId = Session.get('userId'); 
-
-
       if(doc.lastModifiedBy){
         self.LAST_EDITOR = doc.lastModifiedBy; 
       }
 
-      if( self.LAST_EDITOR!==userId && (!!doc.html||!!doc.js)){
+      if( self.LAST_EDITOR!==userId ){
         
         //Someone else made this change, render it and update my editor
-        self.cssEditor.stopDebounce();
-        self.htmlEditor.stopDebounce();
-        self.jsEditor.stopDebounce();
 
         if(doc.css){
+          self.cssEditor.AUTO_SAVE = false;
           renderCSS(doc.css,"css",self);
           self.cssEditor.setValue(doc.css);
           showAlert("css",self.LAST_EDITOR);
         }
         if(doc.html){
+          self.htmlEditor.AUTO_SAVE = false;
           renderHTML(doc.html,"html",self);
           self.htmlEditor.setValue(doc.html);
           showAlert("html",self.LAST_EDITOR);
         }
         if(doc.js){
+          self.jsEditor.AUTO_SAVE = false;
           renderHTML(doc.js,"js",self);
           self.jsEditor.setValue(doc.js);
           showAlert("js",self.LAST_EDITOR);
         }
-        
-        self.cssEditor.startDebounce();
-        self.htmlEditor.startDebounce();
-        self.jsEditor.startDebounce();
 
       }
 
@@ -142,19 +136,28 @@ var startObservers = function(self){
 
 // if someone tries to save an empty file = issue #20
 
-var saveHTML = function(text,templateId){
-  var userId = Session.get('userId');
-  Meteor.call('saveHTML',text,templateId,userId);
+var saveHTML = function(text,templateId,userId,editor){
+  if(editor.AUTO_SAVE){
+    Meteor.call('saveHTML',text,templateId,userId);
+  }else{
+    editor.AUTO_SAVE = true;
+  }
 }
 
-var saveJS = function(text,templateId){
-  var userId = Session.get('userId');
-  Meteor.call('saveJS',text,templateId,userId);
+var saveJS = function(text,templateId,userId,editor){
+  if(editor.AUTO_SAVE){
+    Meteor.call('saveJS',text,templateId,userId);
+  }else{
+    editor.AUTO_SAVE = true;
+  }
 }
 
-var saveCSS = function(text,templateId){
-  var userId = Session.get('userId');
-  Meteor.call('saveCSS',text,templateId,userId);
+var saveCSS = function(text,templateId,userId,editor){
+  if(editor.AUTO_SAVE){
+    Meteor.call('saveCSS',text,templateId,userId);
+  }else{
+    editor.AUTO_SAVE = true;
+  }
 }
 
 
@@ -256,18 +259,29 @@ function createHelper(helpers,key){
 
 /**
 * displays a message if another user besides currentuser is editing this Template
-* @param {String} file,  either css , html , js ( js coming soon )
+* @param {String} file,  either css , html , js
 * @param {String} user, userId who is editing
 */
 var showAlert = function(file,user){
   var alert = document.getElementById('alertPanel');
   alert.style.display = "block";
-  alert.innerHTML = "User " + user +" is editing the " + file + " now!"
-  hideAlert();
+  alert.innerHTML = "User " + user +" is editing the " + file + " now!";
+
+  $("#"+file+"-editor-tab").css({backgroundColor: "#ff9900" });
+
+  hideAlert(file);
 }
-var hideAlert = _.debounce(function(){
+
+var hideAlert = _.debounce(function(file){
+
   document.getElementById('alertPanel').style.display = 'none';
-},3000);
+
+  var color;
+  $("#"+file+"-editor-tab").hasClass('current') ? color = "#272822" : color = "#3A3A38";
+  $("#"+file+"-editor-tab").css({backgroundColor: color });
+
+
+},1000);
 
 
 

@@ -29,7 +29,7 @@ TextEditor = function(_textArea,_type,_id) {
   this.editor = CodeMirror.fromTextArea(textArea,options);
   this.editor.display.wrapper.id = _id;
 
-  this.CAN_DEBOUNCE = false;  // allows us to do something like Event.off() for text change
+  this.AUTO_SAVE = true;  // allows us to do something like Event.off() for text change
 
 }
 
@@ -37,17 +37,7 @@ TextEditor.prototype.setValue = function(_text){
   this.editor.getDoc().setValue(_text);
 }
 
-
-// debounce listeners will fire
-TextEditor.prototype.startDebounce = function(){
-  this.CAN_DEBOUNCE = true;
-}
-
-// debounce listeners will not fire
-TextEditor.prototype.stopDebounce = function(){
-  this.CAN_DEBOUNCE = true;
-}
-
+ 
 /**
 * debounce
 * wraps event handler in a debounce, calls callback with params
@@ -64,9 +54,8 @@ TextEditor.prototype.debounce = function(_eventName,_handler,_templateId,_userId
 
     _.debounce(  
       function(e){
-          if(!self.CAN_DEBOUNCE){
-            _handler(e.getValue(),_templateId,_userId);
-          }
+
+        _handler(e.getValue(),_templateId,_userId,self);
          
       }, 300 )  // no semicolon
     
