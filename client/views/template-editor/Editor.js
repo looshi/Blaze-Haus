@@ -33,7 +33,7 @@ Template.Editor.rendered = function(){
   this['lastCssEditorId'] = 'not set';
   this['renderedView'] = null; // Blaze View object we are rendering dynamically
   this['LAST_EDITOR'] = '';  // last user who made an edit
-
+  this['style'] = "not set"  // StyleSheet appended to the <head>
   startObservers(this);
  
 }
@@ -82,7 +82,11 @@ Template.Editor.events({
 });
 
 Template.Editor.destroyed = function(){
+
   if(!!this.renderedView){
+
+    destroyCSS();
+
     // this.renderedView._domrange.destroyMembers();
     // this.renderedView._domrange.detach();
     // this.renderedView._domrange.destroy();
@@ -182,6 +186,7 @@ var saveCSS = function(text,templateId){
 
 
 
+
 /**
 * applies CSS to the CSSOM, right now it will just continually append 
 * and override everything on the page, TODO, scope CSS to a given container
@@ -191,12 +196,12 @@ var saveCSS = function(text,templateId){
 */
 var renderCSS = function(newCSS,codeType,self){
 
+  destroyCSS();
 
   var head = document.head || document.getElementsByTagName('head')[0];
   var style = document.createElement('style');
 
   self.cssError.set("ok");
-  // TODO - validate CSS before applying it
 
   style.type = 'text/css';
   if (style.styleSheet){
@@ -204,9 +209,18 @@ var renderCSS = function(newCSS,codeType,self){
   } else {
     style.appendChild(document.createTextNode(newCSS));
   }
+
   head.appendChild(style);
+
 }
 
+var destroyCSS = function(){
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var node = head.children[head.children.length-1];
+  if(node.type==='text/css'){
+    head.removeChild( node );  // assumes nothing else is appended to <head> between renders
+  }
+}
 
 var latestHTML = "";
 var latestJS = "";
