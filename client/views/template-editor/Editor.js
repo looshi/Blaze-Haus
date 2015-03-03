@@ -128,9 +128,6 @@ var startObservers = function(self){
       if(doc.lastModifiedBy){
         self.LAST_EDITOR = doc.lastModifiedBy; 
       }
-     
-      // when someone completely empties out a whole file, so that the html is an empty string,
-      // our simple schema won't allow it, we can set it to one space character i suppose
 
       if( self.LAST_EDITOR!==userId && (!!doc.html||!!doc.js)){
         
@@ -139,18 +136,20 @@ var startObservers = function(self){
         self.htmlEditor.stopDebounce = true;
         self.jsEditor.stopDebounce = true;
 
-        console.log("Someone else made the change.");
         if(doc.css){
           renderCSS(doc.css,"css",self);
           self.cssEditor.setValue(doc.css);
+          showAlert("css",self.LAST_EDITOR);
         }
         if(doc.html){
           renderHTML(doc.html,"html",self);
           self.htmlEditor.setValue(doc.html);
+          showAlert("html",self.LAST_EDITOR);
         }
         if(doc.js){
           renderHTML(doc.js,"js",self);
           self.jsEditor.setValue(doc.js);
+          showAlert("js",self.LAST_EDITOR);
         }
         
         self.cssEditor.stopDebounce = false;
@@ -164,6 +163,7 @@ var startObservers = function(self){
 }
 
 
+// if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId){
   var userId = Session.get('userId');
