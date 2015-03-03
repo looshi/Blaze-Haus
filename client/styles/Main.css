@@ -22,13 +22,23 @@ button:hover{
 .editor-menu{
   padding:12px;
   background-color:#DDDDDD;
+  min-height:36px;
 }
 .template-menu{
   display:inline-block;
 }
-.template-menu.delete-template{
-  float:right;
+.left-controls{
+  position:absolute;
 }
+.right-controls{
+  position:absolute;
+  right:16px;
+}
+.template-menu .form-error-message{
+   position:absolute;
+  right:16px;
+}
+
 .template-title{
   display:inline;
   padding-left:18px;
