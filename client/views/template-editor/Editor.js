@@ -32,7 +32,7 @@ Template.Editor.rendered = function(){
   this['lastHtmlEditorId'] = 'not set';
   this['lastCssEditorId'] = 'not set';
   this['renderedView'] = null; // Blaze View object we are rendering dynamically
-  this['LAST_EDITOR'] = '';  // last user who made an edit
+  this['LAST_EDITOR'] = false;  // last user who made an edit
   this['style'] = "not set"  // StyleSheet appended to the <head>
   startObservers(this);
  
@@ -57,39 +57,12 @@ Template.Editor.helpers({
   }
 });
 
-Template.Editor.events({
-
-  'click .restoreDefaults' : function(e,self){
-    
-
-    if(this.lastHtmlEditorId!=="System" && this.lastCssEditorId!=="System"){
-
-      this.lastHtmlEditorId = "System";
-      this.lastCssEditorId = "System";
-
-      var parent = document.getElementById('htmlOutput');
-      parent.innerHTML = "";
-      
-      Meteor.call('RestoreDefaultTemplate',function(err,res){
-        if(!err){
-          setTimeout(function(){
-            renderHTML(self.data.html,null,self); // remove this settimeout
-          },300); 
-        }
-      });
-    }
-  }
-});
 
 Template.Editor.destroyed = function(){
 
   if(!!this.renderedView){
 
     destroyCSS();
-
-    // this.renderedView._domrange.destroyMembers();
-    // this.renderedView._domrange.detach();
-    // this.renderedView._domrange.destroy();
     Blaze._destroyView(this.renderedView);
     this.renderedView._domrange = null;
     this.renderedView = null;
@@ -136,9 +109,9 @@ var startObservers = function(self){
       if( self.LAST_EDITOR!==userId && (!!doc.html||!!doc.js)){
         
         //Someone else made this change, render it and update my editor
-        self.cssEditor.stopDebounce = true;
-        self.htmlEditor.stopDebounce = true;
-        self.jsEditor.stopDebounce = true;
+        self.cssEditor.stopDebounce();
+        self.htmlEditor.stopDebounce();
+        self.jsEditor.stopDebounce();
 
         if(doc.css){
           renderCSS(doc.css,"css",self);
@@ -156,9 +129,9 @@ var startObservers = function(self){
           showAlert("js",self.LAST_EDITOR);
         }
         
-        self.cssEditor.stopDebounce = false;
-        self.htmlEditor.stopDebounce = false;
-        self.jsEditor.stopDebounce = false;
+        self.cssEditor.startDebounce();
+        self.htmlEditor.startDebounce();
+        self.jsEditor.startDebounce();
 
       }
 
@@ -183,7 +156,6 @@ var saveCSS = function(text,templateId){
   var userId = Session.get('userId');
   Meteor.call('saveCSS',text,templateId,userId);
 }
-
 
 
 
