@@ -18,9 +18,7 @@ Template.Editor.created = function(){
 
   this.cssError = new ReactiveVar;
   this.cssError.set("ok");
-  
-  this.jsError = new ReactiveVar;
-  this.jsError.set("ok");
+
 }
 
 
@@ -51,9 +49,6 @@ Template.Editor.helpers({
   },
   cssErrorClass : function(){
     return Template.instance().cssError.get()==="ok" ? "errorPanel ok" : "errorPanel";
-  },
-  jsErrorClass : function(){
-    return Template.instance().jsError.get()==="ok" ? "errorPanel ok" : "errorPanel";
   }
 });
 
@@ -208,7 +203,6 @@ var renderHTML = function(text,codeType,self){
 
 
   self.htmlError.set("ok");
-  self.jsError.set("ok");
 
   if(codeType==="html"){
     latestHTML = text;
