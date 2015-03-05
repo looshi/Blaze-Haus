@@ -107,19 +107,19 @@ var startObservers = function(self){
           self.cssEditor.AUTO_SAVE = false;
           renderCSS(doc.css,"css",self);
           self.cssEditor.setValue(doc.css);
-          showAlert("css",self.LAST_EDITOR);
+          Session.set('UserEditMessage',{file:"css",user:self.LAST_EDITOR});
         }
         if(doc.html){
           self.htmlEditor.AUTO_SAVE = false;
           renderHTML(doc.html,"html",self);
           self.htmlEditor.setValue(doc.html);
-          showAlert("html",self.LAST_EDITOR);
+          Session.set('UserEditMessage',{file:"html",user:self.LAST_EDITOR});
         }
         if(doc.js){
           self.jsEditor.AUTO_SAVE = false;
           renderHTML(doc.js,"js",self);
           self.jsEditor.setValue(doc.js);
-          showAlert("js",self.LAST_EDITOR);
+          Session.set('UserEditMessage',{file:"js",user:self.LAST_EDITOR});
         }
 
       }
@@ -250,32 +250,4 @@ function createHelper(helpers,key){
     }catch(e){return e;} 
   }
 }
-
-/**
-* displays a message if another user besides currentuser is editing this Template
-* @param {String} file,  either css , html , js
-* @param {String} user, userId who is editing
-*/
-var showAlert = function(file,user){
-  var alert = document.getElementById('alertPanel');
-  alert.style.display = "block";
-  alert.innerHTML = "User " + user +" is editing the " + file + " now!";
-
-  $("#"+file+"-editor-tab").css({backgroundColor: "#ff9900" });
-
-  hideAlert(file);
-}
-
-var hideAlert = _.debounce(function(file){
-
-  document.getElementById('alertPanel').style.display = 'none';
-
-  var color;
-  $("#"+file+"-editor-tab").hasClass('current') ? color = "#272822" : color = "#3A3A38";
-  $("#"+file+"-editor-tab").css({backgroundColor: color });
-
-
-},1000);
-
-
 
