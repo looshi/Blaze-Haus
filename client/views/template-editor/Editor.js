@@ -24,14 +24,14 @@ Template.Editor.created = function(){
 
 Template.Editor.rendered = function(){
 
-  this['cssEditor'] = 'not set';
-  this['htmlEditor'] = 'not set';
-  this['jsEditor'] = 'not set';
-  this['lastHtmlEditorId'] = 'not set';
-  this['lastCssEditorId'] = 'not set';
-  this['renderedView'] = null; // Blaze View object we are rendering dynamically
-  this['LAST_EDITOR'] = false;  // last user who made an edit
-  this['style'] = "not set"  // StyleSheet appended to the <head>
+  this.cssEditor = 'not set';
+  this.htmlEditor = 'not set';
+  this.jsEditor = 'not set';
+  this.lastHtmlEditorId = 'not set';
+  this.lastCssEditorId = 'not set';
+  this.renderedView = null; // Blaze View object we are rendering dynamically
+  this.LAST_EDITOR = false;  // last user who made an edit
+  this.style = "not set"  // StyleSheet appended to the <head>
   startObservers(this);
  
 }
@@ -49,7 +49,7 @@ Template.Editor.helpers({
   },
   cssErrorClass : function(){
     return Template.instance().cssError.get()==="ok" ? "errorPanel ok" : "errorPanel";
-  }
+  } 
 });
 
 
