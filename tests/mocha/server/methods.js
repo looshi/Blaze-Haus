@@ -118,6 +118,59 @@ MochaWeb.testOnly(function(){
     });
 
   });
+  
+
+  describe("DuplicateTemplate", function(){
+
+    var originalTemplate;
+    var duplicateTemplate;
+    var response;
+    var oldCount;
+
+    before(function(done){  
+
+      originalTemplate = TemplateCollection.findOne();
+      oldCount = TemplateCollection.find().count();
+     
+      Meteor.call('DuplicateTemplate',originalTemplate._id,function(err,res){
+        if(err){
+          response = err;
+          done();
+        }else{
+          response = res;
+          duplicateTemplate = TemplateCollection.findOne(res);
+          done();
+        }
+      });
+    });
+
+    it("should respond with _id string" , function(){
+      chai.assert.isString(response);
+    });
+
+    it("should create template with identical values" , function(){
+      
+      for(var k in originalTemplate){
+        if(k!=="_id"&&k!=="modified"&&k!=="created"){
+          chai.assert.equal( duplicateTemplate[k] , originalTemplate[k] );
+        }     
+      }
+    });
+
+    it("should set modified and created to about now" , function(){
+      var now = new Date().getTime()-10000;   // ten seconds ago
+      chai.assert(duplicateTemplate.created>now); 
+      chai.assert(duplicateTemplate.modified>now);
+      
+    });
+
+    it("should increase the Template collection count by 1" , function(){
+      var newCount = TemplateCollection.find().count();
+      chai.assert.equal(newCount,oldCount+1);
+    });
+
+  });
+
 
   describe("DeleteTemplate", function(){
 

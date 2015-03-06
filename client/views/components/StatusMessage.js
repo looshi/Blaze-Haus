@@ -7,7 +7,7 @@ makes an edit to currentuser's template.
 Tracker.autorun(function () {
 
   var message = Session.get('UserEditMessage');
-  console.log("message!",message);
+  //console.log("message!",message);
   //showAlert(message.file,message.user);
   //Session.set('StatusMessage', 'none');
        

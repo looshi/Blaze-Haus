@@ -22,6 +22,16 @@ Meteor.methods({
     return newTemplate;
   },
 
+  DuplicateTemplate : function(_id){
+
+    var template = TemplateCollection.findOne(_id);
+    delete template._id;
+    template.modified = new Date();
+    template.created = new Date();
+    var newTemplate = TemplateCollection.insert(template);
+    return newTemplate;
+  },
+
   SaveTemplate : function(id,options){
     
     var future = new Future();
