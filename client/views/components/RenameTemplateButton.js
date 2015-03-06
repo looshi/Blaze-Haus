@@ -17,8 +17,8 @@ Template.RenameTemplateButton.events({
   'mouseup #confirm-rename-template-btn' : function(e){
 
     var name = $('#rename-template-field').val();
-    if(name.length<2 || name.length>20){
-      $('#rename-template-error').html('Must be between 2 and 20 chars.');
+    if(name.length<2 || name.length>30){
+      $('#rename-template-error').html('Must be between 2 and 30 chars.');
       return;
     }
     var userId = Session.get('userId');

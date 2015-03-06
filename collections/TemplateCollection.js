@@ -51,7 +51,7 @@ Schemas.TemplateCollection = new SimpleSchema({
   name:{
     type:String,
     label:"title of this template",
-    max: 100
+    max: 30
   },
   owner:{
     type:String,
