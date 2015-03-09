@@ -132,7 +132,7 @@ MochaWeb.testOnly(function(){
       originalTemplate = TemplateCollection.findOne();
       oldCount = TemplateCollection.find().count();
      
-      Meteor.call('DuplicateTemplate',originalTemplate._id,function(err,res){
+      Meteor.call('DuplicateTemplate',originalTemplate._id,"duplicate",function(err,res){
         if(err){
           response = err;
           done();
@@ -151,7 +151,7 @@ MochaWeb.testOnly(function(){
     it("should create template with identical values" , function(){
       
       for(var k in originalTemplate){
-        if(k!=="_id"&&k!=="modified"&&k!=="created"){
+        if(k!=="_id"&&k!=="modified"&&k!=="created"&&k!=="name"){
           chai.assert.equal( duplicateTemplate[k] , originalTemplate[k] );
         }     
       }
