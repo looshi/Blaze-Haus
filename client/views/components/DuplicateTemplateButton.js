@@ -21,7 +21,7 @@ Template.DuplicateTemplateButton.events({
       $('#duplicate-template-error').html('Must be between 2 and 30 chars.');
       return;
     }
-    Meteor.call('CreateNewTemplate',name,function(err,res){
+    Meteor.call('DuplicateTemplate',this._id,name,function(err,res){
       if(err || res === 0){
         console.warn("new template error! ", err,res );
       }else{

@@ -22,10 +22,11 @@ Meteor.methods({
     return newTemplate;
   },
 
-  DuplicateTemplate : function(_id){
+  DuplicateTemplate : function(_id,_name){
 
     var template = TemplateCollection.findOne(_id);
     delete template._id;
+    template.name = _name;
     template.modified = new Date();
     template.created = new Date();
     var newTemplate = TemplateCollection.insert(template);
