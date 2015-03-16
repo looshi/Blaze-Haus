@@ -37,7 +37,17 @@ Template.Editor.rendered = function(){
 }
 
 Template.Editor.helpers({
+  currentTemplate : function(){
+    if(this){
+      var id = this.toString();
+      var current = CurrentTemplate.findOne({_id:id});
+      console.log("current template! " , this, current);
+      if(current){
+        return current;
+      }
+    }
 
+  },
   htmlError : function(){
     return Template.instance().htmlError.get();
   },

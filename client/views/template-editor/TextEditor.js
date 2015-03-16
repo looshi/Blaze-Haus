@@ -16,6 +16,7 @@ TextEditor = function(_textArea,_type,_id) {
     error("selector required : "+_textArea);
   }
 
+  console.log( " TEXT AREA ! " , _textArea,_type,_id );
   var textArea = document.getElementsByClassName(_textArea)[0];
   if(!textArea){
     error('element '+_textArea+' not found');
