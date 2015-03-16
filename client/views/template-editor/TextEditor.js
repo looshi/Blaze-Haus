@@ -29,8 +29,6 @@ TextEditor = function(_textArea,_type,_id) {
   this.editor = CodeMirror.fromTextArea(textArea,options);
   this.editor.display.wrapper.id = _id;
 
-  this.AUTO_SAVE = true;  // allows us to do something like Event.off() for text change
-
 }
 
 TextEditor.prototype.setValue = function(_text){

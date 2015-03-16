@@ -19,18 +19,17 @@ Router.route('TemplateList', {
 
 var EditorController=RouteController.extend({
   template:"Editor",
-  waitOn:function(){
-    return Meteor.subscribe("singleTemplateData",this.params._id);
-  },
+
   data: function(){
-    return TemplateCollection.findOne( this.params._id );
+    return this.params._id;
   },
   onBeforeAction:function(){
     if(this.data()){      
+      console.log("onBefore....",this.data());
       this.next(); 
     }else{
-      //console.warn("template not found!!",this.params._id);
-      Router.go('/');
+      console.warn("template not found!!",this.params._id);
+      //Router.go('/');
     }
   }
 });

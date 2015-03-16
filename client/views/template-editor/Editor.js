@@ -27,13 +27,13 @@ Template.Editor.rendered = function(){
   this.cssEditor = 'not set';
   this.htmlEditor = 'not set';
   this.jsEditor = 'not set';
-  this.lastHtmlEditorId = 'not set';
-  this.lastCssEditorId = 'not set';
   this.renderedView = null; // Blaze View object we are rendering dynamically
-  this.LAST_EDITOR = false;  // last user who made an edit
   this.style = "not set"  // StyleSheet appended to the <head>
+
+
+  Meteor.subscribe("singleTemplateData",this.data,Session.get('userId'));
   startObservers(this);
- 
+
 }
 
 Template.Editor.helpers({
@@ -67,12 +67,16 @@ Template.Editor.destroyed = function(){
 
 var startObservers = function(self){
 
-  var templateId  = self.data._id; 
+  var templateId  = self.data; 
   var userId = Session.get('userId'); 
 
-  TemplateCollection.find({_id:templateId}).observeChanges({
+  console.log("S O : " , templateId )
+
+  CurrentTemplate.find({_id:templateId}).observeChanges({
 
     added : function(id,doc){
+
+      console.log("added : " , id, doc );
 
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
       self.htmlEditor.setValue(doc.html);
@@ -95,35 +99,23 @@ var startObservers = function(self){
 
     changed: function(id,doc){
 
-      if(doc.lastModifiedBy){
-        self.LAST_EDITOR = doc.lastModifiedBy; 
+      // The Publication only sends change events where this.userID!=doc.lastModifiedBy
+      // Someone else made this change, render it and update my editor
+      if(doc.css){
+        renderCSS(doc.css,"css",self);
+        self.cssEditor.setValue(doc.css);
+        Session.set('UserEditMessage',{file:"css",user:doc.lastModifiedBy});
       }
-
-      if( self.LAST_EDITOR!==userId ){
-        
-        //Someone else made this change, render it and update my editor
-
-        if(doc.css){
-          self.cssEditor.AUTO_SAVE = false;
-          renderCSS(doc.css,"css",self);
-          self.cssEditor.setValue(doc.css);
-          Session.set('UserEditMessage',{file:"css",user:self.LAST_EDITOR});
-        }
-        if(doc.html){
-          self.htmlEditor.AUTO_SAVE = false;
-          renderHTML(doc.html,"html",self);
-          self.htmlEditor.setValue(doc.html);
-          Session.set('UserEditMessage',{file:"html",user:self.LAST_EDITOR});
-        }
-        if(doc.js){
-          self.jsEditor.AUTO_SAVE = false;
-          renderHTML(doc.js,"js",self);
-          self.jsEditor.setValue(doc.js);
-          Session.set('UserEditMessage',{file:"js",user:self.LAST_EDITOR});
-        }
-
+      if(doc.html){
+        renderHTML(doc.html,"html",self);
+        self.htmlEditor.setValue(doc.html);
+        Session.set('UserEditMessage',{file:"html",user:doc.lastModifiedBy});
       }
-
+      if(doc.js){
+        renderHTML(doc.js,"js",self);
+        self.jsEditor.setValue(doc.js);
+        Session.set('UserEditMessage',{file:"js",user:doc.lastModifiedBy});
+      }
     }
   });
 }
@@ -132,27 +124,15 @@ var startObservers = function(self){
 // if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId,userId,editor){
-  if(editor.AUTO_SAVE){
-    Meteor.call('saveHTML',text,templateId,userId);
-  }else{
-    editor.AUTO_SAVE = true;
-  }
+  Meteor.call('saveHTML',text,templateId,userId);
 }
 
 var saveJS = function(text,templateId,userId,editor){
-  if(editor.AUTO_SAVE){
-    Meteor.call('saveJS',text,templateId,userId);
-  }else{
-    editor.AUTO_SAVE = true;
-  }
+  Meteor.call('saveJS',text,templateId,userId);
 }
 
 var saveCSS = function(text,templateId,userId,editor){
-  if(editor.AUTO_SAVE){
-    Meteor.call('saveCSS',text,templateId,userId);
-  }else{
-    editor.AUTO_SAVE = true;
-  }
+  Meteor.call('saveCSS',text,templateId,userId);
 }
 
 
