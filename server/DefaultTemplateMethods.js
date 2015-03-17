@@ -1,3 +1,9 @@
+/*
+DefaultTemplateMethods
+creates initial 'default' template
+creates sample data collections
+*/
+
 Meteor.startup(function(){
 
   Meteor.call('CreateDefaultTemplate');
