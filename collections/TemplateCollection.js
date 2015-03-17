@@ -33,9 +33,10 @@ Schemas.TemplateCollection = new SimpleSchema({
     max: 2000
   },
   json:{
-    type:[Object],
+    type:String,
     label:"json collection data",
-    blackbox : true
+    max : 10000
+    //blackbox : true
   },
   likes:{
     type:Number,

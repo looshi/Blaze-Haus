@@ -16,8 +16,15 @@ Meteor.methods({
 
   CreateDefaultTemplate : function(){
 
+    TemplateCollection.remove({});
+
     if(!TemplateCollection.findOne()){
-      TemplateCollection.insert(defaultTemplate);
+      
+      defaultTemplate.json = JSON.stringify(MockPeople);
+      var id = TemplateCollection.insert(defaultTemplate);
+
+      console.log( " INSERTING " , TemplateCollection.findOne() );
+      
     }
   },
 
@@ -45,10 +52,10 @@ Meteor.methods({
 defaultTemplate = {
   created: new Date(),
   css: MockCSS,
-  dataContext: 'peopleCollectionId', // TODO look this up in the restore routine
   html: MockHTML,
   likes:0,
   js : MockJS,
+  json : ' ',
   modified: new Date(),  // set these dates inside the methods
   lastModifiedBy: 'System',
   name : "Default",

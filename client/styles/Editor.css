@@ -17,6 +17,7 @@
   clear: both;
   margin: 0;
   padding: 0;
+  width:100%;
 }
 .tabs-container a{
   font-size:12px;
@@ -36,6 +37,10 @@
   -webkit-box-shadow: inset 0px 18px 16px -13px rgba(255, 255, 255, 0.24);
   -moz-box-shadow:    inset 0px 18px 16px -13px rgba(255, 255, 255, 0.24);
   box-shadow:         inset 0px 18px 16px -13px rgba(255, 255, 255, 0.24);
+  width:23%;
+  overflow:hidden;
+  text-overflow:ellipsis;  
+  color:#fff;
 }
 
 .tabs-menu li.current {
@@ -47,7 +52,7 @@
 .tabs-menu li a {
   padding: 10px;
   color: #fff;
-  text-decoration: none; 
+  text-decoration: none;
 }
 .tabs-menu li a:hover,
 .tabs-menu li a:visited,
