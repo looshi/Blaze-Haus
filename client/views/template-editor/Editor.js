@@ -81,8 +81,6 @@ var startObservers = function(self){
 
     added : function(id,doc){
 
-      console.log("added : " , id, doc );
-
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
       self.htmlEditor.setValue(doc.html);
       self.htmlEditor.debounce("change",saveHTML,templateId,userId);
@@ -102,12 +100,12 @@ var startObservers = function(self){
       renderCSS(doc.css,"css",self);
     },
 
-    changed: function(id,doc){
-      console.log("changed " , id, doc );
-      // The Publication only sends change events where this.userID!=doc.lastModifiedBy
+    changed : function(id,doc){
 
-      // if someone else made this change, render it and update my editor
-      // if I made the last change, render it, but don't update my editor
+      // The Publication will only send change events where (this.userId!=doc.lastModifiedBy)
+      // If someone else made this change, render the template, and update my editor.
+      // If I made the last change, I won't recieve this change event.
+
       if(doc.css){
         renderCSS(doc.css,"css",self);
         self.cssEditor.setValue(doc.css);
@@ -130,15 +128,15 @@ var startObservers = function(self){
 
 // if someone tries to save an empty file = issue #20
 
-var saveHTML = function(text,templateId,userId,editor){
+var saveHTML = function(text,templateId,userId){
   Meteor.call('saveHTML',text,templateId,userId);
 }
 
-var saveJS = function(text,templateId,userId,editor){
+var saveJS = function(text,templateId,userId){
   Meteor.call('saveJS',text,templateId,userId);
 }
 
-var saveCSS = function(text,templateId,userId,editor){
+var saveCSS = function(text,templateId,userId){
   Meteor.call('saveCSS',text,templateId,userId);
 }
 
@@ -146,7 +144,7 @@ var saveCSS = function(text,templateId,userId,editor){
 
 /**
 * applies CSS to the CSSOM, right now it will just continually append 
-* and override everything on the page, TODO, scope CSS to a given container
+* and override everything on the page, TODO, scope CSS to a given container, or leave it?
 * @param {String} newCSS,  css string
 * @param {String} codeType , redundant, but consistent with the other render functions
 * @param {Object} self , this Editor's Template instance
@@ -176,6 +174,7 @@ var destroyCSS = function(){
   var node = head.children[head.children.length-1];
   if(node.type==='text/css'){
     head.removeChild( node );  // assumes nothing else is appended to <head> between renders
+                               // TODO : remove css by correct index or name, this has bad side effects
   }
 }
 

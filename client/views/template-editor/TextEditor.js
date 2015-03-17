@@ -1,25 +1,14 @@
-/*
-TextEditor
-Wraps an instance of CodeMirror.
-*/
-
-
 /**
-* constructor
+* TextEditor 
+* wraps an instance of Code Mirror
 * @param {Object} _textArea, DOM id for the TextArea to apply this editor, e.g. "myTextArea"
 * @param {String} _type , only "css" , "html" are supported now
 */
 TextEditor = function(_textArea,_type,_id) {
 
-
-  if(!Utils.isPosString(_textArea)){
-    error("selector required : "+_textArea);
-  }
-
-  console.log( " TEXT AREA ! " , _textArea,_type,_id );
   var textArea = document.getElementsByClassName(_textArea)[0];
   if(!textArea){
-    error('element '+_textArea+' not found');
+    console.warn('element '+_textArea+' not found');
   }
 
   var options = {
@@ -76,14 +65,3 @@ TextEditor.prototype.on = function(_eventName,_handler,_codeType,_self){
 }
   
 
-
-
-
-/**
-* logs an error to the console
-* @param {String} _msg, the error message
-*/
-var error = function(_msg){
-  console.warn(msg);
-  //throw new Error(_msg);
-}
