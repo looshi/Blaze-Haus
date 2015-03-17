@@ -29,7 +29,7 @@ Template.Editor.rendered = function(){
   this.jsEditor = 'not set';
   this.renderedView = null; // Blaze View object we are rendering dynamically
   this.style = "not set"  // StyleSheet appended to the <head>
-
+  this.observer = "not set";
   startObservers(this);
 
 }
@@ -62,6 +62,8 @@ Template.Editor.helpers({
 
 Template.Editor.destroyed = function(){
 
+  this.observer.stop();
+
   if(!!this.renderedView){
 
     destroyCSS();
@@ -69,6 +71,7 @@ Template.Editor.destroyed = function(){
     this.renderedView._domrange = null;
     this.renderedView = null;
   }
+  
 };
 
 
@@ -77,9 +80,11 @@ var startObservers = function(self){
   var templateId  = self.data._id; 
   var userId = Session.get('userId'); 
 
-  CurrentTemplate.find({_id:templateId}).observeChanges({
+  self.observer = CurrentTemplate.find({_id:templateId}).observeChanges({
 
     added : function(id,doc){
+
+      console.log("added " , id , doc ); 
 
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
       self.htmlEditor.setValue(doc.html);

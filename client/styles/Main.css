@@ -148,3 +148,20 @@ a.template-list-item:hover{
   font-family: Arial;
   display:none;
 }
+
+.footer-nav{
+  position:fixed;
+  bottom:0;
+  background-color:rgba(255,255,255,.5);
+  width:45%;
+  height:10px;
+  padding:2%;
+  z-index:5;
+  border-radius: 16px;
+}
+#next-template-btn{
+  float:right;
+}
+#previous-template-btn{
+  float:left;
+}

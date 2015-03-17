@@ -9,6 +9,7 @@ TextEditor = function(_textArea,_type,_id) {
   var textArea = document.getElementsByClassName(_textArea)[0];
   if(!textArea){
     console.warn('element '+_textArea+' not found');
+    return;
   }
 
   var options = {

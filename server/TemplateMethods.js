@@ -20,6 +20,7 @@ Meteor.methods({
     template.name = name;
     template.created = new Date();
     template.modified = new Date();
+    template.html = MockHTML.split('Default Template').join(name); // use the filename for <H2> 
     delete template._id;
     var newTemplate = TemplateCollection.insert(template);
     return newTemplate;
