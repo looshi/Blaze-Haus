@@ -20,11 +20,3 @@ Template.Tabs.rendered = function(){
 
   });
 }
-
-Template.Tabs.helpers({
-
-  getName : function(){
-    return CurrentTemplate.findOne(this._id).name;
-  }
-
-})
