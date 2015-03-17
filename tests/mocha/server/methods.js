@@ -29,7 +29,7 @@ MochaWeb.testOnly(function(){
     });
 
     it("should contain default html", function(){
-      chai.assert.equal(newTemplate.html,MockHTML);
+      chai.assert(newTemplate.html.indexOf("Today is : {{currentDate}}")!==-1);
     });
 
     it("should contain default css", function(){

@@ -16,7 +16,7 @@ MochaWeb.testOnly(function(){
 
         if (data){
           Router.go("/"+data._id);
-          defaultTemplate = data;
+          defaultTemplate = CurrentTemplate.findOne({name:"Default"});
           selector = data._id;
         }
       });
