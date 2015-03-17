@@ -2,6 +2,7 @@ Meteor.startup(function(){
 
   Meteor.call('CreateDefaultTemplate');
   Meteor.call('CreateAddressCollection');
+  Meteor.call('CreatePeopleCollection');
 
 });
 
@@ -9,10 +10,12 @@ Meteor.methods({
 
   CreateDefaultTemplate : function(){
 
-    defaultTemplate.modified = new Date();
-    defaultTemplate.created = new Date();
+    if(!TemplateCollection.findOne()){
+      TemplateCollection.insert(defaultTemplate);
+    }
+  },
 
-    TemplateCollection.insert(defaultTemplate);
+  CreatePeopleCollection : function(){
 
     if(!PeopleCollection.findOne()){
       for(var i=0;i<MockPeople.length;i++){
@@ -34,13 +37,13 @@ Meteor.methods({
 });
 
 defaultTemplate = {
-  //created: new Date(),
+  created: new Date(),
   css: MockCSS,
   dataContext: 'peopleCollectionId', // TODO look this up in the restore routine
   html: MockHTML,
   likes:0,
   js : MockJS,
-  //modified: new Date(),  // set these dates inside the methods
+  modified: new Date(),  // set these dates inside the methods
   lastModifiedBy: 'System',
   name : "Default",
   owner:'System'

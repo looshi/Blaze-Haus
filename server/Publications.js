@@ -1,7 +1,8 @@
 
-/*
-  only publish changes if a different user made the edit
-*/
+
+// singleTemplateData
+// Publishes current template for the Editor including all editable fields.
+
 Meteor.publish("singleTemplateData", function (_id,_userId) {
 
   var self = this;
@@ -16,8 +17,11 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
 
     }, 
     changed: function (id, fields) {
-      if(_userId!==TemplateCollection.findOne(_id).lastModifiedBy){
-        self.changed("CurrentTemplate",id,fields);
+
+      var userMadeChange = (_userId===TemplateCollection.findOne(_id).lastModifiedBy);
+
+      if( !userMadeChange || fields.name ){
+        self.changed("CurrentTemplate",id,fields);  // Only publish changes if a different user made the edit
       }      
     },
     removed: function (id) {
@@ -31,14 +35,21 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
 
 });
 
+
+// summaryTemplateData
+// Publishes the entire list of all Templates, limited to a few fields.
+
 Meteor.publish("summaryTemplateData", function () {
   return TemplateCollection.find({}, {fields: {'name': 1,'likes':1 }} );
 });
 
+
+// sample data publication
 Meteor.publish("peopleData", function () {
    return PeopleCollection.find({});
 });
 
+// sample data publication
 Meteor.publish("addressData", function () {
    return AddressCollection.find({});
 });

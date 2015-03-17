@@ -19,5 +19,12 @@ Template.Tabs.rendered = function(){
     },20);
 
   });
-
 }
+
+Template.Tabs.helpers({
+
+  getName : function(){
+    return CurrentTemplate.findOne(this._id).name;
+  }
+
+})
