@@ -20,21 +20,22 @@ Schemas.TemplateCollection = new SimpleSchema({
   css:{
     type:String,
     label:"css",
-    max: 1000
-  },
-  dataContext:{
-    type:String,
-    label:"_id of Data Collection to use as the data context for this template"
+    max: 2000
   },
   html:{
     type:String,
     label:"html",
-    max: 1000
+    max: 2000
   },
   js:{
     type:String,
     label:"js code",
-    max: 1000
+    max: 2000
+  },
+  json:{
+    type:[Object],
+    label:"json collection data",
+    blackbox : true
   },
   likes:{
     type:Number,
