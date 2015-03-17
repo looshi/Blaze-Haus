@@ -52,3 +52,4 @@ MockPeople = [
 {"country":"Indonesia","date":"8/12/2014","city":"Jenang Selatan","company":"Tazzy","name":"Frances","color":"#ed9121"}
 ];
 
+

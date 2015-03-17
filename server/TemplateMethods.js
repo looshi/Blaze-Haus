@@ -100,7 +100,19 @@ Meteor.methods({
       if(err||res===0){
         console.log("saveJS err",err, res);
       }else{
-        //console.log("saveHTML OK!", res);
+
+      }
+    });
+    
+  },
+
+  saveJSON : function(newJSON,templateId,userId){
+
+    TemplateCollection.update({_id:templateId},{$set:{json:newJSON,lastModifiedBy:userId}},function(err,res){
+      if(err||res===0){
+        console.log("saveJSON err",err, res);
+      }else{
+        console.log("saveJSON OK!", res);
       }
     });
     

@@ -19,6 +19,16 @@ Template.Editor.created = function(){
   this.cssError = new ReactiveVar;
   this.cssError.set("ok");
 
+  // CollectionCollection = new Mongo.Collection(null);
+
+  // var data = MockPeople;
+
+  // _.each(data, function (document) {
+  //   CollectionCollection.insert(document);
+  // });
+
+  // console.log( " collection " , CollectionCollection.find().fetch() );
+
 }
 
 
@@ -27,6 +37,7 @@ Template.Editor.rendered = function(){
   this.cssEditor = 'not set';
   this.htmlEditor = 'not set';
   this.jsEditor = 'not set';
+  this.jsonEditor = 'not set';
   this.renderedView = null; // Blaze View object we are rendering dynamically
   this.style = "not set"  // StyleSheet appended to the <head>
   this.observer = "not set";
@@ -100,6 +111,14 @@ var startObservers = function(self){
       self.cssEditor.debounce("change",saveCSS,templateId,userId);
       self.cssEditor.on("change",renderCSS,"css",self);  
       renderCSS(doc.css,"css",self);
+
+      self.jsonEditor = new TextEditor('json-editor','text/javascript','json'+templateId);
+      console.log( " DOC JSON " , doc.json );
+      self.jsonEditor.setValue(doc.json);
+      self.jsonEditor.debounce("change",saveJSON,templateId,userId);
+      //self.jsonEditor.on("change",renderHTML,null,self);  
+      //renderHTML("",null,self);  
+
     },
 
     changed : function(id,doc){
@@ -123,6 +142,12 @@ var startObservers = function(self){
         self.jsEditor.setValue(doc.js);
         Session.set('UserEditMessage',{file:"js",user:doc.lastModifiedBy});
       }
+      if(doc.json){
+        console.log("JSON CHANGED !! " );
+        // renderHTML(doc.json,"json",self);
+        // self.jsEditor.setValue(doc.js);
+        // Session.set('UserEditMessage',{file:"js",user:doc.lastModifiedBy});
+      }
     }
   });
 }
@@ -142,6 +167,9 @@ var saveCSS = function(text,templateId,userId){
   Meteor.call('saveCSS',text,templateId,userId);
 }
 
+var saveJSON = function(text,templateId,userId){
+  Meteor.call('saveJSON',text,templateId,userId);
+}
 
 
 /**

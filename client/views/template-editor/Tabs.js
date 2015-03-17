@@ -7,6 +7,7 @@ Template.Tabs.rendered = function(){
   $('#tab-1').css('opacity','0'); // hides a visual jump as codemirror resizes
   $('#tab-2').css('opacity','0');
   $('#tab-3').css('opacity','0');
+  $('#tab-4').css('opacity','0');
 
   $(document).ready(function() {
     $(".tabs-menu a").click(function(event) {
@@ -23,10 +24,12 @@ Template.Tabs.rendered = function(){
     setTimeout(function(){
       $('#tab-2').hide();
       $('#tab-3').hide();
+      $('#tab-4').hide();
 
       $('#tab-1').css('opacity','1');
       $('#tab-2').css('opacity','1');
       $('#tab-3').css('opacity','1');
+      $('#tab-4').css('opacity','1');
 
     },20);
 
