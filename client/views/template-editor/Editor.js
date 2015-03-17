@@ -39,7 +39,6 @@ Template.Editor.helpers({
     if(this){
       var id = this.toString();
       var current = CurrentTemplate.findOne({_id:id});
-      console.log("current template! " , this, current);
       if(current){
         return current;
       }
@@ -83,8 +82,6 @@ var startObservers = function(self){
   self.observer = CurrentTemplate.find({_id:templateId}).observeChanges({
 
     added : function(id,doc){
-
-      console.log("added " , id , doc ); 
 
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
       self.htmlEditor.setValue(doc.html);
