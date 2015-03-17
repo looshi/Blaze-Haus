@@ -1,7 +1,10 @@
+/*
+TemplateMethods
+CRUD methods for a single editable Template
+*/
+
 Fiber = Npm.require('fibers');
 Future = Npm.require('fibers/future');
-
-
 
 Meteor.methods({
 

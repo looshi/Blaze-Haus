@@ -1,3 +1,7 @@
+/*
+Instructions
+'help' type information describing the project and how to use it.
+*/
 Template.Instructions.events({
   'click .restoreDefaults' : function(e){
     Meteor.call('restoreDefaults');

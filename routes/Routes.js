@@ -27,7 +27,6 @@ var EditorController=RouteController.extend({
   },
   onBeforeAction:function(){
     if(this.data()){      
-      console.log("onBefore....",this.data());
       this.next(); 
     }else{
       console.warn("template not found!!",this.params._id);

@@ -1,7 +1,9 @@
 
 
-// singleTemplateData
-// Publishes current template for the Editor including all editable fields.
+/* 
+singleTemplateData
+Publishes the current template used in the Editor, including all editable fields.
+*/ 
 
 Meteor.publish("singleTemplateData", function (_id,_userId) {
 
@@ -36,9 +38,10 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
 });
 
 
-// summaryTemplateData
-// Publishes the entire list of all Templates, limited to a few fields.
-
+/* 
+summaryTemplateData
+Publishes the entire list of all Templates, limited to a few fields.
+*/ 
 Meteor.publish("summaryTemplateData", function () {
   return TemplateCollection.find({}, {fields: {'name': 1,'likes':1 }} );
 });

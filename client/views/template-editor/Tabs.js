@@ -1,4 +1,7 @@
-
+/*
+Tabs
+Tabs which appear above each css, js, and html file.
+*/
 Template.Tabs.rendered = function(){
 
   $(document).ready(function() {
