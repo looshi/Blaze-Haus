@@ -2,7 +2,7 @@
  
   {{> Instructions}} 
 
-  {{#with currentTemplate}}
+
   <div class="editor-menu">
      
     <div class="left-controls">
@@ -24,14 +24,12 @@
       {{> RenameTemplateButton}}
     </div>
   </div>
- {{/with}}
+
 
   <div class="editor-container">
-
-    {{#with currentTemplate}}
-      {{> Tabs}}
-    {{/with}}
-
+  
+    {{> Tabs}}
+  
     <div class="tab">
       <div id="tab-1" class="tab-content">
         <textarea class="html-editor"></textarea>

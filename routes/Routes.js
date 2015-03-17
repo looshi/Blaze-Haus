@@ -19,9 +19,11 @@ Router.route('TemplateList', {
 
 var EditorController=RouteController.extend({
   template:"Editor",
-
+  waitOn: function(){
+    return this.subscribe("singleTemplateData",this.params._id,Session.get('userId'));
+  },
   data: function(){
-    return this.params._id;
+    return CurrentTemplate.findOne(this.params._id);
   },
   onBeforeAction:function(){
     if(this.data()){      
@@ -29,7 +31,7 @@ var EditorController=RouteController.extend({
       this.next(); 
     }else{
       console.warn("template not found!!",this.params._id);
-      //Router.go('/');
+      Router.go('/');
     }
   }
 });

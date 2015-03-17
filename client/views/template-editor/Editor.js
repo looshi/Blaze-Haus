@@ -30,8 +30,6 @@ Template.Editor.rendered = function(){
   this.renderedView = null; // Blaze View object we are rendering dynamically
   this.style = "not set"  // StyleSheet appended to the <head>
 
-
-  Meteor.subscribe("singleTemplateData",this.data,Session.get('userId'));
   startObservers(this);
 
 }
@@ -46,7 +44,6 @@ Template.Editor.helpers({
         return current;
       }
     }
-
   },
   htmlError : function(){
     return Template.instance().htmlError.get();
@@ -77,10 +74,8 @@ Template.Editor.destroyed = function(){
 
 var startObservers = function(self){
 
-  var templateId  = self.data; 
+  var templateId  = self.data._id; 
   var userId = Session.get('userId'); 
-
-  console.log("S O : " , templateId )
 
   CurrentTemplate.find({_id:templateId}).observeChanges({
 
@@ -108,9 +103,11 @@ var startObservers = function(self){
     },
 
     changed: function(id,doc){
-
+      console.log("changed " , id, doc );
       // The Publication only sends change events where this.userID!=doc.lastModifiedBy
-      // Someone else made this change, render it and update my editor
+
+      // if someone else made this change, render it and update my editor
+      // if I made the last change, render it, but don't update my editor
       if(doc.css){
         renderCSS(doc.css,"css",self);
         self.cssEditor.setValue(doc.css);
