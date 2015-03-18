@@ -106,7 +106,8 @@ var startObservers = function(self){
       createCollection(doc.json);
       self.jsonEditor.setValue(doc.json);
       self.jsonEditor.debounce("change",saveJSON,templateId,userId);
-      self.cssEditor.on("change",renderJSON,"json",self);  
+      self.cssEditor.on("change",renderJSON,"json",self); 
+      renderHTML('',null,self);
 
     },
 
