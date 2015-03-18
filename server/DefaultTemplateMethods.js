@@ -20,7 +20,6 @@ Meteor.methods({
 
     if(!TemplateCollection.findOne()){
       
-      defaultTemplate.json = JSON.stringify(MockPeople);
       var id = TemplateCollection.insert(defaultTemplate);
 
       console.log( " INSERTING " , TemplateCollection.findOne() );
@@ -55,7 +54,7 @@ defaultTemplate = {
   html: MockHTML,
   likes:0,
   js : MockJS,
-  json : ' ',
+  json : MockJSON,
   modified: new Date(),  // set these dates inside the methods
   lastModifiedBy: 'System',
   name : "Default",

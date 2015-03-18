@@ -40,6 +40,10 @@ MochaWeb.testOnly(function(){
       chai.assert.equal(newTemplate.js,MockJS);
     });
 
+    it("should contain default json", function(){
+      chai.assert.equal(newTemplate.json,MockJSON);
+    });
+
   });
   
   describe("SaveTemplate", function(){
@@ -55,6 +59,7 @@ MochaWeb.testOnly(function(){
         dataContext: 'mydata', 
         html: 'myhtml',
         js: 'myjs',
+        json : 'myjson',
         modified: new Date(), 
         lastModifiedBy: 'System',
         likes:2,
@@ -67,6 +72,7 @@ MochaWeb.testOnly(function(){
         dataContext: 'emydata', 
         html: 'emyhtml',
         js: 'emyjs',
+        json : 'emyjson',
         likes:3,
         modified: new Date(), 
         lastModifiedBy: 'eSystem',
@@ -97,6 +103,9 @@ MochaWeb.testOnly(function(){
     });
     it('should be able to save js' , function(){
       chai.assert.equal(savedTemplate.js,edits.js);
+    });
+    it('should be able to save json' , function(){
+      chai.assert.equal(savedTemplate.json,edits.json);
     });
     it('should be able to save css' , function(){
       chai.assert.equal(savedTemplate.css,edits.css);
@@ -182,6 +191,7 @@ MochaWeb.testOnly(function(){
         dataContext: 'mydata', 
         html: 'myhtml',
         js: 'myjs',
+        json : "myjson",
         likes:0,
         modified: new Date(), 
         lastModifiedBy: 'System',

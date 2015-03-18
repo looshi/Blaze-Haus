@@ -19,16 +19,6 @@ Template.Editor.created = function(){
   this.cssError = new ReactiveVar;
   this.cssError.set("ok");
 
-  // CollectionCollection = new Mongo.Collection(null);
-
-  // var data = MockPeople;
-
-  // _.each(data, function (document) {
-  //   CollectionCollection.insert(document);
-  // });
-
-  // console.log( " collection " , CollectionCollection.find().fetch() );
-
 }
 
 
@@ -113,11 +103,10 @@ var startObservers = function(self){
       renderCSS(doc.css,"css",self);
 
       self.jsonEditor = new TextEditor('json-editor','text/javascript','json'+templateId);
-      console.log( " DOC JSON " , doc.json );
+      createCollection(doc.json);
       self.jsonEditor.setValue(doc.json);
       self.jsonEditor.debounce("change",saveJSON,templateId,userId);
-      //self.jsonEditor.on("change",renderHTML,null,self);  
-      //renderHTML("",null,self);  
+      self.cssEditor.on("change",renderJSON,"json",self);  
 
     },
 
@@ -144,14 +133,13 @@ var startObservers = function(self){
       }
       if(doc.json){
         console.log("JSON CHANGED !! " );
-        // renderHTML(doc.json,"json",self);
-        // self.jsEditor.setValue(doc.js);
-        // Session.set('UserEditMessage',{file:"js",user:doc.lastModifiedBy});
+        renderHTML("",null,self);  
+        self.jsonEditor.setValue(doc.js);
+        Session.set('UserEditMessage',{file:"json",user:doc.lastModifiedBy});
       }
     }
   });
 }
-
 
 // if someone tries to save an empty file = issue #20
 
@@ -169,10 +157,34 @@ var saveCSS = function(text,templateId,userId){
 
 var saveJSON = function(text,templateId,userId){
   Meteor.call('saveJSON',text,templateId,userId);
+  createCollection(text);
+  renderHTML("",null,self);  
+}
+
+
+var createCollection = function(json){
+  var items = JSON.parse(json);
+  Data.remove({});
+  _.each(items,function(item){
+    Data.insert(item);
+  });
+}
+
+/**
+* renderJSON
+* updates the local 'Data' Collection 
+* calls render on the template
+* @param {String} newCSS,  css string
+* @param {String} codeType , redundant, but consistent with the other render functions
+* @param {Object} self , this Editor's Template instance
+*/
+var renderJSON = function(newJSON,codeType,self){
+
 }
 
 
 /**
+* renderCSS
 * applies CSS to the CSSOM, right now it will just continually append 
 * and override everything on the page, TODO, scope CSS to a given container, or leave it?
 * @param {String} newCSS,  css string
@@ -211,6 +223,7 @@ var destroyCSS = function(){
 var latestHTML = "";
 var latestJS = "";
 /**
+* renderHTML
 * renders html with a data context into the parent Dom object
 * @param {String} codeType, either js or html
 * @param {Object} self , this Editor's Template instance
