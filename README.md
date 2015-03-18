@@ -4,7 +4,7 @@ Demo application which reads and writes CSS and dynamic Meteor Blaze Templates v
 
 Stores Template code and CSS in the database. 
 
-<a href="http://live-template-editor.meteor.com/" target="_blank">view the demo here</a>
+<a href="http://blazer.meteor.com/" target="_blank">view the demo here</a>
 
 ![screenshot](https://cloud.githubusercontent.com/assets/1656829/6429598/4510a7a2-bf92-11e4-90c5-f0bd7c44b855.png)
 
