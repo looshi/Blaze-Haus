@@ -1,0 +1,98 @@
+<Template name="About">
+
+
+
+
+  <div class='instructions-container'>
+
+    
+    <div class="editor-container">
+
+      <h1>How it works</h1>
+      
+      <a href="http://docs.meteor.com/#/full/blaze">Blaze Documentation</a><br/><br/>
+
+      <a href="https://github.com/looshi/Blaze-Haus" target="_blank">View source on github.</a><br/>
+
+      The code that creates and renders the template at runtime is <a href="https://github.com/looshi/Blaze-Haus/blob/master/client/views/template-editor/Editor.js#L251" target="_blank">here.</a><br/><br/>
+
+
+
+      The editable 'files' are read and written to the database.<br/>
+      Upon edits to the respective file : <br/>
+      - A dynamic template is created and rendered from the html file.  <br/>
+      - Global helpers are defined by the .js file.  <br/>
+      - The styles in the .css file are applied to the CSSOM.<br/>
+      - The 'Data' collection is created from the .json file.<br/>
+
+
+    </div>
+    
+    <div class="editor-container">
+      <div>
+        <h1>Instructions</h1>
+
+        <h4>HTML</h4>
+
+        Loop through your 'Data' collection in the .html file like so : <br/><br/>
+        <span class='callout'>&#123;&#123;#each person&#125;&#125;</span><br/>
+        &nbsp;&nbsp;&nbsp; &lt;div&gt;the person's name is &#123;&#123;name&#125;&#125;&lt;/div&gt;<br/>
+        &nbsp;&nbsp;&nbsp; &lt;div&gt;and they are from &#123;&#123;country&#125;&#125;&lt;/div&gt;<br/>
+        <span class='callout'>&#123;&#123;/each&#125;&#125;</span><br/><br/>
+
+        Maximum allowed size : 2000 chars.
+
+        <h4>Javascript</h4>
+
+        Add helpers in the .js file like so : <br/><br/>
+        helpers = &#123;<br/>
+        &nbsp;&nbsp;person : function(num)&#123;<br/>
+        &nbsp;&nbsp;&nbsp; return Data.find();<br/>
+        &nbsp;&nbsp;&#125;,<br/>
+        &nbsp;&nbsp;timesFour : function(num)&#123;<br/>
+        &nbsp;&nbsp;&nbsp; return num*4;<br/>
+        &nbsp;&nbsp;&#125;,<br/>
+        &#125;<br/>
+        <br/>
+        Maximum allowed size : 2000 chars.
+
+        <h4>CSS</h4>
+        Maximum allowed size : 2000 chars.
+
+        <h4>JSON</h4>
+
+       The Data.json tab contains by default a data set you can use for your template.<br/>
+        <a href="https://www.mockaroo.com/">mockaroo.com</a> is a good tool to generate test data.<br/>
+        Maximum allowed size : 10000 chars.<br/>
+
+      </div>
+      <div>
+
+      In addition to the data available to your template from the Data.json tab, there are two collections available in the database, the 'PeopleCollection', and the 'AddressCollection'.<br/>
+      This allows you to work with more than one collection at a time if you want, since at this time we only support one collection import per template.<br/>
+      One document from the PeopleCollection looks like this : 
+      </div>
+      <div class='mongo'>
+        { &nbsp;&nbsp;country : 'China',<br/>
+        &nbsp;&nbsp;date : '1/1/2014','<br/>
+        &nbsp;&nbsp;city : 'Bijia','<br/>
+        &nbsp;&nbsp;company : 'Skajo',<br/>
+        &nbsp;&nbsp;name : 'Kathy',<br/>
+        &nbsp;&nbsp;color : '#ffff99' }
+      <br/>
+      </div>
+      One document from the AddressCollection looks like this : 
+      <div class='mongo'>
+        { &nbsp;&nbsp;name : 'Océane',<br/>
+        &nbsp;&nbsp;address : '1188 Northland Trail','<br/>
+        &nbsp;&nbsp;color : '#6fcfea','<br/>
+        &nbsp;&nbsp;order : '40',<br/>
+        &nbsp;&nbsp;description : 'eros suspen...',<br/>
+        &nbsp;&nbsp;ip_address : '221.195.221.255' }
+      </div><br/>
+
+    </div>
+
+  </div>
+
+</Template>

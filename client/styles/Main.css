@@ -24,6 +24,7 @@ button:hover{
 .main-title{
   padding : 12px;
   margin:0;
+  float:left;
 }
 .main-description{
   margin : 2px 12px 0;
