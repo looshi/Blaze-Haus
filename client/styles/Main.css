@@ -11,14 +11,15 @@ body{
 header{
   background-color:#EBEBEB;
   margin:0;
-  padding:12px;
+  padding:12px 12px 0;
 }
 button:hover{
   cursor:pointer;
   color:#A6344A;
 }
 .main-title{
-  margin : 12px 12px 0 12px;
+  padding : 12px;
+  margin:0;
 }
 .main-description{
   margin : 2px 12px 0;
