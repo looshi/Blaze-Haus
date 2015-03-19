@@ -11,7 +11,8 @@ body{
 header,.login-header{
   background-color:#EBEBEB;
   margin:0;
-  padding:12px 12px 0;
+  padding:12px;
+  font-family: monospace;
 }
 .login-header{
   height:38px;
@@ -157,12 +158,11 @@ a.template-list-item:hover{
 
 .footer-nav{
   position:fixed;
-  bottom:0;
-  background-color:rgba(255,255,255,.5);
+  bottom:20px;
   width:45%;
   height:10px;
-  padding:2%;
-  z-index:5;
+  padding:0;
+  z-index:500;
   border-radius: 16px;
 }
 #next-template-btn{
@@ -170,6 +170,17 @@ a.template-list-item:hover{
 }
 #previous-template-btn{
   float:left;
+}
+
+.template-next-prev-button{
+  background-color:#ccc;
+  padding:6px;
+  border-radius:4px;
+}
+.template-next-prev-button:hover{
+  cursor:pointer;
+  background-color:#aaa;
+  text-decoration: underline;
 }
 
 .login .username{

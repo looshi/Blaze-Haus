@@ -5,6 +5,8 @@ Template.DeleteTemplateButton.rendered = function(){
 Template.DeleteTemplateButton.events({
 
   'click #delete-template-btn' : function(e){
+    $('.menu-button').show();
+    $('.menu-confirmation').hide();
     $('#delete-template-btn').hide();
     $('#delete-template-controls').show();
     $('#delete-template-error').html('');

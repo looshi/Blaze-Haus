@@ -7,6 +7,8 @@ Template.CreateTemplateButton.rendered = function(){
 Template.CreateTemplateButton.events({
 
   'click #create-new-template-btn' : function(e){
+    $('.menu-button').show();
+    $('.menu-confirmation').hide();
     $('#create-new-template-btn').hide();
     $('#new-template-controls').show();
     $('#template-name-field').val('');
