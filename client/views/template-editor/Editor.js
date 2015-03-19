@@ -86,8 +86,13 @@ Template.Editor.destroyed = function(){
 var startObservers = function(self){
 
   var templateId  = self.data._id; 
-  var userId = Session.get('userId'); 
-
+  var userId;
+  if( Meteor.userId() ){
+    userId = Meteor.userId();
+  }else{
+    userId = Session.get('AnonymousUserId'); 
+  }
+  
   self.observer = CurrentTemplate.find({_id:templateId}).observeChanges({
 
     added : function(id,doc){
@@ -152,19 +157,19 @@ var startObservers = function(self){
 // if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId,userId){
-  Meteor.call('saveHTML',text,templateId,userId);
+  Meteor.call('SaveHTML',text,templateId,userId);
 }
 
 var saveJS = function(text,templateId,userId){
-  Meteor.call('saveJS',text,templateId,userId);
+  Meteor.call('SaveJS',text,templateId,userId);
 }
 
 var saveCSS = function(text,templateId,userId){
-  Meteor.call('saveCSS',text,templateId,userId);
+  Meteor.call('SaveCSS',text,templateId,userId);
 }
 
 var saveJSON = function(text,templateId,userId){
-  Meteor.call('saveJSON',text,templateId,userId); 
+  Meteor.call('SaveJSON',text,templateId,userId); 
 }
 
 

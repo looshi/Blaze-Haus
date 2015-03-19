@@ -16,7 +16,15 @@ Meteor.methods({
     if(name==='Default'){
       throw new Error("error, cannot use default name")
     }
+
     var template = defaultTemplate;
+
+    if(Meteor.userId()){
+      template.owner = Meteor.userId();
+    }else{
+      template.owner = 'anonymous';
+    }
+
     template.name = name;
     template.created = new Date();
     template.modified = new Date();
@@ -26,9 +34,16 @@ Meteor.methods({
     return newTemplate;
   },
 
-  DuplicateTemplate : function(_id,_name){
+  DuplicateTemplate : function(templateId,_name){
 
-    var template = TemplateCollection.findOne(_id);
+    var template = TemplateCollection.findOne(templateId);
+
+    if(Meteor.userId()){
+      template.owner = Meteor.userId();
+    }else{
+      template.owner = 'anonymous';
+    }
+
     delete template._id;
     template.name = _name;
     template.modified = new Date();
@@ -37,42 +52,19 @@ Meteor.methods({
     return newTemplate;
   },
 
-  SaveTemplate : function(id,options){
-    
-    var future = new Future();
+  DeleteTemplate : function(templateId){
 
-    if(options.name==='Default'){
-       future.throw("error, cannot use default name");
+    var template = TemplateCollection.findOne(templateId);
+
+    if( !canUpdate(templateId) ){
+      throw new Error("Cannot delete.");
     }
 
-    if(options.created){
-      delete options.created;
-    }
-    
-    TemplateCollection.update({_id:id}, {$set:options}, function(err,res){
-      if(err||res===0){
-        future.throw("Error saving template ", err);
-      }else{
-        future.return(res);
-      }
-    });
-
-    return future.wait();
-  },
-
-  DeleteTemplate : function(id){
-
-    var template = TemplateCollection.findOne(id);
-    if(template){
-      if(template.likes>10){
-        throw new Error("only admins can delete Templates with more than 10 likes.");
-      }
-    }
     if(template.name==='Default'){
       throw new Error("Cannot delete default.");
     }
 
-    return TemplateCollection.remove({_id:id});
+    return TemplateCollection.remove({_id:templateId});
 
   },
 
@@ -82,55 +74,103 @@ Meteor.methods({
     
   },
 
-  saveHTML : function(newHTML,templateId,userId){
+  SaveHTML : function(newHTML,templateId,userId){
 
-    TemplateCollection.update({_id:templateId},{$set:{html:newHTML,lastModifiedBy:userId}},function(err,res){
+    var future = new Future();
+  
+    if( !canUpdate(templateId) ){
+      future.throw("Error Cannot saveHTML.");
+      future.return();
+    }
+
+    var fields = {html:newHTML,lastModifiedBy:userId,modified:new Date()};
+
+    TemplateCollection.update({_id:templateId},{$set:fields},function(err,res){
       if(err||res===0){
-        console.log("saveHTML err",err, res);
+        future.throw('SaveHTML error '+err);
       }else{
-        //console.log("saveHTML OK!", res);
+        future.return(res); 
       }
     });
+
+    return future.wait();
     
   },
 
-  saveJS : function(newJS,templateId,userId){
+  SaveJS : function(newJS,templateId,userId){
 
-    TemplateCollection.update({_id:templateId},{$set:{js:newJS,lastModifiedBy:userId}},function(err,res){
+    var future = new Future();
+
+    if( !canUpdate(templateId) ){
+      future.throw("Error Cannot saveJS.");
+      future.return();
+    }
+
+    var fields = {js:newJS,lastModifiedBy:userId,modified:new Date()};
+
+    TemplateCollection.update({_id:templateId},{$set:fields},function(err,res){
       if(err||res===0){
-        console.log("saveJS err",err, res);
+        future.throw("saveJS err",err, res);
       }else{
-
+        future.return(res); 
       }
     });
-    
+
+    return future.wait();
   },
 
-  saveJSON : function(newJSON,templateId,userId){
+  SaveJSON : function(newJSON,templateId,userId){
+    
+    var future = new Future();
 
-    TemplateCollection.update({_id:templateId},{$set:{json:newJSON,lastModifiedBy:userId}},function(err,res){
+    if( !canUpdate(templateId) ){
+      future.throw("Error Cannot saveJSON.");
+      future.return();
+    }
+
+    var fields = {json:newJSON,lastModifiedBy:userId,modified:new Date()};
+
+    TemplateCollection.update({_id:templateId},{$set:fields},function(err,res){
       if(err||res===0){
-        console.log("saveJSON err",err, res);
+        future.throw("saveJSON err",err, res);
       }else{
-        //console.log("saveJSON OK!", res);
+        future.return(res); 
       }
     });
-    
+
+    return future.wait();
   },
 
-  saveCSS : function(newCSS,templateId,userId){
+  SaveCSS : function(newCSS,templateId,userId){
+    
+    var future = new Future();
 
-    TemplateCollection.update({_id:templateId},{$set:{css:newCSS,lastModifiedBy:userId}},function(err,res){
+    if( !canUpdate(templateId) ){
+      future.throw("Error Cannot saveCSS.");
+      future.return();
+    }
+
+    var fields = {css:newCSS,lastModifiedBy:userId,modified:new Date()};
+
+    TemplateCollection.update({_id:templateId},{$set:fields},function(err,res){
       if(err||res===0){
-        console.log("saveCSS error",err, res);
+        future.throw("saveCSS error",err, res);
       }else{
-        //console.log("saveCSS OK!",res);
+        future.return(res); 
       }
     });
-    
+
+    return future.wait();
   },
+
+
   RenameTemplate : function(newName,templateId,userId){
     
+
+    if( !canUpdate(templateId) ){
+      throw new Error("Cannot rename.");
+    }
+
     if(newName==='Default'){
        throw new Error("error, cannot use default name");
     }
@@ -147,3 +187,26 @@ Meteor.methods({
 
 
 });
+
+/*
+canUpdate
+returns true if the template was created by anonymous
+returns true if the userId == owner
+returns false if the template owner is a logged in User and (template.owner !== userId)
+*/
+var canUpdate = function(templateId){
+  
+  var template = TemplateCollection.findOne(templateId);
+  
+  if(template.owner === 'anonymous'){
+    return true;                           // anonymous templates can be udpated or deleted by everyone
+  }
+
+  if( Meteor.userId()===template.owner ){
+    return true;                           // user templates can only be udpated by their owner
+                                           // template edits will still render in the client, but they won't save
+  }
+
+  return false;
+
+}
