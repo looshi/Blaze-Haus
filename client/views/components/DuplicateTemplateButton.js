@@ -7,6 +7,8 @@ Template.DuplicateTemplateButton.rendered = function(){
 Template.DuplicateTemplateButton.events({
 
   'click #duplicate-template-btn' : function(e){
+    $('.menu-button').show();
+    $('.menu-confirmation').hide();
     $('#duplicate-template-btn').hide();
     $('#duplicate-template-controls').show();
     $('#duplicate-template-name-field').val(this.name+'Copy');
@@ -31,6 +33,8 @@ Template.DuplicateTemplateButton.events({
     }); 
   },
   'click #cancel-duplicate-template-btn' : function(e){
+    $('.menu-button').show();
+    $('.menu-confirmation').hide();
     $('#duplicate-template-btn').show();
     $('#duplicate-template-controls').hide();
     $('#duplicate-template-name-field').val('');

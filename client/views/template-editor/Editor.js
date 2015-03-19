@@ -173,9 +173,14 @@ var createCollection = function(json,self){
   try{
     var items = JSON.parse(json);
     Data.remove({});
-    _.each(items,function(item){
-      Data.insert(item);
-    });
+    if(items instanceof Array){
+      _.each(items,function(item){
+        Data.insert(item);
+      });
+    }else{
+      throw new Error("JSON items must be in array.")
+    }
+
   }catch(e){self.jsonError.set(e);}
   
 }

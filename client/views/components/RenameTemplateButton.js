@@ -7,6 +7,8 @@ Template.RenameTemplateButton.rendered = function(){
 Template.RenameTemplateButton.events({
 
   'click #rename-template-btn' : function(e){
+    $('.menu-button').show();
+    $('.menu-confirmation').hide();
     $('#rename-template-btn').hide();
     $('#rename-template-controls').show();
     $('#template-name-field').val('');
