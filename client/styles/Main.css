@@ -8,11 +8,15 @@ body{
   padding:0;
 }
 
-header{
+header,.login-header{
   background-color:#EBEBEB;
   margin:0;
   padding:12px 12px 0;
 }
+.login-header{
+  height:38px;
+}
+
 button:hover{
   cursor:pointer;
   color:#A6344A;
@@ -165,4 +169,14 @@ a.template-list-item:hover{
 }
 #previous-template-btn{
   float:left;
+}
+
+.login .username{
+  color:#596595;
+  display:inline-block;
+}
+img.avatar{
+  display:inline-block;
+  border-radius:4px;
+  vertical-align: middle;
 }
