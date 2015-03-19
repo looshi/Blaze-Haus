@@ -9,18 +9,18 @@
     <div class="editor-container">
 
       <h1>How it works</h1>
+
       
       <a href="http://docs.meteor.com/#/full/blaze">Blaze Documentation</a><br/><br/>
 
-      <a href="https://github.com/looshi/Blaze-Haus" target="_blank">View source on github.</a><br/>
+      The code of interest that renders the template is <a href="https://github.com/looshi/Blaze-Haus/blob/master/client/views/template-editor/Editor.js#L251" target="_blank">here.</a><br/><br/>
 
-      The code that creates and renders the template at runtime is <a href="https://github.com/looshi/Blaze-Haus/blob/master/client/views/template-editor/Editor.js#L251" target="_blank">here.</a><br/><br/>
-
+      <a href="https://github.com/looshi/Blaze-Haus" target="_blank">source on github</a><br/><br/>
 
 
       The editable 'files' are read and written to the database.<br/>
       Upon edits to the respective file : <br/>
-      - A dynamic template is created and rendered from the html file.  <br/>
+      - A dynamic template is created and rendered from the .html file.  <br/>
       - Global helpers are defined by the .js file.  <br/>
       - The styles in the .css file are applied to the CSSOM.<br/>
       - The 'Data' collection is created from the .json file.<br/>
@@ -34,11 +34,13 @@
 
         <h4>HTML</h4>
 
-        Loop through your 'Data' collection in the .html file like so : <br/><br/>
+        Use spacebars syntax in the HTML file like so : <br/><br/>
         <span class='callout'>&#123;&#123;#each person&#125;&#125;</span><br/>
         &nbsp;&nbsp;&nbsp; &lt;div&gt;the person's name is &#123;&#123;name&#125;&#125;&lt;/div&gt;<br/>
         &nbsp;&nbsp;&nbsp; &lt;div&gt;and they are from &#123;&#123;country&#125;&#125;&lt;/div&gt;<br/>
         <span class='callout'>&#123;&#123;/each&#125;&#125;</span><br/><br/>
+
+        <a href="https://www.discovermeteor.com/blog/spacebars-secrets-exploring-meteor-new-templating-engine/" target="_blank">good article about spacebars from discovermeteor.com</a><br/><br/>
 
         Maximum allowed size : 2000 chars.
 
@@ -57,11 +59,14 @@
         Maximum allowed size : 2000 chars.
 
         <h4>CSS</h4>
+        Edit the CSS file and style your template.<br/>
+        We don't scope the CSS, so you can make the rest of the page look better too if you want.<br/>
         Maximum allowed size : 2000 chars.
 
         <h4>JSON</h4>
 
-       The Data.json tab contains by default a data set you can use for your template.<br/>
+        The 'Data' Collection is populated with data from the Data.json file.<br/>
+        Edit the default JSON, or import your own.<br/>
         <a href="https://www.mockaroo.com/">mockaroo.com</a> is a good tool to generate test data.<br/>
         Maximum allowed size : 10000 chars.<br/>
 
