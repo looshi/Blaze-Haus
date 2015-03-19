@@ -1,10 +1,17 @@
 <Template name='TemplateList'>
-
+  {{> Header}}
   <div class="editor-menu">
+   
+  
+    <div class="left-controls">
+      {{> CreateTemplateButton}}
+    </div>
     
-   {{> CreateTemplateButton}}
+    <div class="right-controls">
+      {{getNumTemplates}} Templates in the Haus!
+    </div>
   </div>
-
+  
   <div class="template-list">
 
     {{#each templates}}
