@@ -254,19 +254,21 @@ var renderHTML = function(text,codeType,self){
 
     parent.innerHTML = "";      // clear the output and re-render it
     
-    Blaze._globalHelpers = {};  // removes all global helpers, TODO : scope it to this instance
-
     var helpers = eval(latestJS);
     
     for(var key in helpers){
-      Blaze.registerHelper(key, createHelper(helpers,key));
+      Blaze.registerHelper(key, createHelper(helpers,key)); // uses Global helpers, 
+                                                            // is it possible to apply helpers to the View instance?
     }
 
     self.renderedView =  Blaze.render(view,parent);
 
     self.renderedView._domrange.destroy();   // renders a view then destroys it every single time
-                                             // possible to re-render only the parts that changed ?
-                                             // what's best destroy method(s) to call here ? 
+
+    for(var key in helpers){
+      delete Blaze._globalHelpers[key];  // clean up Global helpers after they're done
+    }
+
   }catch(e){ 
     self.htmlError.set(e);
   }
