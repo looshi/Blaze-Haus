@@ -17,6 +17,10 @@ Router.route('TemplateList', {
   path:'/',     
 });
 
+Router.route('About', {
+  path:'/about',     
+});
+
 var EditorController=RouteController.extend({
   template:"Editor",
   waitOn: function(){
