@@ -20,9 +20,7 @@ Meteor.methods({
 
     if(!TemplateCollection.findOne()){
       
-      var id = TemplateCollection.insert(defaultTemplate);
-
-      console.log( " INSERTING " , TemplateCollection.findOne() );
+      TemplateCollection.insert(defaultTemplate);
       
     }
   },

@@ -19,6 +19,8 @@ Template.Editor.created = function(){
   this.cssError = new ReactiveVar;
   this.cssError.set("ok");
 
+  this.jsonError = new ReactiveVar;
+  this.jsonError.set("ok");
 }
 
 
@@ -48,14 +50,20 @@ Template.Editor.helpers({
   htmlError : function(){
     return Template.instance().htmlError.get();
   },
-  cssError : function(){
-    return Template.instance().cssError.get();
-  },
   htmlErrorClass : function(){
     return Template.instance().htmlError.get()==="ok" ? "errorPanel ok" : "errorPanel";
   },
+  cssError : function(){
+    return Template.instance().cssError.get();
+  },
   cssErrorClass : function(){
     return Template.instance().cssError.get()==="ok" ? "errorPanel ok" : "errorPanel";
+  },
+  jsonError : function(){
+    return Template.instance().jsonError.get();
+  },
+  jsonErrorClass : function(){
+    return Template.instance().jsonError.get()==="ok" ? "errorPanel ok" : "errorPanel";
   } 
 });
 
@@ -103,10 +111,10 @@ var startObservers = function(self){
       renderCSS(doc.css,"css",self);
 
       self.jsonEditor = new TextEditor('json-editor','text/javascript','json'+templateId);
-      createCollection(doc.json);
+      createCollection(doc.json,self);
       self.jsonEditor.setValue(doc.json);
       self.jsonEditor.debounce("change",saveJSON,templateId,userId);
-      self.cssEditor.on("change",renderJSON,"json",self); 
+      self.jsonEditor.on("change",renderJSON,"json",self); 
       renderHTML('',null,self);
 
     },
@@ -133,7 +141,6 @@ var startObservers = function(self){
         Session.set('UserEditMessage',{file:"js",user:doc.lastModifiedBy});
       }
       if(doc.json){
-        console.log("JSON CHANGED !! " );
         renderHTML("",null,self);  
         self.jsonEditor.setValue(doc.js);
         Session.set('UserEditMessage',{file:"json",user:doc.lastModifiedBy});
@@ -157,30 +164,33 @@ var saveCSS = function(text,templateId,userId){
 }
 
 var saveJSON = function(text,templateId,userId){
-  Meteor.call('saveJSON',text,templateId,userId);
-  createCollection(text);
-  renderHTML("",null,self);  
+  Meteor.call('saveJSON',text,templateId,userId); 
 }
 
 
-var createCollection = function(json){
-  var items = JSON.parse(json);
-  Data.remove({});
-  _.each(items,function(item){
-    Data.insert(item);
-  });
+var createCollection = function(json,self){
+  self.jsonError.set("ok");
+  try{
+    var items = JSON.parse(json);
+    Data.remove({});
+    _.each(items,function(item){
+      Data.insert(item);
+    });
+  }catch(e){self.jsonError.set(e);}
+  
 }
 
 /**
 * renderJSON
-* updates the local 'Data' Collection 
+* re-creates the local 'Data' Collection 
 * calls render on the template
-* @param {String} newCSS,  css string
+* @param {String} newJSON,  the json data to be inserted into the Data Collection
 * @param {String} codeType , redundant, but consistent with the other render functions
-* @param {Object} self , this Editor's Template instance
+* @param {Object} self , this Template.Editor instance
 */
 var renderJSON = function(newJSON,codeType,self){
-
+  createCollection(newJSON,self);
+  renderHTML("",null,self); 
 }
 
 
@@ -190,7 +200,7 @@ var renderJSON = function(newJSON,codeType,self){
 * and override everything on the page, TODO, scope CSS to a given container, or leave it?
 * @param {String} newCSS,  css string
 * @param {String} codeType , redundant, but consistent with the other render functions
-* @param {Object} self , this Editor's Template instance
+* @param {Object} self , this Template.Editor instance
 */
 var renderCSS = function(newCSS,codeType,self){
 
@@ -227,12 +237,13 @@ var latestJS = "";
 * renderHTML
 * renders html with a data context into the parent Dom object
 * @param {String} codeType, either js or html
-* @param {Object} self , this Editor's Template instance
+* @param {Object} self , this Template.Editor instance
 */
 var renderHTML = function(text,codeType,self){
 
-
-  self.htmlError.set("ok");
+  if(self.htmlError){
+    self.htmlError.set("ok");
+  }
 
   if(codeType==="html"){
     latestHTML = text;
