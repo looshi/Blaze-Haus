@@ -112,7 +112,7 @@ Meteor.methods({
       if(err||res===0){
         console.log("saveJSON err",err, res);
       }else{
-        console.log("saveJSON OK!", res);
+        //console.log("saveJSON OK!", res);
       }
     });
     
