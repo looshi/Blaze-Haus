@@ -8,12 +8,13 @@
      
     <div class="left-controls">
       <div class="template-title">
-        {{name}}
+        {{name}} {{> TemplateOwner}}
+      </div>
+      <div class="template-like-button">
+        {{> LikeButton}}
       </div>
       
-      {{> LikeButton}}
-      
-      <div class="template-title">last modified : 
+      <div class="template-date"> 
         {{modified.getMonth}}/{{modified.getDate}}/{{modified.getUTCFullYear}}
       </div>
     </div>

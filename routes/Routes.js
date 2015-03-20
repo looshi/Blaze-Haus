@@ -48,3 +48,27 @@ Router.route('Editor', {
   }
 });
 
+
+var UserProfileController=RouteController.extend({
+  template:"UserProfile",
+  data: function(){
+    return Meteor.users.findOne(this.params._id);
+  },
+  onBeforeAction:function(){
+    if(this.data()){      
+      this.next(); 
+    }else{
+      console.warn("user not found!!",this.params._id);
+      Router.go('/');
+    }
+  }
+});
+
+
+Router.route('UserProfile', {
+  path:'/user/:_id',
+  controller:UserProfileController,
+  action:function(){
+    this.render('UserProfile');
+  }     
+});

@@ -67,11 +67,25 @@ button:hover{
   right:16px;
 }
 
+.template-date{
+  display:inline;
+}
 .template-title{
   display:inline;
   padding-left:18px;
+  font-size:24px;
+  font-weight:bold;
+  color:#222;
+  font-family: monospace;
 }
-
+.template-title img{
+  vertical-align: middle;
+  border-radius: 4px;
+}
+.template-like-button{
+  display:inline;
+  padding:0px 24px;
+}
 
 #like-template-btn{
   width:60px !important;
@@ -146,6 +160,9 @@ a#toggle-directions {
 .template-list-owner{
   float:left;
   width:24px;
+}
+.template-list-item .anonymous-owner{
+  display:none;
 }
 
 .template-list-owner a img, 
@@ -246,4 +263,10 @@ img.avatar{
   display:inline-block;
   border-radius:4px;
   vertical-align: middle;
+}
+
+.user-profile{
+  font-family: monospace;
+  color:blue;
+  padding:24px;
 }
