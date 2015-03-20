@@ -7,11 +7,7 @@
     </div>
     
     <div class="login right-controls">
-      {{#if currentUser}}
-        <img class="avatar" src='{{githubAvatar 18}}'/>
-        <div class="username">{{githubUsername}}</div>
-      {{/if}}
-      {{> loginButtons}}
+      {{> LoginForm}}
     </div>    
   </div>
 </Template>

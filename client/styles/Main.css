@@ -13,9 +13,25 @@ header,.login-header{
   margin:0;
   padding:12px;
   font-family: monospace;
+  color:blue;
+}
+
+.login-header a,
+.login-header a:visited{
+  color:blue;
 }
 .login-header{
   height:38px;
+}
+.auth-button{
+  background:#eee;
+  color:blue;
+  padding:4px;
+  border-radius:4px;
+}
+.auth-button:hover{
+  color:#000;
+  cursor:pointer;
 }
 
 button:hover{
