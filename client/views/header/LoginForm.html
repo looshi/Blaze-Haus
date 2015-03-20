@@ -1,8 +1,11 @@
 <Template name="LoginForm">
   {{#if currentUser}}
-    <img class="avatar" src='{{githubAvatar 18}}'/>
-    <div class="username">{{githubUsername}}</div>
+    <a class = 'login-profile' href="/user/{{getUserId}}">
+      <img class="avatar" src='{{githubAvatar 18}}'/>
+      <div class="username">{{githubUsername}}</div>
+    </a>
     <a id='logout-button' class='auth-button'>Logout</a>
+
   {{else}}
     {{#if loggingIn}}
       Logging in...

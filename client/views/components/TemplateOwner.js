@@ -11,7 +11,7 @@ Template.TemplateOwner.helpers({
         return html;
       }
     }else{
-      return "<span class='anonymous-owner'>anonymous</span>";
+      return "&nbsp;";
     }
   }
 });
