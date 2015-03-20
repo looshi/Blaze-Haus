@@ -54,6 +54,7 @@ button:hover{
   padding:12px;
   background-color:#DDDDDD;
   min-height:36px;
+  font-family:monospace;
 }
 .template-menu{
   display:inline-block;
