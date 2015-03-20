@@ -1,0 +1,19 @@
+<Template name="UserProfile">
+
+  <div class="user-profile">
+    <img src='https://avatars.githubusercontent.com/u/{{services.github.id}}?s=200'/>
+    <h1>{{services.github.username}}</h1>
+    
+    <h3>{{getNumUserTemplates}} templates in the haus : </h3>
+    {{#each getUserTemplates}}
+      <div class='template-list-item'>
+        <a class="template-link" href="/{{_id}}">
+          <div class='template-list-name'>{{name}}</div>
+          <div class='template-list-likes'>&#9829; {{likes}}</div>
+        </a>
+      </div>
+    {{/each}}
+
+  </div>
+
+</Template>
