@@ -76,13 +76,13 @@ Meteor.methods({
 
   SaveHTML : function(newHTML,templateId,userId){
 
-    var future = new Future();
-  
     if( !canUpdate(templateId) ){
-      future.throw("Error Cannot saveHTML.");
-      future.return();
+      throw new Error("Error Cannot saveHTML.");
+      return;
     }
 
+    var future = new Future();
+    
     var fields = {html:newHTML,lastModifiedBy:userId,modified:new Date()};
 
     TemplateCollection.update({_id:templateId},{$set:fields},function(err,res){
@@ -99,12 +99,12 @@ Meteor.methods({
 
   SaveJS : function(newJS,templateId,userId){
 
-    var future = new Future();
-
     if( !canUpdate(templateId) ){
-      future.throw("Error Cannot saveJS.");
-      future.return();
+      throw new Error("Error Cannot saveJS.");
+      return;
     }
+
+    var future = new Future();
 
     var fields = {js:newJS,lastModifiedBy:userId,modified:new Date()};
 
@@ -120,13 +120,13 @@ Meteor.methods({
   },
 
   SaveJSON : function(newJSON,templateId,userId){
-    
-    var future = new Future();
 
     if( !canUpdate(templateId) ){
-      future.throw("Error Cannot saveJSON.");
-      future.return();
+      throw new Error("Error Cannot saveJSON.");
+      return;
     }
+
+    var future = new Future();
 
     var fields = {json:newJSON,lastModifiedBy:userId,modified:new Date()};
 
@@ -143,12 +143,12 @@ Meteor.methods({
 
   SaveCSS : function(newCSS,templateId,userId){
     
-    var future = new Future();
-
     if( !canUpdate(templateId) ){
-      future.throw("Error Cannot saveCSS.");
-      future.return();
+      throw new Error("Error Cannot saveCSS.");
+      return;
     }
+
+    var future = new Future();
 
     var fields = {css:newCSS,lastModifiedBy:userId,modified:new Date()};
 
