@@ -22,8 +22,11 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
 
       var userMadeChange = (_userId===TemplateCollection.findOne(_id).lastModifiedBy);
 
+      console.log("user : " , _userId , "modified by : " , TemplateCollection.findOne(_id).lastModifiedBy );
+      console.log("/////////////");
+
       if( !userMadeChange || fields.name ){
-        self.changed("CurrentTemplate",id,fields);  // Only publish changes if a different user made the edit
+        self.changed("CurrentTemplate",id,fields);  // Only publish changes if a different user made the edit, or user renamed template
       }      
     },
     removed: function (id) {

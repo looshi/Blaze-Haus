@@ -24,7 +24,8 @@ Router.route('About', {
 var EditorController=RouteController.extend({
   template:"Editor",
   waitOn: function(){
-    return this.subscribe("singleTemplateData",this.params._id,Session.get('userId'));
+    var userId = Meteor.userId() ? Meteor.userId() : Session.get('AnonymousUserId');
+    return this.subscribe("singleTemplateData",this.params._id,userId);
   },
   data: function(){
     return CurrentTemplate.findOne(this.params._id);

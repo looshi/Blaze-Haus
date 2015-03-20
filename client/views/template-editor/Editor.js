@@ -130,11 +130,6 @@ var startObservers = function(self){
       // If someone else made this change, render the template, and update my editor.
       // If I made the last change, I won't recieve this change event.
 
-      if(doc.css){
-        renderCSS(doc.css,"css",self);
-        self.cssEditor.setValue(doc.css);
-        Session.set('UserEditMessage',{file:"css",user:doc.lastModifiedBy});
-      }
       if(doc.html){
         renderHTML(doc.html,"html",self);
         self.htmlEditor.setValue(doc.html);
@@ -145,6 +140,13 @@ var startObservers = function(self){
         self.jsEditor.setValue(doc.js);
         Session.set('UserEditMessage',{file:"js",user:doc.lastModifiedBy});
       }
+
+      if(doc.css){
+        renderCSS(doc.css,"css",self);
+        self.cssEditor.setValue(doc.css);
+        Session.set('UserEditMessage',{file:"css",user:doc.lastModifiedBy});
+      }
+
       if(doc.json){
         renderHTML("",null,self);  
         self.jsonEditor.setValue(doc.js);
@@ -157,6 +159,7 @@ var startObservers = function(self){
 // if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId,userId){
+  console.log("Save HTML!!");
   Meteor.call('SaveHTML',text,templateId,userId);
 }
 
