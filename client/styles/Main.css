@@ -118,11 +118,31 @@ a#toggle-directions {
   margin-top:-32px;
 }
 
+.editor-curtain{
+  background-color:white;
+  height:100%;
+  width:100%;
+  position:absolute;
+  z-index:999;
+}
 .editor-container{
-  width:45%;
   display:inline-block;
   vertical-align:top;
   padding:2%;
+}
+
+.source-code{
+  width:45%;
+}
+
+.rendered-output{
+  width:45%;
+}
+
+.rendered-output.full-screen{
+  width: calc(100% - 32px);
+  padding:16px;
+  margin:0 auto;
 }
 
 .template-list{
@@ -268,7 +288,15 @@ img.avatar{
   border-radius:4px;
   vertical-align: middle;
 }
-
+.avatar-link{
+  text-decoration: none;
+}
+.avatar-link img{
+  padding-right:12px;
+}
+.avatar-link:hover{
+  text-decoration: underline;
+}
 .user-profile{
   font-family: monospace;
   color:blue;

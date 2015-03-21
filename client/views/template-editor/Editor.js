@@ -134,7 +134,6 @@ var startObservers = function(self){
 
     changed : function(id,doc){
 
-      console.log("I'm still running!!! " );
       // The Publication will only send change events where (this.userId!=doc.lastModifiedBy)
       // If someone else made this change, render the template, and update my editor.
       // If I made the last change, I won't recieve this change event.
