@@ -50,9 +50,11 @@
 }
 
 .tabs-menu li a {
-  padding: 10px;
+  padding: 0 10px;
   color: #fff;
   text-decoration: none;
+  width:100%;
+  display:inline-block;
 }
 .tabs-menu li a:hover,
 .tabs-menu li a:visited,

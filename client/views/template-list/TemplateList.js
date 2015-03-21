@@ -10,6 +10,13 @@ Template.TemplateList.helpers({
   },
   getNumTemplates : function(){
     return TemplateCollection.find().count();
+  },
+  getLikes : function(){
+    console.log("likes " , this.likes );
+    if(this.likes>0){
+      return "&#9829;  "+this.likes;
+    }
+     
   }
 
 })

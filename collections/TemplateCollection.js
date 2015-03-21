@@ -63,15 +63,36 @@ Schemas.TemplateCollection = new SimpleSchema({
 
 TemplateCollection.attachSchema(Schemas.TemplateCollection);
 
-// allow it all for now
-TemplateCollection.allow({
-  insert: function () {
-    return true;
-  },
-  update: function () {  // TODO don't allow name : 'DefaultTemplate' 
-    return true;
-  },
-  remove: function () {
-    return true;
-  }
-});
+
+
+
+if(Meteor.isClient){
+
+  TemplateCollection.allow({
+    insert: function () {
+      return false;
+    },
+    update: function () {
+      return false;
+    },
+    remove: function () {
+      return false;
+    }
+  });
+
+}
+if(Meteor.isServer){
+  TemplateCollection.allow({
+    insert: function () {
+      return true;
+    },
+    update: function () {
+      return true;
+    },
+    remove: function () {
+      return true;
+    }
+  });
+}
+
+

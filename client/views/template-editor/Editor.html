@@ -8,13 +8,17 @@
      
     <div class="left-controls">
       <div class="template-title">
-        {{name}}
+        {{name}} {{{templateOwnerAvatar this}}}
+      </div>
+      <div class="template-like-button">
+        {{> LikeButton}}
       </div>
       
-      {{> LikeButton}}
-      
-      <div class="template-title">last modified : 
+      <div class="template-date"> 
         {{modified.getMonth}}/{{modified.getDate}}/{{modified.getUTCFullYear}}
+      </div>
+      <div class="template-like-button"> 
+        {{> ToggleSourceCode}}
       </div>
     </div>
     
@@ -26,8 +30,8 @@
     </div>
   </div>
 
-
-  <div class="editor-container">
+  <div class="editor-curtain"> </div> <!-- used to hide loading glitches -->
+  <div class="editor-container source-code">
   
     {{> Tabs}}
   
@@ -50,14 +54,14 @@
       </div>
     </div>
 
-   {{> FooterNav}} 
-    
   </div>
 
-  <div class="editor-container rendered-output">
+
+  <div class="editor-container rendered-output full-screen">
     <div id="htmlOutput"></div>
   </div>
 
+  {{> FooterNav}} 
   
   
 </Template>

@@ -1,15 +1,21 @@
 /*
-we don't have accounts 
-so all this does is set a Session variable
-for the current user.
+AnonymousUserId
+for non-logged in users 
 */
 
 if(Meteor.isClient){
 
   Meteor.startup(function(){
     var userId = Random.id();
-    Session.set('userId',userId); 
+    Session.set('AnonymousUserId','anon'+userId); 
   });
 
 
 }
+
+
+Meteor.users.allow({
+  update: function() {
+    return false;
+  }
+});

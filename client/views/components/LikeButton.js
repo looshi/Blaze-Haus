@@ -2,7 +2,7 @@ Template.LikeButton.events({
 
   'click #like-template-btn' : function(e){
 
-    var userId = Session.get('userId');
+    var userId = Session.get('AnonymousUserId');
     
     if( Session.get('voted'+this._id) ){
       console.warn('aready voted.');

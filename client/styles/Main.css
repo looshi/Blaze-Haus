@@ -11,10 +11,30 @@ body{
 header,.login-header{
   background-color:#EBEBEB;
   margin:0;
-  padding:12px 12px 0;
+  padding:12px;
+  font-family: monospace;
+  color:blue;
+}
+
+.login-header a,
+.login-header a:visited{
+  color:blue;
 }
 .login-header{
   height:38px;
+}
+.login-profile{
+  text-decoration: none;
+}
+.auth-button{
+  background:#eee;
+  color:blue;
+  padding:4px;
+  border-radius:4px;
+}
+.auth-button:hover{
+  color:#000;
+  cursor:pointer;
 }
 
 button:hover{
@@ -34,6 +54,7 @@ button:hover{
   padding:12px;
   background-color:#DDDDDD;
   min-height:36px;
+  font-family:monospace;
 }
 .template-menu{
   display:inline-block;
@@ -50,11 +71,25 @@ button:hover{
   right:16px;
 }
 
+.template-date{
+  display:inline;
+}
 .template-title{
   display:inline;
   padding-left:18px;
+  font-size:24px;
+  font-weight:bold;
+  color:#222;
+  font-family: monospace;
 }
-
+.template-title img{
+  vertical-align: middle;
+  border-radius: 4px;
+}
+.template-like-button{
+  display:inline;
+  padding:0px 24px;
+}
 
 #like-template-btn{
   width:60px !important;
@@ -83,33 +118,102 @@ a#toggle-directions {
   margin-top:-32px;
 }
 
+.editor-curtain{
+  background-color:white;
+  height:100%;
+  width:100%;
+  position:absolute;
+  z-index:999;
+}
 .editor-container{
-  width:45%;
   display:inline-block;
   vertical-align:top;
   padding:2%;
 }
 
+.source-code{
+  width:45%;
+}
+
+.rendered-output{
+  width:45%;
+}
+
+.rendered-output.full-screen{
+  width: calc(100% - 32px);
+  padding:16px;
+  margin:0 auto;
+}
+
+.about-container{
+  display:inline-block;
+  width:45%;
+  float:left;
+  padding:2%;
+}
+
 .template-list{
+  padding:16px;
   text-decoration: none;
   display:inline-block;
   
 }
-a.template-list-item{
-  padding:0px 12px;
+.template-list-item{
   display:inline-block;
-  min-width:200px;
 }
-a.template-list-item:hover{
-  background-color:#000;
+.template-link{
+  width:140px;
+}
+.template-list-item a{
+  padding:2px 14px;  
+  display:inline-block;
+  text-decoration:none;
+}
+.template-list-item img{
+  vertical-align: top;
+  border-radius: 4px;
+}
+.template-list-item a:hover{
+  background-color:blue;
   color:#fff;
+
 }
-.template-list-item.name{
+.template-list-name{
   float:left;
+  width: 110px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.template-list-item.date{
+.template-list-likes{
   float:right;
 }
+.template-list-owner{
+  float:left;
+  width:24px;
+}
+.template-list-item .anonymous-owner{
+  display:none;
+}
+
+.template-list-owner a img, 
+.template-list-owner a{ 
+  border: none; 
+  overflow: hidden; 
+  float: left; 
+  padding:0;
+  margin:0;
+ 
+}
+.template-list-owner a:hover{ 
+  border: 4px solid blue; 
+  background:none;
+  border-radius: 4px;
+}
+.template-list-owner a:hover img{ 
+  margin: -4px; 
+}
+
 
 .editor-instructions h4{
   margin-bottom:0px;
@@ -157,19 +261,34 @@ a.template-list-item:hover{
 
 .footer-nav{
   position:fixed;
-  bottom:0;
-  background-color:rgba(255,255,255,.5);
-  width:45%;
+  bottom:20px;
+  width:100px;
   height:10px;
-  padding:2%;
-  z-index:5;
+  padding:0;
+  z-index:500;
   border-radius: 16px;
 }
 #next-template-btn{
-  float:right;
+  position:fixed;
+  bottom:2px;
+  right:2px;
+   user-select: none;
 }
 #previous-template-btn{
-  float:left;
+  position:fixed;
+  bottom:2px;
+  left:2px;
+}
+
+.template-next-prev-button{
+  background-color:#ccc;
+  padding:6px;
+  border-radius:4px;
+}
+.template-next-prev-button:hover{
+  cursor:pointer;
+  background-color:#aaa;
+  text-decoration: underline;
 }
 
 .login .username{
@@ -180,4 +299,18 @@ img.avatar{
   display:inline-block;
   border-radius:4px;
   vertical-align: middle;
+}
+.avatar-link{
+  text-decoration: none;
+}
+.avatar-link img{
+  padding-right:12px;
+}
+.avatar-link:hover{
+  text-decoration: underline;
+}
+.user-profile{
+  font-family: monospace;
+  color:blue;
+  padding:24px;
 }
