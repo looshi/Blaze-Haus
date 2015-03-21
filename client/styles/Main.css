@@ -134,6 +134,12 @@ a#toggle-directions {
 .source-code{
   width:45%;
 }
+.source-code.hidden{
+  display:none;
+}
+.source-code.show{
+  display:inline-block;
+}
 
 .rendered-output{
   width:45%;
@@ -144,6 +150,8 @@ a#toggle-directions {
   padding:16px;
   margin:0 auto;
 }
+
+
 
 .about-container{
   display:inline-block;
@@ -272,12 +280,19 @@ a#toggle-directions {
   position:fixed;
   bottom:2px;
   right:2px;
-   user-select: none;
+  width:100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #previous-template-btn{
   position:fixed;
   bottom:2px;
   left:2px;
+  width:100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .template-next-prev-button{

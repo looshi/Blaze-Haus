@@ -66,7 +66,13 @@ Template.Editor.helpers({
   },
   jsonErrorClass : function(){
     return Template.instance().jsonError.get()==="ok" ? "errorPanel ok" : "errorPanel";
-  } 
+  },
+  getSourceCodeVisible : function(){
+    return Session.get('ViewSource');
+  },
+  getTemplateFullscreen : function(){
+    return Session.get('Fullscreen');
+  }
 });
 
 
@@ -110,26 +116,26 @@ var startObservers = function(self){
     added : function(id,doc){
 
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
-      self.htmlEditor.setValue(doc.html);
+      self.htmlEditor.setValueNative(doc.html);
       self.htmlEditor.debounce("change",saveHTML,templateId,userId);
       self.htmlEditor.on("change",renderHTML,"html",self);  
       renderHTML(doc.html,"html",self);
 
       self.jsEditor = new TextEditor('js-editor','text/javascript','js'+templateId);
-      self.jsEditor.setValue(doc.js);
+      self.jsEditor.setValueNative(doc.js);
       self.jsEditor.debounce("change",saveJS,templateId,userId);
       self.jsEditor.on("change",renderHTML,"js",self);  
       renderHTML(doc.js,"js",self);  
 
       self.cssEditor = new TextEditor('css-editor','text/css','css'+templateId);
-      self.cssEditor.setValue(doc.css);
+      self.cssEditor.setValueNative(doc.css);
       self.cssEditor.debounce("change",saveCSS,templateId,userId);
       self.cssEditor.on("change",renderCSS,"css",self);  
       renderCSS(doc.css,"css",self);
 
       self.jsonEditor = new TextEditor('json-editor','text/javascript','json'+templateId);
       createCollection(doc.json,self);
-      self.jsonEditor.setValue(doc.json);
+      self.jsonEditor.setValueNative(doc.json);
       self.jsonEditor.debounce("change",saveJSON,templateId,userId);
       self.jsonEditor.on("change",renderJSON,"json",self); 
       renderHTML('',null,self);
@@ -162,7 +168,7 @@ var startObservers = function(self){
 
       if(doc.json){
         renderHTML("",null,self);  
-        self.jsonEditor.setValue(doc.js);
+        self.jsonEditor.setValue(doc.json);
         Session.set('UserEditMessage',{file:"json",user:doc.lastModifiedBy});
       }
     }
@@ -185,6 +191,7 @@ var saveCSS = function(text,templateId,userId){
 }
 
 var saveJSON = function(text,templateId,userId){
+  console.log("save json" );
   Meteor.call('SaveJSON',text,templateId,userId); 
 }
 
@@ -293,7 +300,7 @@ var renderHTML = function(text,codeType,self){
     parent.innerHTML = "";      // clear the output and re-render it
 
     if(self.canClearIntervals){
-      clearAllIntervals();
+      //clearAllIntervals();
     }
 
     var helpers = eval(latestJS);

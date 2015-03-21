@@ -32,7 +32,6 @@ Template.Tabs.rendered = function(){
       $('#tab-2').css('opacity','1');
       $('#tab-3').css('opacity','1');
       $('#tab-4').css('opacity','1');
-      $('.source-code').hide();       // initial state hides source for each template
       $('.editor-curtain').hide(); 
 
     },20);

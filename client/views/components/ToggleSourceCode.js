@@ -1,17 +1,23 @@
+
 Template.ToggleSourceCode.events({
 
   'click #toggleSourceButton' : function(){
-    $('.source-code').toggle();
 
-    console.log(   $('.source-code')  );
-
-    if( $('.source-code').is(":visible") ){
-      $('#toggleSourceButton').html("Hide Source");
-      $('.rendered-output').removeClass('full-screen');
+    if( Session.get("ViewSource") === "show" ){
+      Session.set('ViewSource',"hidden");
+      Session.set('ViewSourceText',"View Source");
+      Session.set('Fullscreen',"full-screen");
     }else{
-      $('#toggleSourceButton').html("View Source");
-      $('.rendered-output').addClass('full-screen');
+      Session.set('ViewSource',"show");
+      Session.set('ViewSourceText',"Hide Source");
+      Session.set('Fullscreen',"");
     }
   }
 
-})
+});
+
+Template.ToggleSourceCode.helpers({
+  getViewSourceText: function () {
+    return Session.get("ViewSourceText");
+  }
+});
