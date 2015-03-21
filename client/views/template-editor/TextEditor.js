@@ -34,9 +34,15 @@ TextEditor = function(_textArea,_type,_id) {
 */
 TextEditor.prototype.setValue = function(_text){
   this.autoSave = false;
-  this.editor.getDoc().setValue(_text);
+  try{
+    this.editor.getDoc().setValue(_text);
+  }catch(e){console.warn(e);}
+  
 }
 
+TextEditor.prototype.setValueNative = function(_text){
+  this.editor.getDoc().setValue(_text);
+}
 
 
 /**
@@ -50,6 +56,7 @@ TextEditor.prototype.setValue = function(_text){
 TextEditor.prototype.debounce = function(_eventName,_handler,_templateId,_userId){
 
   var self = this;
+  console.log("SELF",this);
   this.editor.getDoc().on(_eventName, 
 
     _.debounce(  
