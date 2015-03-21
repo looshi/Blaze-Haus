@@ -23,7 +23,7 @@ Template.Tabs.rendered = function(){
 
     // give code mirror time to initialize itself
 
-    setTimeout(function(){
+    Meteor.setTimeout(function(){
       $('#tab-2').hide();
       $('#tab-3').hide();
       $('#tab-4').hide();

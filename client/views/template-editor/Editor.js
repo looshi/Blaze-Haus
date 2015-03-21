@@ -21,6 +21,8 @@ Template.Editor.created = function(){
 
   this.jsonError = new ReactiveVar;
   this.jsonError.set("ok");
+
+  this.canClearIntervals = false;
 }
 
 
@@ -70,11 +72,7 @@ Template.Editor.helpers({
 
 Template.Editor.destroyed = function(){
 
-  // clear any intervals the template may have running
-  var highestTimeoutId = setTimeout(";");
-  for (var i = 0 ; i < highestTimeoutId ; i++) {
-    clearTimeout(i); 
-  }
+  clearAllIntervals();
 
   this.observer.stop();
 
@@ -85,10 +83,16 @@ Template.Editor.destroyed = function(){
     this.renderedView._domrange = null;
     this.renderedView = null;
   }
-
-
-  
 };
+
+
+var clearAllIntervals = function(){
+  // clear any intervals the template may have running
+  var highestTimeoutId = setTimeout(";");
+  for (var i = 0 ; i < highestTimeoutId ; i++) {
+    clearTimeout(i); 
+  }
+}
 
 
 var startObservers = function(self){
@@ -129,6 +133,7 @@ var startObservers = function(self){
       self.jsonEditor.debounce("change",saveJSON,templateId,userId);
       self.jsonEditor.on("change",renderJSON,"json",self); 
       renderHTML('',null,self);
+      self.canClearIntervals = true;
 
     },
 
@@ -279,13 +284,18 @@ var renderHTML = function(text,codeType,self){
   // the malformed Blaze Template syntax will throw a lot of errors
   // which is good actually , we can output these errors to the user 
   try{
+
     
     var htmlJS = SpacebarsCompiler.compile(latestHTML);
     var evaled = eval(htmlJS);
     var view = Blaze.View(evaled);  // DL 3/2 removed Blaze.With(dataContext,evaled) template must fetch using helpers now
 
     parent.innerHTML = "";      // clear the output and re-render it
-    
+
+    if(self.canClearIntervals){
+      clearAllIntervals();
+    }
+
     var helpers = eval(latestJS);
     
     for(var key in helpers){
