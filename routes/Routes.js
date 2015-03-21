@@ -21,31 +21,22 @@ Router.route('About', {
   path:'/about',     
 });
 
-var EditorController=RouteController.extend({
-  template:"Editor",
-  waitOn: function(){
+
+Router.route('Editor', {
+  path:'/:_id',     
+  subscriptions: function() {
     var userId = Meteor.userId() ? Meteor.userId() : Session.get('AnonymousUserId');
-    return this.subscribe("singleTemplateData",this.params._id,userId);
+    return Meteor.subscribe("singleTemplateData",this.params._id,userId);
   },
   data: function(){
     return CurrentTemplate.findOne(this.params._id);
   },
-  onBeforeAction:function(){
-    if(this.data()){      
-      this.next(); 
-    }else{
-      console.warn("template not found!!",this.params._id);
-      Router.go('/');
+  action: function () {
+    if (this.ready()) {
+      this.render();
+    } else {
+      this.render('Loading');
     }
-  }
-});
-
-
-Router.route('Editor', {
-  path:'/:_id',     
-  controller:EditorController,
-  action:function(){
-    this.render('Editor');
   }
 });
 
