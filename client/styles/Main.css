@@ -145,6 +145,13 @@ a#toggle-directions {
   margin:0 auto;
 }
 
+.about-container{
+  display:inline-block;
+  width:45%;
+  float:left;
+  padding:2%;
+}
+
 .template-list{
   padding:16px;
   text-decoration: none;
@@ -255,17 +262,22 @@ a#toggle-directions {
 .footer-nav{
   position:fixed;
   bottom:20px;
-  width:45%;
+  width:100px;
   height:10px;
   padding:0;
   z-index:500;
   border-radius: 16px;
 }
 #next-template-btn{
-  float:right;
+  position:fixed;
+  bottom:2px;
+  right:2px;
+   user-select: none;
 }
 #previous-template-btn{
-  float:left;
+  position:fixed;
+  bottom:2px;
+  left:2px;
 }
 
 .template-next-prev-button{
