@@ -7,10 +7,10 @@ Template.ToggleSourceCode.events({
 
     if( $('.source-code').is(":visible") ){
       $('#toggleSourceButton').html("Hide Source");
-      $('.rendered-output').width('45%');
+      $('.rendered-output').removeClass('full-screen');
     }else{
       $('#toggleSourceButton').html("View Source");
-      $('.rendered-output').width('100%');
+      $('.rendered-output').addClass('full-screen');
     }
   }
 

@@ -19,9 +19,9 @@ UI.registerHelper("templateOwnerAvatar", function(template,showname){
     if(user && user.services){
       var githubId = user.services.github.id;
       var userId = user._id;
-      var html = "<a href='/user/"+userId+"'><img src='https://avatars.githubusercontent.com/u/"+githubId+"?s=24'/>";
+      var html = "<a class='avatar-link' href='/user/"+userId+"'><img src='https://avatars.githubusercontent.com/u/"+githubId+"?s=24'/>";
       if(showname){
-        html += "&nbsp;"+user.services.github.username;
+        html += user.services.github.username;
       }
       html+="</a>";
       return html;
