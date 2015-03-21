@@ -56,12 +56,12 @@ TextEditor.prototype.setValueNative = function(_text){
 TextEditor.prototype.debounce = function(_eventName,_handler,_templateId,_userId){
 
   var self = this;
-  console.log("SELF",this);
+  
   this.editor.getDoc().on(_eventName, 
 
     _.debounce(  
       function(e){
-
+console.log("SELF",self.autoSave);
         if(self.autoSave){
           _handler(e.getValue(),_templateId,_userId);
         }else{
