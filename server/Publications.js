@@ -10,7 +10,7 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
   var self = this;
   var initializing = true;
 
-  TemplateCollection.find(_id).observeChanges({
+  var handle = TemplateCollection.find(_id).observeChanges({
     added: function (id, fields) {
 
       if(!initializing){
@@ -22,10 +22,13 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
 
       var userMadeChange = (_userId===TemplateCollection.findOne(_id).lastModifiedBy);
 
-      console.log("user : " , _userId , "modified by : " , TemplateCollection.findOne(_id).lastModifiedBy );
-      console.log("/////////////");
-
       if( !userMadeChange || fields.name ){
+
+
+        console.log("user : " , _userId , "modified by : " , TemplateCollection.findOne(_id).lastModifiedBy );
+        console.log(fields);
+        console.log("/////////////");
+        
         self.changed("CurrentTemplate",id,fields);  // Only publish changes if a different user made the edit, or user renamed template
       }      
     },
@@ -37,6 +40,7 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
   initializing = false;
   self.added("CurrentTemplate", _id, TemplateCollection.findOne(_id) );
   self.ready();
+  self.onStop( function(){ console.log("STOPPED!!!");handle.stop();});
 
 });
 
