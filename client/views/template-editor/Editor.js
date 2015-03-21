@@ -70,6 +70,12 @@ Template.Editor.helpers({
 
 Template.Editor.destroyed = function(){
 
+  // clear any intervals the template may have running
+  var highestTimeoutId = setTimeout(";");
+  for (var i = 0 ; i < highestTimeoutId ; i++) {
+    clearTimeout(i); 
+  }
+
   this.observer.stop();
 
   if(!!this.renderedView){
@@ -79,6 +85,8 @@ Template.Editor.destroyed = function(){
     this.renderedView._domrange = null;
     this.renderedView = null;
   }
+
+
   
 };
 
@@ -126,6 +134,7 @@ var startObservers = function(self){
 
     changed : function(id,doc){
 
+      console.log("I'm still running!!! " );
       // The Publication will only send change events where (this.userId!=doc.lastModifiedBy)
       // If someone else made this change, render the template, and update my editor.
       // If I made the last change, I won't recieve this change event.

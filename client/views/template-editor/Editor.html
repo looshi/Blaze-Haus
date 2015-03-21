@@ -17,6 +17,9 @@
       <div class="template-date"> 
         {{modified.getMonth}}/{{modified.getDate}}/{{modified.getUTCFullYear}}
       </div>
+      <div class="template-like-button"> 
+        {{> ToggleSourceCode}}
+      </div>
     </div>
     
     <div class="right-controls">
@@ -28,7 +31,7 @@
   </div>
 
 
-  <div class="editor-container">
+  <div class="editor-container source-code">
   
     {{> Tabs}}
   
