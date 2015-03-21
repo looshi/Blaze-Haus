@@ -135,10 +135,12 @@ a#toggle-directions {
   width:45%;
 }
 .source-code.hidden{
-  display:none;
+  position:fixed;
+  left:-2000px;
 }
 .source-code.show{
   display:inline-block;
+  position:relative;
 }
 
 .rendered-output{

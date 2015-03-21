@@ -1,4 +1,10 @@
 
+Meteor.startup(function(){
+  Session.set('ViewSource',"show");
+  Session.set('ViewSourceText',"Hide Source");
+  Session.set('Fullscreen',"");
+})
+
 Template.ToggleSourceCode.events({
 
   'click #toggleSourceButton' : function(){
