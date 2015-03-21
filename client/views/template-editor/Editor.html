@@ -31,7 +31,7 @@
   </div>
 
   <div class="editor-curtain"> </div> <!-- used to hide loading glitches -->
-  <div class="editor-container source-code">
+  <div class="editor-container source-code {{getSourceCodeVisible}}">
   
     {{> Tabs}}
   
@@ -57,7 +57,7 @@
   </div>
 
 
-  <div class="editor-container rendered-output full-screen">
+  <div class="editor-container rendered-output {{getTemplateFullscreen}}">
     <div id="htmlOutput"></div>
   </div>
 
