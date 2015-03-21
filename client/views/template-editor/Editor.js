@@ -300,7 +300,7 @@ var renderHTML = function(text,codeType,self){
     parent.innerHTML = "";      // clear the output and re-render it
 
     if(self.canClearIntervals){
-      clearAllIntervals();
+      //clearAllIntervals(); // this wipes out autosave debounce TODO fix
     }
 
     var helpers = eval(latestJS);
