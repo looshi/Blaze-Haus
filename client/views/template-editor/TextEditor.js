@@ -54,7 +54,7 @@ TextEditor.prototype.debounce = function(_eventName,_handler,_templateId,_userId
 
     _.debounce(  
       function(e){
-        console.log( " Autosave ? " , self.autoSave );
+
         if(self.autoSave){
           _handler(e.getValue(),_templateId,_userId);
         }else{
