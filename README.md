@@ -12,7 +12,7 @@ Some Other Potential Practical Applications of this method are :
 
 -Education, where the user can try out spacebars syntax out as part of a tutorial about Blaze, Meteor and data context. 
 
--CMS, where the system allows site admins to customize the appearance of the app by editing the Template code for a given page, I know that Big Cartel and similar CMS systems expose this functionality to customize the appearance for online stores.
+-CMS, where the system allows site admins to customize the appearance of the app by editing the Template code for a given page.  For example, Big Cartel exposes handlebars style syntax to customize the appearance its online stores.
 
 -in-app Template inspector, similar to a browser's html inspector.
 
