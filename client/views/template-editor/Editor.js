@@ -70,6 +70,12 @@ Template.Editor.helpers({
 
 Template.Editor.destroyed = function(){
 
+  // clear any intervals the template may have running
+  var highestTimeoutId = setTimeout(";");
+  for (var i = 0 ; i < highestTimeoutId ; i++) {
+    clearTimeout(i); 
+  }
+
   this.observer.stop();
 
   if(!!this.renderedView){
@@ -79,6 +85,8 @@ Template.Editor.destroyed = function(){
     this.renderedView._domrange = null;
     this.renderedView = null;
   }
+
+
   
 };
 
@@ -86,8 +94,13 @@ Template.Editor.destroyed = function(){
 var startObservers = function(self){
 
   var templateId  = self.data._id; 
-  var userId = Session.get('userId'); 
-
+  var userId;
+  if( Meteor.userId() ){
+    userId = Meteor.userId();
+  }else{
+    userId = Session.get('AnonymousUserId'); 
+  }
+  
   self.observer = CurrentTemplate.find({_id:templateId}).observeChanges({
 
     added : function(id,doc){
@@ -125,11 +138,6 @@ var startObservers = function(self){
       // If someone else made this change, render the template, and update my editor.
       // If I made the last change, I won't recieve this change event.
 
-      if(doc.css){
-        renderCSS(doc.css,"css",self);
-        self.cssEditor.setValue(doc.css);
-        Session.set('UserEditMessage',{file:"css",user:doc.lastModifiedBy});
-      }
       if(doc.html){
         renderHTML(doc.html,"html",self);
         self.htmlEditor.setValue(doc.html);
@@ -140,6 +148,13 @@ var startObservers = function(self){
         self.jsEditor.setValue(doc.js);
         Session.set('UserEditMessage',{file:"js",user:doc.lastModifiedBy});
       }
+
+      if(doc.css){
+        renderCSS(doc.css,"css",self);
+        self.cssEditor.setValue(doc.css);
+        Session.set('UserEditMessage',{file:"css",user:doc.lastModifiedBy});
+      }
+
       if(doc.json){
         renderHTML("",null,self);  
         self.jsonEditor.setValue(doc.js);
@@ -152,19 +167,20 @@ var startObservers = function(self){
 // if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId,userId){
-  Meteor.call('saveHTML',text,templateId,userId);
+  console.log("Save HTML!!");
+  Meteor.call('SaveHTML',text,templateId,userId);
 }
 
 var saveJS = function(text,templateId,userId){
-  Meteor.call('saveJS',text,templateId,userId);
+  Meteor.call('SaveJS',text,templateId,userId);
 }
 
 var saveCSS = function(text,templateId,userId){
-  Meteor.call('saveCSS',text,templateId,userId);
+  Meteor.call('SaveCSS',text,templateId,userId);
 }
 
 var saveJSON = function(text,templateId,userId){
-  Meteor.call('saveJSON',text,templateId,userId); 
+  Meteor.call('SaveJSON',text,templateId,userId); 
 }
 
 
@@ -173,9 +189,14 @@ var createCollection = function(json,self){
   try{
     var items = JSON.parse(json);
     Data.remove({});
-    _.each(items,function(item){
-      Data.insert(item);
-    });
+    if(items instanceof Array){
+      _.each(items,function(item){
+        Data.insert(item);
+      });
+    }else{
+      throw new Error("JSON items must be in array.")
+    }
+
   }catch(e){self.jsonError.set(e);}
   
 }

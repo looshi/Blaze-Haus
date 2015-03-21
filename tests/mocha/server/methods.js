@@ -5,13 +5,14 @@ return;
 MochaWeb.testOnly(function(){
 
 
-  describe("CreateTemplate", function(){  
+  describe("CreateNewTemplate - Server", function(){  
 
     var response;
     var name = "myname";
     var newTemplate;
     
     before(function(done){  
+      
       Meteor.call('CreateNewTemplate',name,function(err,res){
         if(err){
           response = err;
@@ -21,7 +22,9 @@ MochaWeb.testOnly(function(){
           newTemplate = TemplateCollection.findOne({_id:response});
           done();
         }
+      
       });
+
     });
 
     it('should save the name' , function(){
@@ -46,90 +49,8 @@ MochaWeb.testOnly(function(){
 
   });
   
-  describe("SaveTemplate", function(){
 
-    var response;
-    var name = "myname";
-    var savedTemplate;
-    var createdDate = new Date(0);
-
-    var options = {
-        created: createdDate,
-        css: 'mycss',
-        dataContext: 'mydata', 
-        html: 'myhtml',
-        js: 'myjs',
-        json : 'myjson',
-        modified: new Date(), 
-        lastModifiedBy: 'System',
-        likes:2,
-        name : 'myname',
-        owner:'System'
-      }
-    var edits = {
-        created: new Date(),
-        css: 'emycss',
-        dataContext: 'emydata', 
-        html: 'emyhtml',
-        js: 'emyjs',
-        json : 'emyjson',
-        likes:3,
-        modified: new Date(), 
-        lastModifiedBy: 'eSystem',
-        name : 'emyname',
-        owner:'eSystem'
-    }
-    before(function(done){  
-
-      var id = TemplateCollection.insert(options);
-     
-      Meteor.call('SaveTemplate',id,edits,function(err,res){
-        if(err){
-          response = err;
-          done();
-        }else{
-          response = res;
-          savedTemplate = TemplateCollection.findOne(id);
-          done();
-        }
-      });
-    });
-
-    it('response should be 1' , function(){
-      chai.assert.equal(response,1);
-    });
-    it('should be able to save html' , function(){
-      chai.assert.equal(savedTemplate.html,edits.html);
-    });
-    it('should be able to save js' , function(){
-      chai.assert.equal(savedTemplate.js,edits.js);
-    });
-    it('should be able to save json' , function(){
-      chai.assert.equal(savedTemplate.json,edits.json);
-    });
-    it('should be able to save css' , function(){
-      chai.assert.equal(savedTemplate.css,edits.css);
-    });
-    it('should be able to save name' , function(){
-      chai.assert.equal(savedTemplate.name,edits.name);
-    });
-    it('should be able to save lastModifiedBy' , function(){
-      chai.assert.equal(savedTemplate.lastModifiedBy,edits.lastModifiedBy);
-    });
-    it('should be able to save likes' , function(){
-      chai.assert.equal(savedTemplate.likes,edits.likes);
-    });
-    it('should be able to save modified' , function(){
-      chai.assert.notEqual(savedTemplate.modified,edits.modified);
-    });
-    it('should not update created field' , function(){
-      chai.assert.equal(savedTemplate.created.toString(),createdDate.toString());
-    });
-
-  });
-  
-
-  describe("DuplicateTemplate", function(){
+  describe("DuplicateTemplate  - Server", function(){
 
     var originalTemplate;
     var duplicateTemplate;
@@ -160,10 +81,14 @@ MochaWeb.testOnly(function(){
     it("should create template with identical values" , function(){
       
       for(var k in originalTemplate){
-        if(k!=="_id"&&k!=="modified"&&k!=="created"&&k!=="name"){
+        if(k!=="_id"&&k!=="modified"&&k!=="created"&&k!=="name"&&k!=="owner"){
           chai.assert.equal( duplicateTemplate[k] , originalTemplate[k] );
         }     
       }
+    });
+
+    it("should set owner to anonymous since user not logged in" , function(){
+      chai.assert(duplicateTemplate.owner==='anonymous'); 
     });
 
     it("should set modified and created to about now" , function(){
@@ -181,7 +106,7 @@ MochaWeb.testOnly(function(){
   });
 
 
-  describe("DeleteTemplate", function(){
+  describe("Delete Anonymous Template - Server", function(){
 
     var deletedTemplate;
 
@@ -196,7 +121,7 @@ MochaWeb.testOnly(function(){
         modified: new Date(), 
         lastModifiedBy: 'System',
         name : 'DeleteMe',
-        owner:'System'
+        owner:'anonymous'
       }
 
     before(function(done){  
@@ -226,6 +151,4 @@ MochaWeb.testOnly(function(){
   });
   
 });
-
-
 

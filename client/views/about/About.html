@@ -6,29 +6,38 @@
   <div class='instructions-container'>
 
     
-    <div class="editor-container">
+    <div class="about-container">
 
-      <h1>How it works</h1>
-
+      <h1><img height="24px" style="vertical-align:bottom;" src='https://s3-us-west-1.amazonaws.com/blazehaus-assets/meteor-logo.svg'/> How it works</h1>
+      <a href="https://github.com/looshi/Blaze-Haus" target="_blank">View source on github</a><br/><br/>
       
-      <a href="http://docs.meteor.com/#/full/blaze">Blaze Documentation</a><br/><br/>
-
-      The code of interest that renders the template is <a href="https://github.com/looshi/Blaze-Haus/blob/master/client/views/template-editor/Editor.js#L251" target="_blank">here.</a><br/><br/>
-
-      <a href="https://github.com/looshi/Blaze-Haus" target="_blank">source on github</a><br/><br/>
-
 
       The editable 'files' are read and written to the database.<br/>
-      Upon edits to the respective file : <br/>
+      Upon edits to each respective file : <br/>
       - A dynamic template is created and rendered from the .html file.  <br/>
       - Global helpers are defined by the .js file.  <br/>
       - The styles in the .css file are applied to the CSSOM.<br/>
       - The 'Data' collection is created from the .json file.<br/>
 
+      The code of interest that renders the template is <a href="https://github.com/looshi/Blaze-Haus/blob/master/client/views/template-editor/Editor.js#L251" target="_blank">here.</a><br/><br/>
 
+      <h1>Resources</h1>
+      <p>
+        The <a href="http://docs.meteor.com/#/full/blaze" target="_blank">Blaze documentation</a> is a good place to start.
+        <br/>
+        <a href="http://docs.meteor.com/#/full/blaze" target="_blank">docs.meteor.com</a>
+      </p>
+      <p>
+        Try <a href="http://meteorpad.com<" target="_blank">Meteorpad.</a>  Blaze Haus is a simulation, and to some degree only an approximation, of one aspect of Meteor.  If you would like to try out 'real' Meteor code, share bug replications, or demonstrate server side techniques, Meteor Pad is the place to go.<br/>
+        <a href="http://meteorpad.com<" target="_blank">meteorpad.com</a><br/><br/>
+      </p>
+
+      <h1>Get in touch</h1>
+      All feedback and collaborators welcome.<br/>
+      contact : dave@smoothtalker.biz
     </div>
     
-    <div class="editor-container">
+    <div class="about-container">
       <div>
         <h1>Instructions</h1>
 
@@ -44,13 +53,13 @@
 
         <a href="https://www.discovermeteor.com/blog/spacebars-secrets-exploring-meteor-new-templating-engine/" target="_blank">good article about spacebars from discovermeteor.com</a><br/><br/>
 
-        Maximum allowed size : 2000 chars.
+        Maximum allowed HTML size : 2000 chars.
 
         <h3>Javascript</h3>
 
         Add helpers in the .js file like so : <br/><br/>
         helpers = &#123;<br/>
-        &nbsp;&nbsp;person : function(num)&#123;<br/>
+        &nbsp;&nbsp;person : function()&#123;<br/>
         &nbsp;&nbsp;&nbsp; return Data.find();<br/>
         &nbsp;&nbsp;&#125;,<br/>
         &nbsp;&nbsp;timesFour : function(num)&#123;<br/>
@@ -58,45 +67,50 @@
         &nbsp;&nbsp;&#125;,<br/>
         &#125;<br/>
         <br/>
-        Maximum allowed size : 2000 chars.
+        Maximum allowed Javascript size : 2000 chars.
 
         <h3>CSS</h3>
         Edit the CSS file and style your template.<br/>
         We don't scope the CSS, so you can make the rest of the page look better too if you want.<br/>
-        Maximum allowed size : 2000 chars.
+        Maximum allowed CSS size : 2000 chars.
 
         <h3>JSON</h3>
 
         The 'Data' Collection is populated with data from the Data.json file.<br/>
-        Edit the default JSON, or import your own.<br/>
-        <a href="https://www.mockaroo.com/">mockaroo.com</a> is a good tool to generate test data.<br/>
-        Maximum allowed size : 10000 chars.<br/>
+        Edit the default JSON, or import your own.<br/><br/>
+        <a href="https://www.mockaroo.com/" target="_blank">mockaroo.com</a> is a good tool to generate test data.<br/><br/>
+        
 
       </div>
       <div>
+      Use double quotes for keys and string values<br/> 
+      The JSON items must be members of an array<br/>
+      </div>
+      <div class='mongo'>
+        [{<br/>&nbsp;&nbsp;"country" : "China",<br/>
+        &nbsp;&nbsp;"city" : "Bijia",<br/>
+        &nbsp;&nbsp;"name" : "Kathy"<br/>},<br/>
+        {&nbsp;&nbsp;"country" : "France",<br/>
+        &nbsp;&nbsp;"city" : "Paris",<br/>
+        &nbsp;&nbsp;"name" : "Sebastien"<br/>}]<br/>
+      </div>
+      You can use array values like so : 
+      <div class='mongo'>
+      [{<br/>
+        &nbsp;&nbsp;<span>"name"</span>: <span>"Strings"</span>,<br/>
+        &nbsp;&nbsp;<span>"items"</span>:[<span>"dog"</span>,<span>"cat"</span>,<span>"bird"</span>]<br/>
+      },<br/>
+      {<br/>
+        &nbsp;&nbsp;<span>"name"</span>: <span>"Numbers"</span>,<br/>
+        &nbsp;&nbsp;<span>"items"</span>:[<span>1</span>,<span>2</span>,<span>3</span>]<br/>
+      },<br/>
+      {<br/>
+        &nbsp;&nbsp;<span>"name"</span>: <span>"Objects"</span>,
+        &nbsp;&nbsp;<span>"items"</span>:[{<span>"name"</span>:<span>"John"</span>},{<span>"name"</span>:<span>"Larry"</span>}]<br/>
+      }]<br/>
+      </div>
+      Maximum allowed JSON size : 10000 chars.<br/>
 
-      In addition to the data available to your template from the Data.json tab, there are two collections available in the database, the 'PeopleCollection', and the 'AddressCollection'.<br/>
-      This allows you to work with more than one collection at a time if you want, since at this time we only support one collection import per template.<br/>
-      One document from the PeopleCollection looks like this : 
-      </div>
-      <div class='mongo'>
-        { &nbsp;&nbsp;country : 'China',<br/>
-        &nbsp;&nbsp;date : '1/1/2014','<br/>
-        &nbsp;&nbsp;city : 'Bijia','<br/>
-        &nbsp;&nbsp;company : 'Skajo',<br/>
-        &nbsp;&nbsp;name : 'Kathy',<br/>
-        &nbsp;&nbsp;color : '#ffff99' }
-      <br/>
-      </div>
-      One document from the AddressCollection looks like this : 
-      <div class='mongo'>
-        { &nbsp;&nbsp;name : 'Océane',<br/>
-        &nbsp;&nbsp;address : '1188 Northland Trail','<br/>
-        &nbsp;&nbsp;color : '#6fcfea','<br/>
-        &nbsp;&nbsp;order : '40',<br/>
-        &nbsp;&nbsp;description : 'eros suspen...',<br/>
-        &nbsp;&nbsp;ip_address : '221.195.221.255' }
-      </div><br/>
 
     </div>
 
