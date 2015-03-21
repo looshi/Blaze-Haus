@@ -1,10 +1,10 @@
-Meteor Live Template Editor
+Blaze Haus
 
-Demo application which reads and writes Meteor Blaze Templates via the database and renders the changes live.
+Reads and writes Meteor Blaze Templates via the database and renders the changes live.
 
 <a href="http://blaze.haus/" target="_blank">http://blaze.haus/</a>
 
-![screenshot](https://cloud.githubusercontent.com/assets/1656829/6429598/4510a7a2-bf92-11e4-90c5-f0bd7c44b855.png)
+![screenshot](https://cloud.githubusercontent.com/assets/1656829/6763679/f3f6fd68-cf44-11e4-83f8-7a24a968ab98.png)
 
 
 
