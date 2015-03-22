@@ -106,7 +106,8 @@ var startObservers = function(self){
   var templateId  = self.data._id; 
   var userId;
   if( Meteor.userId() ){
-    userId = Meteor.userId();
+    // random digit will be appended so that the 'lastModifiedBy' field is always unique for a single browser window
+    userId = Meteor.userId() + "" + Session.get('AnonymousUserId');
   }else{
     userId = Session.get('AnonymousUserId'); 
   }
