@@ -22,12 +22,12 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
 
       var userMadeChange = (_userId===TemplateCollection.findOne(_id).lastModifiedBy);
 
-      if( !userMadeChange || fields.name ){
+      // send changes to code if another user made the change
+      // send changes to likes
+      // send changes to template name
+      if( !userMadeChange || fields.name || fields.likes ){
 
-
-        console.log("user : " , _userId , "modified by : " , TemplateCollection.findOne(_id).lastModifiedBy );
-        console.log(fields);
-        console.log("/////////////");
+        console.log("user : " , _userId , "modified by : " , TemplateCollection.findOne(_id).lastModifiedBy,"fields : " , fields );
         
         self.changed("CurrentTemplate",id,fields);  // Only publish changes if a different user made the edit, or user renamed template
       }      
@@ -57,12 +57,3 @@ Meteor.publish("summaryTemplateData", function () {
 });
 
 
-// sample data publication
-Meteor.publish("peopleData", function () {
-   return PeopleCollection.find({});
-});
-
-// sample data publication
-Meteor.publish("addressData", function () {
-   return AddressCollection.find({});
-});
