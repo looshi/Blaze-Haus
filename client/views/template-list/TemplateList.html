@@ -12,17 +12,28 @@
     </div>
   </div>
 
-  <div class="template-list">
-
-    {{#each templates}}
-      <div class='template-list-item'>
-        <div class='template-list-owner'>{{{templateOwnerAvatar this false}}}</div>
-        <a class="template-link" href="/{{_id}}">
-          <div class='template-list-name'>{{name}}</div>
-          <div class='template-list-likes'>{{{getLikes}}}</div>
-        </a>
-      </div>
+  <div class="template-list top-rated">
+    <h4>Top Rated</h4>
+    {{#each getTopRated }}
+      {{>TemplateListItem}}
     {{/each}}
   </div>
 
+  <div class="template-list latest">
+    <h4>Recently Added</h4>
+    {{#each getLatest }}
+      {{>TemplateListItem}}
+    {{/each}}
+  </div>
+
+</Template>
+
+<Template name='TemplateListItem'>
+  <div class='template-list-item'>
+      <div class='template-list-owner'>{{{templateOwnerAvatar this false}}}</div>
+      <a class="template-link" href="/{{_id}}">
+        <div class='template-list-name'>{{name}}</div>
+        <div class='template-list-likes'>{{{getLikes this}}}</div>
+      </a>
+  </div>
 </Template>
