@@ -325,7 +325,7 @@ img.avatar{
 }
 .avatar-link{
   text-decoration: none;
-  background-color: #ccc;
+  background-color: #ddd;
 }
 .avatar-link img{
   padding-right:12px;
@@ -333,6 +333,8 @@ img.avatar{
 div.avatar-link{
   height:24px;
   border-radius:4px;
+  display:inline-block;
+  width:24px;
 }
 .avatar-link:hover{
   text-decoration: underline;

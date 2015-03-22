@@ -10,16 +10,18 @@
      
       <p>Blaze Haus is a <a href="https://www.meteor.com/" target="_blank">Meteor</a> application which allows users to edit <a href="http://docs.meteor.com/#/full/blaze" target="_blank">Meteor Blaze Templates</a> in the browser.</p>
       
-       <p><img height="24px" style="vertical-align:bottom;margin:0 auto;display:block;width:100%;" src='https://s3-us-west-1.amazonaws.com/blazehaus-assets/meteor-logo.svg'/></p>
+       <p><img height="54px" style="vertical-align:bottom;margin:0 auto;display:block;width:100%;" src='https://s3-us-west-1.amazonaws.com/blazehaus-assets/meteor-logo.svg'/></p>
 
       <h1>How it works</h1>
       <p><a href="https://github.com/looshi/Blaze-Haus" target="_blank">View source on github</a></p>
 
-      <p>The html, js, css, and json are stored in a Mongo database as strings.  Each of these 'files' are autosaved on change events of a <a href="https://codemirror.net/">CodeMirror</a> instance.  Since the template code itself is being read and written to Mongo, just like any other Meteor app it is reactive, the template is re-rendered on each change.  For now, reactivity is limited to templates that have no owner ( Templates with the gray square next to them )</p>
+      <p>The html, js, css, and json are stored in a Mongo database as strings.  Each of these 'files' are autosaved on change events of a <a href="https://codemirror.net/">CodeMirror</a> instance.</p>
 
-      <p>The raw html code is compiled into a Blaze template.  This can be achieved in a few lines of code and is really the basis for this whole project. You can check out how it's done towards the bottom of <a href="https://github.com/looshi/Blaze-Haus/blob/master/client/views/template-editor/Editor.js">this file</a>.</p>
+      <p>The raw html code is compiled into a Blaze template.  The source for the dynamic template creation <a href="https://github.com/looshi/Blaze-Haus/blob/master/client/views/template-editor/Editor.js#L275"  target="_blank">is here</a>.</p>
 
-      <p>Functions declared in the .js file are made into <a href="http://docs.meteor.com/#/full/livehtmltemplates">Meteor helpers</a>.  For now, these helpers are global and defined by calling Blaze.registerHelper ( which causes all sorts of fun bugs in Blaze Haus ).  Eventually the helpers will be scoped to the template instance.</p>
+      <p>Functions declared in the .js file are made into <a href="http://docs.meteor.com/#/full/livehtmltemplates" target="_blank">Meteor helpers</a>.  For now, these helpers are global and defined by calling Blaze.registerHelper ( which causes all sorts of fun bugs in Blaze Haus ).  Eventually the helpers will be scoped to the template instance.</p>
+
+      <p>The dynamic template is reactive.  This means that code changes are sent down to each client, you can view this behavior by opening two browser windows and editing a template that you own, or a template which has no owner ( templates with the gray square next to them ).</p>
 
       <p>CSS code is applied to the CSSOM.</p>
 
