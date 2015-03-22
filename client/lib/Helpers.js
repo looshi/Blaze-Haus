@@ -27,7 +27,7 @@ UI.registerHelper("templateOwnerAvatar", function(template,showname){
       return html;
     }
   }else{
-    return "&nbsp;";
+    return "<div class='avatar-link'></div>";
   }
   
 });
@@ -39,4 +39,10 @@ UI.registerHelper("githubUsername", function(date) {
     return Meteor.user().services.github.username;
   }
 
+});
+
+UI.registerHelper("getLikes", function(template) {
+  if(template.likes>0){
+    return "&#9829;  "+template.likes;
+  }
 });

@@ -166,13 +166,16 @@ a#toggle-directions {
   padding:16px;
   text-decoration: none;
   display:inline-block;
-  
+  font-family: monospace;
+  width:45%;
+  padding:2%;
 }
 .template-list-item{
   display:inline-block;
 }
 .template-link{
   width:140px;
+  font-family:monospace;
 }
 .template-list-item a{
   padding:2px 14px;  
@@ -190,13 +193,16 @@ a#toggle-directions {
 }
 .template-list-name{
   float:left;
-  width: 110px;
+  width: 98px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-top:4px;
 }
 .template-list-likes{
+  padding-top:4px;
   float:right;
+  color:#ff0000;
 }
 .template-list-owner{
   float:left;
@@ -216,12 +222,12 @@ a#toggle-directions {
  
 }
 .template-list-owner a:hover{ 
-  border: 4px solid blue; 
+  border: 2px solid #ccc; 
   background:none;
   border-radius: 4px;
 }
 .template-list-owner a:hover img{ 
-  margin: -4px; 
+  margin: -2px; 
 }
 
 
@@ -315,13 +321,18 @@ a#toggle-directions {
 img.avatar{
   display:inline-block;
   border-radius:4px;
-  vertical-align: middle;
+  vertical-align: bottom;
 }
 .avatar-link{
   text-decoration: none;
+  background-color: #ccc;
 }
 .avatar-link img{
   padding-right:12px;
+}
+div.avatar-link{
+  height:24px;
+  border-radius:4px;
 }
 .avatar-link:hover{
   text-decoration: underline;

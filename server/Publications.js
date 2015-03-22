@@ -40,7 +40,7 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
   initializing = false;
   self.added("CurrentTemplate", _id, TemplateCollection.findOne(_id) );
   self.ready();
-  self.onStop( function(){ console.log("STOPPED!!!");handle.stop();});
+  self.onStop( function(){handle.stop();});
 
 });
 
@@ -53,7 +53,7 @@ summaryTemplateData
 Publishes the entire list of all Templates, limited to a few fields.
 */ 
 Meteor.publish("summaryTemplateData", function () {
-  return TemplateCollection.find({}, {fields: {'name': 1,'likes':1,'owner':1 }} );
+  return TemplateCollection.find({}, {fields: {'name': 1,'likes':1,'owner':1,'created':1 }} );
 });
 
 
