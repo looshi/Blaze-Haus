@@ -15,3 +15,4 @@ accounts-github
 accounts-ui
 accounts-password
 service-configuration
+mike:mocha
