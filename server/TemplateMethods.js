@@ -44,6 +44,8 @@ Meteor.methods({
       template.owner = 'anonymous';
     }
 
+    template.likes = 0;
+
     delete template._id;
     template.name = _name;
     template.modified = new Date();

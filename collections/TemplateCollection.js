@@ -20,22 +20,22 @@ Schemas.TemplateCollection = new SimpleSchema({
   css:{
     type:String,
     label:"css",
-    max: 2000
+    max: 5000
   },
   html:{
     type:String,
     label:"html",
-    max: 2000
+    max: 20000
   },
   js:{
     type:String,
     label:"js code",
-    max: 2000
+    max: 20000
   },
   json:{
     type:String,
     label:"json collection data",
-    max : 10000
+    max : 20000
     //blackbox : true
   },
   likes:{
