@@ -89,10 +89,8 @@ var iAmTheOwner = function(templateId){
   }
 
   if(template && template.owner==='anonymous'){
-    console.log('anon');
     return true;
   }else{
-    console.log('i own!',template,Meteor.userId());
     return Meteor.userId() === template.owner;
   }
 }
@@ -140,29 +138,33 @@ var startObservers = function(self){
 
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
       self.htmlEditor.setValueNative(doc.html);
-      self.htmlEditor.debounce("change",saveHTML,templateId,userId);
       self.htmlEditor.on("change",renderHTML,"html",self);  
       renderHTML(doc.html,"html",self);
 
       self.jsEditor = new TextEditor('js-editor','text/javascript','js'+templateId);
       self.jsEditor.setValueNative(doc.js);
-      self.jsEditor.debounce("change",saveJS,templateId,userId);
       self.jsEditor.on("change",renderHTML,"js",self);  
       renderHTML(doc.js,"js",self);  
 
       self.cssEditor = new TextEditor('css-editor','text/css','css'+templateId);
       self.cssEditor.setValueNative(doc.css);
-      self.cssEditor.debounce("change",saveCSS,templateId,userId);
       self.cssEditor.on("change",renderCSS,"css",self);  
       renderCSS(doc.css,"css",self);
 
       self.jsonEditor = new TextEditor('json-editor','text/javascript','json'+templateId);
       createCollection(doc.json,self);
       self.jsonEditor.setValueNative(doc.json);
-      self.jsonEditor.debounce("change",saveJSON,templateId,userId);
       self.jsonEditor.on("change",renderJSON,"json",self); 
+
       renderHTML('',null,self);
       self.canClearIntervals = true;
+
+      if(iAmTheOwner(templateId)){
+        self.htmlEditor.debounce("change",saveHTML,templateId,userId);
+        self.jsEditor.debounce("change",saveJS,templateId,userId);
+        self.jsonEditor.debounce("change",saveJSON,templateId,userId);
+        self.cssEditor.debounce("change",saveCSS,templateId,userId);
+      }
 
     },
 
@@ -201,27 +203,19 @@ var startObservers = function(self){
 // if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId,userId){
-  if(iAmTheOwner(templateId)){
-    Meteor.call('SaveHTML',text,templateId,userId);
-  }
+  Meteor.call('SaveHTML',text,templateId,userId);
 }
 
 var saveJS = function(text,templateId,userId){
-  if(iAmTheOwner(templateId)){
-    Meteor.call('SaveJS',text,templateId,userId);
-  }
+  Meteor.call('SaveJS',text,templateId,userId);
 }
 
 var saveCSS = function(text,templateId,userId){
-  if(iAmTheOwner(templateId)){
-    Meteor.call('SaveCSS',text,templateId,userId);
-  }
+  Meteor.call('SaveCSS',text,templateId,userId);
 }
 
 var saveJSON = function(text,templateId,userId){
-  if(iAmTheOwner(templateId)){
-    Meteor.call('SaveJSON',text,templateId,userId);
-  }
+  Meteor.call('SaveJSON',text,templateId,userId);
 }
 
 
