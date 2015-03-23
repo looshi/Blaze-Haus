@@ -211,7 +211,9 @@ a#toggle-directions {
 .template-list-item .anonymous-owner{
   display:none;
 }
-
+.template-list-owner a img{
+  width:24px;
+}
 .template-list-owner a img, 
 .template-list-owner a{ 
   border: none; 
@@ -329,6 +331,7 @@ img.avatar{
 }
 .avatar-link img{
   padding-right:12px;
+  width:24px;
 }
 div.avatar-link{
   height:24px;
@@ -343,4 +346,7 @@ div.avatar-link{
   font-family: monospace;
   color:blue;
   padding:24px;
+}
+.user-profile img{
+  width:200px;
 }

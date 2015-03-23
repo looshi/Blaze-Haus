@@ -74,14 +74,28 @@ Template.Editor.helpers({
     return Session.get('Fullscreen');
   },
   isOwner : function(){
-    console.log("is owner? " ,Meteor.userId(), this.owner )
-    if(this.owner==='anonymous'){
-      return true;
-    }else{
-      return Meteor.userId() === this.owner;
+    if(this){
+      var id = this.toString();
+      return iAmTheOwner(id);
     }
   }
 });
+
+var iAmTheOwner = function(templateId){
+  var template = CurrentTemplate.findOne();
+
+  if(!template || !template.owner){
+    return;
+  }
+
+  if(template && template.owner==='anonymous'){
+    console.log('anon');
+    return true;
+  }else{
+    console.log('i own!',template,Meteor.userId());
+    return Meteor.userId() === template.owner;
+  }
+}
 
 
 Template.Editor.destroyed = function(){
@@ -187,19 +201,27 @@ var startObservers = function(self){
 // if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId,userId){
-  Meteor.call('SaveHTML',text,templateId,userId);
+  if(iAmTheOwner(templateId)){
+    Meteor.call('SaveHTML',text,templateId,userId);
+  }
 }
 
 var saveJS = function(text,templateId,userId){
-  Meteor.call('SaveJS',text,templateId,userId);
+  if(iAmTheOwner(templateId)){
+    Meteor.call('SaveJS',text,templateId,userId);
+  }
 }
 
 var saveCSS = function(text,templateId,userId){
-  Meteor.call('SaveCSS',text,templateId,userId);
+  if(iAmTheOwner(templateId)){
+    Meteor.call('SaveCSS',text,templateId,userId);
+  }
 }
 
 var saveJSON = function(text,templateId,userId){
-  Meteor.call('SaveJSON',text,templateId,userId); 
+  if(iAmTheOwner(templateId)){
+    Meteor.call('SaveJSON',text,templateId,userId);
+  }
 }
 
 
