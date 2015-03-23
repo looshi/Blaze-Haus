@@ -72,6 +72,14 @@ Template.Editor.helpers({
   },
   getTemplateFullscreen : function(){
     return Session.get('Fullscreen');
+  },
+  isOwner : function(){
+    console.log("is owner? " ,Meteor.userId(), this.owner )
+    if(this.owner==='anonymous'){
+      return true;
+    }else{
+      return Meteor.userId() === this.owner;
+    }
   }
 });
 
@@ -179,7 +187,6 @@ var startObservers = function(self){
 // if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId,userId){
-  console.log("Save HTML!!");
   Meteor.call('SaveHTML',text,templateId,userId);
 }
 
@@ -192,7 +199,6 @@ var saveCSS = function(text,templateId,userId){
 }
 
 var saveJSON = function(text,templateId,userId){
-  console.log("save json" );
   Meteor.call('SaveJSON',text,templateId,userId); 
 }
 
