@@ -9,7 +9,11 @@
       <div class="template-like-button">
         {{> LikeButton}}
       </div>
-      
+      {{#if isOwner}}
+        <div class="publish-template-button">
+          {{> PublishTemplate}}
+        </div>
+      {{/if}}
       <div class="template-date"> 
         {{modified.getMonth}}/{{modified.getDate}}/{{modified.getUTCFullYear}}
       </div>
