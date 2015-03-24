@@ -6,19 +6,20 @@
       <div class="template-title">
         {{name}} {{{templateOwnerAvatar this}}}
       </div>
-      <div class="template-like-button">
-        {{> LikeButton}}
+      <br/>
+      <div class="template-like-button"> 
+        {{> ToggleSourceCode}}
       </div>
-      {{#if isOwner}}
+      {{#if isOwner}}{{#unless isAnonymous}}
         <div class="publish-template-button">
           {{> PublishTemplate}}
         </div>
-      {{/if}}
+      {{/unless}}{{/if}}
       <div class="template-date"> 
         {{modified.getMonth}}/{{modified.getDate}}/{{modified.getUTCFullYear}}
       </div>
-      <div class="template-like-button"> 
-        {{> ToggleSourceCode}}
+      <div class="template-like-button">
+        {{> LikeButton}}
       </div>
     </div>
     

@@ -77,6 +77,11 @@ Template.Editor.helpers({
     if(this){
       return iCanSave(this._id);
     }
+  },
+  isAnonymous : function(){
+    if(this){
+     return this.owner==='anonymous';
+   }
   }
 });
 
