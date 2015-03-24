@@ -203,6 +203,21 @@ Meteor.methods({
     
   },
 
+  PublishTemplate : function(_published,templateId,userId){
+
+    if( !canUpdate(templateId,userId,this.userId) ){
+      throw new Error("Cannot publish.");
+    }
+
+    TemplateCollection.update({_id:templateId},{$set:{published:_published}},function(err,res){
+      if(err||res===0){
+        console.log("publish error",err, res);
+      }else{
+        //console.log("saveCSS OK!",res);
+      }
+    });
+  }
+
 
 });
 

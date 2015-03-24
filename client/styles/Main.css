@@ -93,6 +93,9 @@ button:hover{
   display:inline;
   padding:0px 24px;
 }
+.publish-template-button{
+  display:inline;
+}
 
 .center-button{
   margin:0 auto;

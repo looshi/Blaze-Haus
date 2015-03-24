@@ -58,6 +58,10 @@ Schemas.TemplateCollection = new SimpleSchema({
   owner:{
     type:String,
     label:"owner - user id"
+  },
+  published:{
+    type:Boolean,
+    label:"published"
   }
 });
 

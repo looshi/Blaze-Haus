@@ -1,10 +1,20 @@
 Template.UserProfile.helpers({
 
   getUserTemplates : function(){
-    return TemplateCollection.find({owner:this._id});
+
+    if(Meteor.userId()===this._id){
+      return TemplateCollection.find({owner:this._id});
+    }else{
+      return TemplateCollection.find({owner:this._id,published:true});
+    }
+ 
   },
   getNumUserTemplates : function(){
-    return TemplateCollection.find({owner:this._id}).count();
+    if(Meteor.userId()===this._id){
+      return TemplateCollection.find({owner:this._id}).count();
+    }else{
+      return TemplateCollection.find({owner:this._id,published:true}).count();
+    }
   }
   
 })
