@@ -175,6 +175,7 @@ a#toggle-directions {
 }
 .template-list-item{
   display:inline-block;
+  padding:2px 4px;
 }
 .template-link{
   width:140px;
@@ -203,7 +204,6 @@ a#toggle-directions {
   padding-top:4px;
 }
 .template-list-likes{
-  padding-top:4px;
   float:right;
   color:#ff0000;
 }
@@ -319,6 +319,8 @@ img.avatar{
   display:inline-block;
   border-radius:4px;
   vertical-align: bottom;
+  height:20px;
+  width:20px;
 }
 .avatar-link{
   text-decoration: none;
