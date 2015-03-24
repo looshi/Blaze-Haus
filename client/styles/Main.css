@@ -67,8 +67,11 @@ button:hover{
   right:16px;
 }
 .template-menu .form-error-message{
-   position:absolute;
-  right:16px;
+  position:absolute;
+  right:162px;
+  text-align:right;
+  top:29px;
+  width:400px;
 }
 
 .template-date{
@@ -264,17 +267,9 @@ a#toggle-directions {
   font-weight: bold;
 }
 
-#alertPanel{
-  position:fixed;
-  top:12px;
-  right:12px;
-  background-color:#dff2d8;
-  width:45%;
-  border-radius:8px;
-  text-align:center;
+#statusMessage{
   padding:8px;
-  font-family: Arial;
-  display:none;
+  text-align: right;
 }
 
 .footer-nav{

@@ -75,23 +75,21 @@ Template.Editor.helpers({
   },
   isOwner : function(){
     if(this){
-      var id = this.toString();
-      return iAmTheOwner(id);
+      return iCanSave(this._id);
     }
   }
 });
 
-var iAmTheOwner = function(templateId){
-  var template = CurrentTemplate.findOne();
-
-  if(!template || !template.owner){
-    return;
-  }
-
-  if(template && template.owner==='anonymous'){
-    return true;
-  }else{
-    return Meteor.userId() === template.owner;
+var iCanSave = function(templateId){
+  var template = CurrentTemplate.findOne({_id:templateId});
+  
+  if(template  && template.owner){
+    if(template.owner==='anonymous'){
+      return true;
+    }else{
+      return Meteor.userId() === template.owner;
+    }
+  
   }
 }
 
@@ -159,11 +157,14 @@ var startObservers = function(self){
       renderHTML('',null,self);
       self.canClearIntervals = true;
 
-      if(iAmTheOwner(templateId)){
+      if(iCanSave(templateId)){
         self.htmlEditor.debounce("change",saveHTML,templateId,userId);
         self.jsEditor.debounce("change",saveJS,templateId,userId);
         self.jsonEditor.debounce("change",saveJSON,templateId,userId);
         self.cssEditor.debounce("change",saveCSS,templateId,userId);
+        Session.set('UserEditMessage','All changes saved.');
+      }else{
+        Session.set('UserEditMessage',"Template is read-only.");
       }
 
     },
@@ -177,24 +178,24 @@ var startObservers = function(self){
       if(doc.html){
         renderHTML(doc.html,"html",self);
         self.htmlEditor.setValue(doc.html);
-        Session.set('UserEditMessage',{file:"html",user:doc.lastModifiedBy});
+        Session.set('UserEditMessage','html edited by another user just now.');
       }
       if(doc.js){
         renderHTML(doc.js,"js",self);
         self.jsEditor.setValue(doc.js);
-        Session.set('UserEditMessage',{file:"js",user:doc.lastModifiedBy});
+        Session.set('UserEditMessage','js edited by another user just now.');
       }
 
       if(doc.css){
         renderCSS(doc.css,"css",self);
         self.cssEditor.setValue(doc.css);
-        Session.set('UserEditMessage',{file:"css",user:doc.lastModifiedBy});
+        Session.set('UserEditMessage','css edited by another user just now.');
       }
 
       if(doc.json){
         renderHTML("",null,self);  
         self.jsonEditor.setValue(doc.json);
-        Session.set('UserEditMessage',{file:"json",user:doc.lastModifiedBy});
+        Session.set('UserEditMessage','json edited by another user just now.');
       }
     }
   });
@@ -203,21 +204,28 @@ var startObservers = function(self){
 // if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId,userId){
-  Meteor.call('SaveHTML',text,templateId,userId);
+  Meteor.call('SaveHTML',text,templateId,userId,handleResponse);
 }
 
 var saveJS = function(text,templateId,userId){
-  Meteor.call('SaveJS',text,templateId,userId);
+  Meteor.call('SaveJS',text,templateId,userId,handleResponse);
 }
 
 var saveCSS = function(text,templateId,userId){
-  Meteor.call('SaveCSS',text,templateId,userId);
+  Meteor.call('SaveCSS',text,templateId,userId,handleResponse);
 }
 
 var saveJSON = function(text,templateId,userId){
-  Meteor.call('SaveJSON',text,templateId,userId);
+  Meteor.call('SaveJSON',text,templateId,userId,handleResponse);
 }
 
+var handleResponse = function(err,res){
+  if(err){
+    Session.set('UserEditMessage','Error, could not save.');
+  }else{
+    Session.set('UserEditMessage','All changes saved.');
+  }
+}
 
 var createCollection = function(json,self){
   self.jsonError.set("ok");
@@ -260,6 +268,10 @@ var renderJSON = function(newJSON,codeType,self){
 */
 var renderCSS = function(newCSS,codeType,self){
 
+  if(iCanSave(self.data._id)){
+    Session.set('UserEditMessage','saving...');
+  }
+
   destroyCSS();
 
   var head = document.head || document.getElementsByTagName('head')[0];
@@ -296,6 +308,10 @@ var latestJS = "";
 * @param {Object} self , this Template.Editor instance
 */
 var renderHTML = function(text,codeType,self){
+
+  if(iCanSave(self.data._id)){
+    Session.set('UserEditMessage','saving...');
+  }
 
   if(self.htmlError){
     self.htmlError.set("ok");

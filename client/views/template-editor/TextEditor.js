@@ -68,7 +68,7 @@ TextEditor.prototype.debounce = function(_eventName,_handler,_templateId,_userId
         }
        
          
-      }, 300 )  // no semicolon
+      }, 2000 )  // no semicolon
     
   );
 }
