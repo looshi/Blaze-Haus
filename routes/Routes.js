@@ -25,7 +25,7 @@ Router.route('About', {
 Router.route('Editor', {
   path:'/:_id',     
   subscriptions: function() {
-    var userId = Meteor.userId() ? Meteor.userId() : Session.get('AnonymousUserId');
+    var userId = Meteor.userId() ? Meteor.userId() + "" + Session.get('AnonymousUserId') : Session.get('AnonymousUserId');
     return Meteor.subscribe("singleTemplateData",this.params._id,userId);
   },
   data: function(){

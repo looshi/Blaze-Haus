@@ -6,6 +6,21 @@ CRUD methods for a single editable Template
 Fiber = Npm.require('fibers');
 Future = Npm.require('fibers/future');
 
+// rate limit requests
+EasySecurity.config({
+  methods: {
+    CreateNewTemplate: { type: 'throttle', ms: 1000  },
+    DuplicateTemplate: { type: 'throttle', ms: 1000  },
+    DeleteTemplate: { type: 'throttle', ms: 1000  },
+    LikeTemplate: { type: 'throttle', ms: 1000  },
+    RenameTemplate: { type: 'throttle', ms: 1000  },
+    SaveHTML: { type: 'throttle', ms: 2000 },
+    SaveCSS: { type: 'throttle', ms: 2000 },
+    SaveJS: { type: 'throttle', ms: 2000 },
+    SaveJSON: { type: 'throttle', ms: 2000 } 
+  }
+});
+
 Meteor.methods({
 
   /*
@@ -19,8 +34,8 @@ Meteor.methods({
 
     var template = defaultTemplate;
 
-    if(Meteor.userId()){
-      template.owner = Meteor.userId();
+    if(this.userId){
+      template.owner = this.userId;
     }else{
       template.owner = 'anonymous';
     }
@@ -38,11 +53,13 @@ Meteor.methods({
 
     var template = TemplateCollection.findOne(templateId);
 
-    if(Meteor.userId()){
-      template.owner = Meteor.userId();
+    if(this.userId){
+      template.owner = this.userId;
     }else{
       template.owner = 'anonymous';
     }
+
+    template.likes = 0;
 
     delete template._id;
     template.name = _name;
@@ -52,11 +69,11 @@ Meteor.methods({
     return newTemplate;
   },
 
-  DeleteTemplate : function(templateId){
+  DeleteTemplate : function(templateId,userId){
 
     var template = TemplateCollection.findOne(templateId);
 
-    if( !canUpdate(templateId) ){
+    if( !canUpdate(templateId,userId,this.userId) ){
       throw new Error("Cannot delete.");
     }
 
@@ -76,7 +93,7 @@ Meteor.methods({
 
   SaveHTML : function(newHTML,templateId,userId){
 
-    if( !canUpdate(templateId) ){
+    if( !canUpdate(templateId,userId,this.userId) ){
       throw new Error("Error Cannot saveHTML.");
       return;
     }
@@ -99,7 +116,7 @@ Meteor.methods({
 
   SaveJS : function(newJS,templateId,userId){
 
-    if( !canUpdate(templateId) ){
+    if( !canUpdate(templateId,userId,this.userId) ){
       throw new Error("Error Cannot saveJS.");
       return;
     }
@@ -121,7 +138,7 @@ Meteor.methods({
 
   SaveJSON : function(newJSON,templateId,userId){
 
-    if( !canUpdate(templateId) ){
+    if( !canUpdate(templateId,userId,this.userId) ){
       throw new Error("Error Cannot saveJSON.");
       return;
     }
@@ -143,7 +160,7 @@ Meteor.methods({
 
   SaveCSS : function(newCSS,templateId,userId){
     
-    if( !canUpdate(templateId) ){
+    if( !canUpdate(templateId,userId,this.userId) ){
       throw new Error("Error Cannot saveCSS.");
       return;
     }
@@ -167,7 +184,7 @@ Meteor.methods({
   RenameTemplate : function(newName,templateId,userId){
     
 
-    if( !canUpdate(templateId) ){
+    if( !canUpdate(templateId,userId,this.userId) ){
       throw new Error("Cannot rename.");
     }
 
@@ -185,6 +202,21 @@ Meteor.methods({
     
   },
 
+  PublishTemplate : function(_published,templateId,userId){
+
+    if( !canUpdate(templateId,userId,this.userId) ){
+      throw new Error("Cannot publish.");
+    }
+
+    TemplateCollection.update({_id:templateId},{$set:{published:_published}},function(err,res){
+      if(err||res===0){
+        console.log("publish error",err, res);
+      }else{
+        //console.log("saveCSS OK!",res);
+      }
+    });
+  }
+
 
 });
 
@@ -194,17 +226,19 @@ returns true if the template was created by anonymous
 returns true if the userId == owner
 returns false if the template owner is a logged in User and (template.owner !== userId)
 */
-var canUpdate = function(templateId){
+var canUpdate = function(templateId,userId,thisUserId){
   
   var template = TemplateCollection.findOne(templateId);
   
+  // anonymous templates can be udpated or deleted by everyone
   if(template.owner === 'anonymous'){
-    return true;                           // anonymous templates can be udpated or deleted by everyone
+    return true;                           
   }
 
-  if( Meteor.userId()===template.owner ){
-    return true;                           // user templates can only be udpated by their owner
-                                           // template edits will still render in the client, but they won't save
+  // double check the user sent their own id
+  // templates with owners can only be updated by their owner
+  if( (thisUserId===template.owner) && (userId.indexOf(thisUserId)!==-1) ){ 
+    return true;                           
   }
 
   return false;

@@ -60,15 +60,38 @@ button:hover{
   display:inline-block;
 }
 .left-controls{
-  position:absolute;
+  display:inline-block;
+  vertical-align: top;
+  width:30%;
+
+}
+.left-controls button{
+  margin:6px;
+  display:inline;
 }
 .right-controls{
-  position:absolute;
-  right:16px;
+  display:block;
+  float:right;
+  text-align: right;
+  width:550px;
+  background-color: #ddd;
+}
+@media (max-width: 840px) { 
+ .right-controls{
+    width:200px;
+  }
+}
+@media (max-width: 500px) { 
+ .right-controls{
+    width:150px;
+  }
 }
 .template-menu .form-error-message{
-   position:absolute;
-  right:16px;
+  position:absolute;
+  right:162px;
+  text-align:right;
+  top:38px;
+  width:400px;
 }
 
 .template-date{
@@ -87,8 +110,22 @@ button:hover{
   border-radius: 4px;
 }
 .template-like-button{
+  display:inline-block;
+}
+.publish-template-button{
   display:inline;
-  padding:0px 24px;
+}
+
+.center-button{
+  margin:0 auto;
+  text-align:center;
+}
+.center-button .template-menu .form-error-message{
+  color:red;
+  position:static;
+  text-align: center;
+  padding-top:4px;
+
 }
 
 #like-template-btn{
@@ -166,13 +203,17 @@ a#toggle-directions {
   padding:16px;
   text-decoration: none;
   display:inline-block;
-  
+  font-family: monospace;
+  width:45%;
+  padding:2%;
 }
 .template-list-item{
   display:inline-block;
+  padding:2px 4px;
 }
 .template-link{
   width:140px;
+  font-family:monospace;
 }
 .template-list-item a{
   padding:2px 14px;  
@@ -190,13 +231,15 @@ a#toggle-directions {
 }
 .template-list-name{
   float:left;
-  width: 110px;
+  width: 98px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-top:4px;
 }
 .template-list-likes{
   float:right;
+  color:#ff0000;
 }
 .template-list-owner{
   float:left;
@@ -205,7 +248,9 @@ a#toggle-directions {
 .template-list-item .anonymous-owner{
   display:none;
 }
-
+.template-list-owner a img{
+  width:24px;
+}
 .template-list-owner a img, 
 .template-list-owner a{ 
   border: none; 
@@ -216,12 +261,12 @@ a#toggle-directions {
  
 }
 .template-list-owner a:hover{ 
-  border: 4px solid blue; 
+  border: 2px solid #ccc; 
   background:none;
   border-radius: 4px;
 }
 .template-list-owner a:hover img{ 
-  margin: -4px; 
+  margin: -2px; 
 }
 
 
@@ -256,17 +301,9 @@ a#toggle-directions {
   font-weight: bold;
 }
 
-#alertPanel{
-  position:fixed;
-  top:12px;
-  right:12px;
-  background-color:#dff2d8;
-  width:45%;
-  border-radius:8px;
-  text-align:center;
+#statusMessage{
   padding:8px;
-  font-family: Arial;
-  display:none;
+  text-align: right;
 }
 
 .footer-nav{
@@ -308,6 +345,13 @@ a#toggle-directions {
   text-decoration: underline;
 }
 
+.login{
+  float:right;
+}
+.main-header{
+  float:left;
+}
+
 .login .username{
   color:#596595;
   display:inline-block;
@@ -315,13 +359,23 @@ a#toggle-directions {
 img.avatar{
   display:inline-block;
   border-radius:4px;
-  vertical-align: middle;
+  vertical-align: bottom;
+  height:20px;
+  width:20px;
 }
 .avatar-link{
   text-decoration: none;
+  background-color: #ddd;
 }
 .avatar-link img{
   padding-right:12px;
+  width:24px;
+}
+div.avatar-link{
+  height:24px;
+  border-radius:4px;
+  display:inline-block;
+  width:24px;
 }
 .avatar-link:hover{
   text-decoration: underline;
@@ -330,4 +384,12 @@ img.avatar{
   font-family: monospace;
   color:blue;
   padding:24px;
+}
+.user-profile img{
+  width:200px;
+}
+.lock-icon:before{
+
+  content: "\f023";
+
 }

@@ -19,7 +19,7 @@ UI.registerHelper("templateOwnerAvatar", function(template,showname){
     if(user && user.services){
       var githubId = user.services.github.id;
       var userId = user._id;
-      var html = "<a class='avatar-link' href='/user/"+userId+"'><img src='https://avatars.githubusercontent.com/u/"+githubId+"?s=24'/>";
+      var html = "<a class='avatar-link' href='/user/"+userId+"'><img src='https://avatars.githubusercontent.com/u/"+githubId+"?s=20'/>";
       if(showname){
         html += user.services.github.username;
       }
@@ -27,7 +27,7 @@ UI.registerHelper("templateOwnerAvatar", function(template,showname){
       return html;
     }
   }else{
-    return "&nbsp;";
+    return "<div class='avatar-link'></div>";
   }
   
 });
@@ -39,4 +39,10 @@ UI.registerHelper("githubUsername", function(date) {
     return Meteor.user().services.github.username;
   }
 
+});
+
+UI.registerHelper("getLikes", function(template) {
+  if(template.likes>0){
+    return "&#9829;  "+template.likes;
+  }
 });

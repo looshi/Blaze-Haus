@@ -54,7 +54,8 @@ defaultTemplate = {
   modified: new Date(),  // set these dates inside the methods
   lastModifiedBy: 'System',
   name : "Default",
-  owner:'System'
+  owner:'System',
+  published:true
 }
 
 

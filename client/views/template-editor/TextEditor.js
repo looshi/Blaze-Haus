@@ -61,7 +61,6 @@ TextEditor.prototype.debounce = function(_eventName,_handler,_templateId,_userId
 
     _.debounce(  
       function(e){
-console.log("SELF",self.autoSave);
         if(self.autoSave){
           _handler(e.getValue(),_templateId,_userId);
         }else{
@@ -69,7 +68,7 @@ console.log("SELF",self.autoSave);
         }
        
          
-      }, 300 )  // no semicolon
+      }, 2000 )  // no semicolon
     
   );
 }

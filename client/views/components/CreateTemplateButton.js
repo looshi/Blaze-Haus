@@ -1,7 +1,10 @@
 Template.CreateTemplateButton.rendered = function(){
 
   $('#new-template-controls').hide();
-
+  $('#create-new-template-btn').prop('disabled', true);
+  setTimeout(function(){
+    $('#create-new-template-btn').prop('disabled', false); // match the server throttle
+  },1000);
 }
 
 Template.CreateTemplateButton.events({

@@ -121,7 +121,8 @@ MochaWeb.testOnly(function(){
         modified: new Date(), 
         lastModifiedBy: 'System',
         name : 'DeleteMe',
-        owner:'anonymous'
+        owner:'anonymous',
+        published:true
       }
 
     before(function(done){  
