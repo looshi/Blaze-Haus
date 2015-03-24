@@ -97,7 +97,6 @@ Meteor.methods({
       throw new Error("Error Cannot saveHTML.");
       return;
     }
-    console.log("save html : " , newHTML );
 
     var future = new Future();
     
