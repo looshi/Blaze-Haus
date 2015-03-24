@@ -8,20 +8,17 @@ Future = Npm.require('fibers/future');
 
 // rate limit requests
 EasySecurity.config({
-  general: { type: 'rateLimit', ms: 1000 },
   methods: {
-    CreateNewTemplate: { type: 'throttle', ms: 1000 * 10 },
-    DuplicateTemplate: { type: 'throttle', ms: 1000 * 10 },
-    DeleteTemplate: { type: 'throttle', ms: 1000 * 10 },
-    LikeTemplate: { type: 'throttle', ms: 1000 * 5 },
-    RenameTemplate: { type: 'throttle', ms: 1000 * 5 },
+    CreateNewTemplate: { type: 'throttle', ms: 1000 * 3 },
+    DuplicateTemplate: { type: 'throttle', ms: 1000 * 3 },
+    DeleteTemplate: { type: 'throttle', ms: 1000 * 3 },
+    LikeTemplate: { type: 'throttle', ms: 1000 * 3 },
+    RenameTemplate: { type: 'throttle', ms: 1000 * 3 },
     SaveHTML: { type: 'throttle', ms: 2000 },
     SaveCSS: { type: 'throttle', ms: 2000 },
     SaveJS: { type: 'throttle', ms: 2000 },
     SaveJSON: { type: 'throttle', ms: 2000 } 
-  },
-  ignoredMethods: ['someOtherMethod'],
-  maxQueueLength: 200
+  }
 });
 
 Meteor.methods({

@@ -1,7 +1,10 @@
 Template.RenameTemplateButton.rendered = function(){
 
   $('#rename-template-controls').hide();
-
+  $('#rename-template-btn').prop('disabled', true);
+  setTimeout(function(){
+    $('#rename-template-btn').prop('disabled', false); // match the server throttle
+  },3000);
 }
 
 Template.RenameTemplateButton.events({
@@ -23,7 +26,12 @@ Template.RenameTemplateButton.events({
       $('#rename-template-error').html('Must be between 2 and 30 chars.');
       return;
     }
-    var userId = Session.get('AnonymousUserId');
+    var userId;
+    if(Meteor.userId()){
+      userId = Meteor.userId();
+    }else{
+      userId = Session.get('AnonymousUserId');
+    }
     Meteor.call('RenameTemplate',name,this._id,userId,function(err,res){
       if(err || res === 0){
         console.warn("new template error! ", err,res );
