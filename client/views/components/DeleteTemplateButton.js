@@ -1,5 +1,9 @@
 Template.DeleteTemplateButton.rendered = function(){
   $('#delete-template-controls').hide();
+  $('#delete-template-btn').prop('disabled', true);
+  setTimeout(function(){
+    $('#delete-template-btn').prop('disabled', false); // match the server throttle
+  },3000);
 }
 
 Template.DeleteTemplateButton.events({
