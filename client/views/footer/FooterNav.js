@@ -8,7 +8,7 @@ var templateNames;
 
 Template.FooterNav.created = function(){
 
-  var arr = TemplateCollection.find().fetch();
+  var arr = TemplateCollection.find({owner:{$ne:'anonymous'}},{sort:{created:-1},limit:1000}).fetch();
   templates = _.map(arr, function(t){ return t._id; }); // get a list of Template ids
   templateNames = _.map(arr, function(t){ return t.name; }); // list of names
 }

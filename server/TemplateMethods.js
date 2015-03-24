@@ -9,11 +9,11 @@ Future = Npm.require('fibers/future');
 // rate limit requests
 EasySecurity.config({
   methods: {
-    CreateNewTemplate: { type: 'throttle', ms: 1000 * 3 },
-    DuplicateTemplate: { type: 'throttle', ms: 1000 * 3 },
-    DeleteTemplate: { type: 'throttle', ms: 1000 * 3 },
-    LikeTemplate: { type: 'throttle', ms: 1000 * 3 },
-    RenameTemplate: { type: 'throttle', ms: 1000 * 3 },
+    CreateNewTemplate: { type: 'throttle', ms: 1000  },
+    DuplicateTemplate: { type: 'throttle', ms: 1000  },
+    DeleteTemplate: { type: 'throttle', ms: 1000  },
+    LikeTemplate: { type: 'throttle', ms: 1000  },
+    RenameTemplate: { type: 'throttle', ms: 1000  },
     SaveHTML: { type: 'throttle', ms: 2000 },
     SaveCSS: { type: 'throttle', ms: 2000 },
     SaveJS: { type: 'throttle', ms: 2000 },
