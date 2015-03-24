@@ -65,34 +65,17 @@ TemplateCollection.attachSchema(Schemas.TemplateCollection);
 
 
 
+TemplateCollection.allow({
+  insert: function () {
+    return false;
+  },
+  update: function () {
+    return false;
+  },
+  remove: function () {
+    return false;
+  }
+});
 
-if(Meteor.isClient){
-
-  TemplateCollection.allow({
-    insert: function () {
-      return false;
-    },
-    update: function () {
-      return false;
-    },
-    remove: function () {
-      return false;
-    }
-  });
-
-}
-if(Meteor.isServer){
-  TemplateCollection.allow({
-    insert: function () {
-      return true;
-    },
-    update: function () {
-      return true;
-    },
-    remove: function () {
-      return true;
-    }
-  });
-}
 
 
