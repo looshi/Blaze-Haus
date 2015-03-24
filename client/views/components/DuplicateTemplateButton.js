@@ -4,7 +4,7 @@ Template.DuplicateTemplateButton.rendered = function(){
   $('#duplicate-template-btn').prop('disabled', true);
   setTimeout(function(){
     $('#duplicate-template-btn').prop('disabled', false); // match the server throttle
-  },3000);
+  },1000);
 }
 
 Template.DuplicateTemplateButton.events({

@@ -94,6 +94,18 @@ button:hover{
   padding:0px 24px;
 }
 
+.center-button{
+  margin:0 auto;
+  text-align:center;
+}
+.center-button .template-menu .form-error-message{
+  color:red;
+  position:static;
+  text-align: center;
+  padding-top:4px;
+
+}
+
 #like-template-btn{
   width:60px !important;
   height:18px !important;
