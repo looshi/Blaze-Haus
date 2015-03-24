@@ -1,8 +1,4 @@
 <Template name="Editor">
- 
- <!--
-  {{> Instructions}} 
--->
 
   <div class="editor-menu">
      
@@ -10,23 +6,31 @@
       <div class="template-title">
         {{name}} {{{templateOwnerAvatar this}}}
       </div>
-      <div class="template-like-button">
-        {{> LikeButton}}
+      <br/>
+      <div class="template-like-button"> 
+        {{> ToggleSourceCode}}
       </div>
-      
+      {{#if isOwner}}{{#unless isAnonymous}}
+        <div class="publish-template-button">
+          {{> PublishTemplate}}
+        </div>
+      {{/unless}}{{/if}}
       <div class="template-date"> 
         {{modified.getMonth}}/{{modified.getDate}}/{{modified.getUTCFullYear}}
       </div>
-      <div class="template-like-button"> 
-        {{> ToggleSourceCode}}
+      <div class="template-like-button">
+        {{> LikeButton}}
       </div>
     </div>
     
     <div class="right-controls">
       {{> CreateTemplateButton}}
       {{> DuplicateTemplateButton}}
-      {{> DeleteTemplateButton}}
-      {{> RenameTemplateButton}}
+      {{#if isOwner}}
+        {{> DeleteTemplateButton}}
+        {{> RenameTemplateButton}}
+      {{/if}}
+      {{> StatusMessage}}
     </div>
   </div>
 

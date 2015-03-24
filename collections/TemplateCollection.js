@@ -20,22 +20,22 @@ Schemas.TemplateCollection = new SimpleSchema({
   css:{
     type:String,
     label:"css",
-    max: 2000
+    max: 5000
   },
   html:{
     type:String,
     label:"html",
-    max: 2000
+    max: 20000
   },
   js:{
     type:String,
     label:"js code",
-    max: 2000
+    max: 20000
   },
   json:{
     type:String,
     label:"json collection data",
-    max : 10000
+    max : 20000
     //blackbox : true
   },
   likes:{
@@ -58,6 +58,10 @@ Schemas.TemplateCollection = new SimpleSchema({
   owner:{
     type:String,
     label:"owner - user id"
+  },
+  published:{
+    type:Boolean,
+    label:"published"
   }
 });
 
@@ -65,34 +69,17 @@ TemplateCollection.attachSchema(Schemas.TemplateCollection);
 
 
 
+TemplateCollection.allow({
+  insert: function () {
+    return false;
+  },
+  update: function () {
+    return false;
+  },
+  remove: function () {
+    return false;
+  }
+});
 
-if(Meteor.isClient){
-
-  TemplateCollection.allow({
-    insert: function () {
-      return false;
-    },
-    update: function () {
-      return false;
-    },
-    remove: function () {
-      return false;
-    }
-  });
-
-}
-if(Meteor.isServer){
-  TemplateCollection.allow({
-    insert: function () {
-      return true;
-    },
-    update: function () {
-      return true;
-    },
-    remove: function () {
-      return true;
-    }
-  });
-}
 
 

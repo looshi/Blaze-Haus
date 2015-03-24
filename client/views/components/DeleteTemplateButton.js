@@ -1,5 +1,9 @@
 Template.DeleteTemplateButton.rendered = function(){
   $('#delete-template-controls').hide();
+  $('#delete-template-btn').prop('disabled', true);
+  setTimeout(function(){
+    $('#delete-template-btn').prop('disabled', false); // match the server throttle
+  },1000);
 }
 
 Template.DeleteTemplateButton.events({
@@ -20,7 +24,7 @@ Template.DeleteTemplateButton.events({
       return;
     }
 
-    Meteor.call('DeleteTemplate',this._id,function(err,res){
+    Meteor.call('DeleteTemplate',this._id,Meteor.userId(),function(err,res){
       if(err || res === 0){
         $('#delete-template-error').html('error, cannot delete');
         console.warn("delete template error! ", err,res );
