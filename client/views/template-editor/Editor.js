@@ -286,7 +286,7 @@ var renderCSS = function(newCSS,codeType,self){
 
   style.type = 'text/css';
   if (style.styleSheet){
-    style.styleSheet.cssText = _newCSS;
+    style.styleSheet.cssText = newCSS;
   } else {
     style.appendChild(document.createTextNode(newCSS));
   }
