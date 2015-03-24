@@ -15,6 +15,10 @@ Template.UserProfile.helpers({
     }else{
       return TemplateCollection.find({owner:this._id,published:true}).count();
     }
+  },
+  isPublished : function(){
+    return this.published;
   }
+
   
 })

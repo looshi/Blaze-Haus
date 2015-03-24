@@ -60,17 +60,37 @@ button:hover{
   display:inline-block;
 }
 .left-controls{
-  position:absolute;
+  display:inline-block;
+  vertical-align: top;
+  width:30%;
+
+}
+.left-controls button{
+  margin:6px;
+  display:inline;
 }
 .right-controls{
-  position:absolute;
-  right:16px;
+  display:block;
+  float:right;
+  text-align: right;
+  width:550px;
+  background-color: #ddd;
+}
+@media (max-width: 840px) { 
+ .right-controls{
+    width:200px;
+  }
+}
+@media (max-width: 500px) { 
+ .right-controls{
+    width:150px;
+  }
 }
 .template-menu .form-error-message{
   position:absolute;
   right:162px;
   text-align:right;
-  top:29px;
+  top:38px;
   width:400px;
 }
 
@@ -90,8 +110,7 @@ button:hover{
   border-radius: 4px;
 }
 .template-like-button{
-  display:inline;
-  padding:0px 24px;
+  display:inline-block;
 }
 .publish-template-button{
   display:inline;
@@ -326,6 +345,13 @@ a#toggle-directions {
   text-decoration: underline;
 }
 
+.login{
+  float:right;
+}
+.main-header{
+  float:left;
+}
+
 .login .username{
   color:#596595;
   display:inline-block;
@@ -361,4 +387,9 @@ div.avatar-link{
 }
 .user-profile img{
   width:200px;
+}
+.lock-icon:before{
+
+  content: "\f023";
+
 }
