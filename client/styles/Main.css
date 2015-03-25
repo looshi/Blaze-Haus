@@ -6,6 +6,7 @@
 body{
   margin:0;
   padding:0;
+  background-color: #ddd;
 }
 
 header,.login-header{
@@ -112,8 +113,9 @@ button:hover{
 .template-like-button{
   display:inline-block;
 }
-.publish-template-button{
-  display:inline;
+.template-publish-button{
+  display:inline-block;
+  width:98px;
 }
 
 .center-button{
@@ -200,18 +202,23 @@ a#toggle-directions {
 }
 
 .template-list{
-  padding:16px;
   text-decoration: none;
   display:inline-block;
   font-family: monospace;
-  width:45%;
-  padding:2%;
+  width:48%;
+  padding:0 0 0 1%;
+  background-color: #ebebeb;
 }
 
 
 .template-list-item{
   display:inline-block;
-  padding:4px 0;
+  padding:0;
+  width:20%;
+  min-width:80px;
+  min-height:80px;
+  border-top:2px solid white;
+  border-left:2px solid #ddd;
 }
 .template-link{
   text-align: center;
@@ -220,7 +227,8 @@ a#toggle-directions {
   padding:10px;  
   display:inline-block;
   text-decoration:none;
-  background-color:#ddd;
+  background-color:#eee;
+  width: 100%;
 }
 .template-list-item img{
   vertical-align: top;
@@ -232,7 +240,7 @@ a#toggle-directions {
 
 }
 .template-list-name{
-  width: 98px;
+  width: 80%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -260,7 +268,9 @@ a#toggle-directions {
   float: right; 
   color:#ff0000;
   font-size:16px;
-  padding:4px 0 0 6px;
+  padding:0;
+  margin-right:8px;
+  text-align:right;
 }
 .template-list-owner a:hover{ 
   border: 2px solid #ccc; 
@@ -270,16 +280,23 @@ a#toggle-directions {
   margin: -2px; 
 }
 .template-list-screenshot{
-  width:100px;
-  height:100px;
   background-repeat:no-repeat;
-
+  background-size:90%;
+  min-width:40px;
+  min-height:80px;
+  margin:8px 0;
+}
+@media (max-width: 840px) { 
+ .template-list-screenshot{
+    min-height:60px;
+  }
 }
 .template-list-published{
   width:98px;
 }
 .template-list-item-admin-container{
   display:inline-block;
+  width:100px;
 }
 
 

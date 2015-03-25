@@ -43,6 +43,6 @@ UI.registerHelper("githubUsername", function(date) {
 
 UI.registerHelper("getLikes", function(template) {
   if(template.likes>0){
-    return "&#9829;  "+template.likes;
+    return "&#9829; "+template.likes;
   }
 });
