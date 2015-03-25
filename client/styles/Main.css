@@ -237,7 +237,12 @@ a#toggle-directions {
 .template-list-item a:hover{
   background-color:blue;
   color:#fff;
-
+}
+.template-list-item a:visited{
+  background-color:#e4e4e4;
+}
+.template-list-item a:visited:hover{
+  background-color: purple;
 }
 .template-list-name{
   width: 80%;
