@@ -29,6 +29,7 @@
       {{#if isOwner}}
         {{> DeleteTemplateButton}}
         {{> RenameTemplateButton}}
+        {{> ScreenshotButton}}
       {{/if}}
       {{> StatusMessage}}
     </div>
@@ -57,7 +58,9 @@
         <div class="{{jsonErrorClass}}">{{jsonError}}</div>
       </div>
     </div>
-
+    <div class="screenshot-preview" style='width:100px;height:100px;background-image: url({{screenshot}});'>
+      screenshot preview
+    </div>
   </div>
 
 

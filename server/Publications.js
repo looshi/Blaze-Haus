@@ -25,7 +25,7 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
       // send changes to code if another user made the change
       // send changes to likes
       // send changes to template name
-      if( !userMadeChange || fields.name || fields.likes ){
+      if( !userMadeChange || fields.name || fields.likes || fields.screenshot ){
         self.changed("CurrentTemplate",id,fields);  // Only publish changes if a different user made the edit, or user renamed template
       }      
     },
