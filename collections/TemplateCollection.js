@@ -18,22 +18,22 @@ Schemas.TemplateCollection = new SimpleSchema({
     label: "created"
   },
   css:{
-    type:String,
+    type:Uint8Array,
     label:"css",
     max: 5000
   },
   html:{
-    type:String,
+    type:Uint8Array,
     label:"html",
     max: 20000
   },
   js:{
-    type:String,
+    type:Uint8Array,
     label:"js code",
     max: 20000
   },
   json:{
-    type:String,
+    type:Uint8Array,
     label:"json collection data",
     max : 20000
     //blackbox : true

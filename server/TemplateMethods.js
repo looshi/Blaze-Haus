@@ -7,7 +7,8 @@ Fiber = Npm.require('fibers');
 Future = Npm.require('fibers/future');
 
 // rate limit requests
-EasySecurity.config({
+if(typeof EasySecurity!=='undefined'){
+  EasySecurity.config({
   methods: {
     CreateNewTemplate: { type: 'throttle', ms: 1000  },
     DuplicateTemplate: { type: 'throttle', ms: 1000  },
@@ -19,7 +20,9 @@ EasySecurity.config({
     SaveJS: { type: 'throttle', ms: 2000 },
     SaveJSON: { type: 'throttle', ms: 2000 } 
   }
-});
+ });
+}
+
 
 Meteor.methods({
 
@@ -44,6 +47,7 @@ Meteor.methods({
     template.created = new Date();
     template.modified = new Date();
     template.html = MockHTML.split('Default Template').join(name); // use the filename for <H2> 
+    template.html = pako.deflate(template.html);
     delete template._id;
     var newTemplate = TemplateCollection.insert(template);
     return newTemplate;
