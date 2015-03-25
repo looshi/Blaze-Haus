@@ -16,12 +16,9 @@ Meteor.methods({
 
   CreateDefaultTemplate : function(){
 
-    if(!TemplateCollection.findOne()){
-
-
-      TemplateCollection.insert(defaultTemplate);
-      
-    }
+    TemplateCollection.remove({name:'Default'});
+    TemplateCollection.insert(defaultTemplate);
+    
   },
 
   CreatePeopleCollection : function(){
