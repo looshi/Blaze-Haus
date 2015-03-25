@@ -6,5 +6,4 @@ Template.TemplateListItem.helpers({
       return String.fromCharCode.apply(null, new Uint16Array(screenshot));
     }
   }
-
 });

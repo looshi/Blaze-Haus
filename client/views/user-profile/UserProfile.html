@@ -5,16 +5,14 @@
     <h1>{{services.github.username}}</h1>
     
     <h3>{{getNumUserTemplates}} templates in the haus : </h3>
-    {{#each getUserTemplates}}
-      <div class='template-list-item'>
-        <a class="template-link" href="/{{_id}}">
-          <div class='template-list-name'>{{name}}</div>
-          <div class='template-list-likes'>{{{getLikes this}}}</div>
-          {{#unless isPublished}}(unlisted){{/unless}}
-        </a>
-      </div>
+      {{#each getUserTemplates}}
+        <div class='template-list-item-admin-container'>
+          {{> TemplateListItem}}
+          {{#if isOwner}}
+            <div class='template-list-published'>{{> PublishTemplate}}</div>
+          {{/if}}
+        </div>
     {{/each}}
-
   </div>
 
 </Template>

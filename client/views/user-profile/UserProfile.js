@@ -16,9 +16,8 @@ Template.UserProfile.helpers({
       return TemplateCollection.find({owner:this._id,published:true}).count();
     }
   },
-  isPublished : function(){
-    return this.published;
+  isOwner : function(){
+    return Meteor.userId()===this.owner;
   }
-
   
 })

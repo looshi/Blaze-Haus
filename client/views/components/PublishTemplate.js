@@ -1,40 +1,26 @@
 Template.PublishTemplate.rendered = function(){
 
   if(this.data.published){
-    $('#published-checkbox').prop('checked',true);
+    $('#published-checkbox'+this.data._id).prop('checked',true);
   }else{
-    $('#published-checkbox').prop('checked',false);
+    $('#published-checkbox'+this.data._id).prop('checked',false);
   }
 
-}
+  var self = this;
 
-Template.PublishTemplate.events({
+  $('#published-checkbox'+self .data._id).on('change',function(_event){
 
-  'change #published-checkbox' : function(_event){
-
-    if( $('#published-checkbox').prop('checked') ){
+    var checked = $('#published-checkbox'+self.data._id).prop('checked');
       
-      Meteor.call('PublishTemplate',true,this._id,Meteor.userId(),function(err,res){
-        if(err || res === 0){
-          console.warn("publish error! ", err,res );
-          $('#published-checkbox').prop('checked',false);
-        }else{
-          // everything went ok
-        }
-      }); 
+    Meteor.call('PublishTemplate',checked,self.data._id,Meteor.userId(),function(err,res){
+      if(err || res === 0){
+        console.warn("publish error! ", err,res );
+        $('#published-checkbox').prop('checked',!checked);
+      }else{
+        // everything went ok
+      }
+    }); 
 
-    }else{
-    
-      Meteor.call('PublishTemplate',false,this._id,Meteor.userId(),function(err,res){
-        if(err || res === 0){
-          console.warn("unpublish error! ", err,res );
-          $('#published-checkbox').prop('checked',true);
-        }else{
-           // everything went ok
-        }
-      }); 
-    }
-    
-  },
+  });
 
-})
+}
