@@ -17,7 +17,9 @@ Meteor.methods({
   CreateDefaultTemplate : function(){
 
     TemplateCollection.remove({name:'Default'});
-    TemplateCollection.insert(defaultTemplate);
+    var temp = defaultTemplate;
+    temp.published = false;
+    TemplateCollection.insert(temp);
     
   },
 

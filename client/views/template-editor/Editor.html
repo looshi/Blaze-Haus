@@ -16,6 +16,11 @@
       <div class="template-like-button">
         {{> LikeButton}}
       </div>
+      {{#if isOwner}}
+        {{#unless isAnonymous}}
+        <div class='template-publish-button'>{{> PublishTemplate}}</div>
+        {{/unless}}
+      {{/if}}
     </div>
     
     <div class="right-controls">
@@ -53,8 +58,9 @@
         <div class="{{jsonErrorClass}}">{{jsonError}}</div>
       </div>
     </div>
-    screenshot preview
-    <div class="screenshot-preview" style='background-image: url({{screenshot}});'></div>
+   
+    <div class="screenshot-preview" style='background-image: url({{screenshot}});'></div><br/>
+     screenshot preview
   </div>
 
 
