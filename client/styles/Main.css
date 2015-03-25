@@ -388,8 +388,10 @@ div.avatar-link{
 .user-profile img{
   width:200px;
 }
-.lock-icon:before{
-
-  content: "\f023";
-
+.screenshot-preview{
+  padding:0px 0 0 0;
+  margin:18px 0 0 0;
+  display:inline-block;
 }
+
+

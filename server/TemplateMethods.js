@@ -184,7 +184,27 @@ Meteor.methods({
     return future.wait();
   },
 
+  SaveScreenshot : function(imageData,templateId,userId){
+    
+    if( !canUpdate(templateId,userId,this.userId) ){
+      throw new Error("Error Cannot screenshot.");
+      return;
+    }
 
+    var future = new Future();
+
+    var fields = {screenshot:imageData,lastModifiedBy:userId,modified:new Date()};
+
+    TemplateCollection.update({_id:templateId},{$set:fields},function(err,res){
+      if(err||res===0){
+        future.throw("SaveScreenshot error",err, res);
+      }else{
+        future.return(res); 
+      }
+    });
+
+    return future.wait();
+  },
   RenameTemplate : function(newName,templateId,userId){
     
 

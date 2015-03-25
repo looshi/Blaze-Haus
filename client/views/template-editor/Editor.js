@@ -82,6 +82,12 @@ Template.Editor.helpers({
     if(this){
      return this.owner==='anonymous';
    }
+  },
+  screenshot : function(){
+    if(this && this.screenshot){
+      var screenshot = inflate(this.screenshot);
+      return screenshot;
+    }
   }
 });
 

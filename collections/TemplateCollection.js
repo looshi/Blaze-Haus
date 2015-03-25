@@ -62,6 +62,12 @@ Schemas.TemplateCollection = new SimpleSchema({
   published:{
     type:Boolean,
     label:"published"
+  },
+  screenshot:{
+    type:Uint8Array,
+    label:'screenshot',
+    max:2000,
+    optional:true
   }
 });
 
