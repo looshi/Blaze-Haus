@@ -10,11 +10,6 @@
       <div class="template-like-button"> 
         {{> ToggleSourceCode}}
       </div>
-      {{#if isOwner}}{{#unless isAnonymous}}
-        <div class="publish-template-button">
-          {{> PublishTemplate}}
-        </div>
-      {{/unless}}{{/if}}
       <div class="template-date"> 
         {{modified.getMonth}}/{{modified.getDate}}/{{modified.getUTCFullYear}}
       </div>
