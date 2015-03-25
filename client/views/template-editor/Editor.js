@@ -123,6 +123,13 @@ var clearAllIntervals = function(){
   }
 }
 
+var deflate = function(string){
+  return pako.deflate(string);
+}
+var inflate = function(uint8Array){
+  uint8Array = pako.inflate(uint8Array);
+  return String.fromCharCode.apply(null, new Uint16Array(uint8Array));
+}
 
 var startObservers = function(self){
 
@@ -140,21 +147,25 @@ var startObservers = function(self){
     added : function(id,doc){
 
       self.htmlEditor = new TextEditor('html-editor','text/html','html'+templateId); 
+      doc.html = inflate(doc.html);
       self.htmlEditor.setValueNative(doc.html);
       self.htmlEditor.on("change",renderHTML,"html",self);  
       renderHTML(doc.html,"html",self);
 
       self.jsEditor = new TextEditor('js-editor','text/javascript','js'+templateId);
+      doc.js = inflate(doc.js);
       self.jsEditor.setValueNative(doc.js);
       self.jsEditor.on("change",renderHTML,"js",self);  
       renderHTML(doc.js,"js",self);  
 
       self.cssEditor = new TextEditor('css-editor','text/css','css'+templateId);
+      doc.css = inflate(doc.css);
       self.cssEditor.setValueNative(doc.css);
       self.cssEditor.on("change",renderCSS,"css",self);  
       renderCSS(doc.css,"css",self);
 
       self.jsonEditor = new TextEditor('json-editor','text/javascript','json'+templateId);
+      doc.json = inflate(doc.json);
       createCollection(doc.json,self);
       self.jsonEditor.setValueNative(doc.json);
       self.jsonEditor.on("change",renderJSON,"json",self); 
@@ -182,23 +193,27 @@ var startObservers = function(self){
 
       if(doc.html){
         renderHTML(doc.html,"html",self);
+        doc.html = inflate(doc.html);
         self.htmlEditor.setValue(doc.html);
         Session.set('UserEditMessage','html edited by another user just now.');
       }
       if(doc.js){
         renderHTML(doc.js,"js",self);
+        doc.js = inflate(doc.js);
         self.jsEditor.setValue(doc.js);
         Session.set('UserEditMessage','js edited by another user just now.');
       }
 
       if(doc.css){
         renderCSS(doc.css,"css",self);
+        doc.css = inflate(doc.css);
         self.cssEditor.setValue(doc.css);
         Session.set('UserEditMessage','css edited by another user just now.');
       }
 
       if(doc.json){
-        renderHTML("",null,self);  
+        renderHTML("",null,self); 
+        doc.json = inflate(doc.json); 
         self.jsonEditor.setValue(doc.json);
         Session.set('UserEditMessage','json edited by another user just now.');
       }
@@ -209,18 +224,22 @@ var startObservers = function(self){
 // if someone tries to save an empty file = issue #20
 
 var saveHTML = function(text,templateId,userId){
+  text = deflate(text);
   Meteor.call('SaveHTML',text,templateId,userId,handleResponse);
 }
 
 var saveJS = function(text,templateId,userId){
+  text = deflate(text);
   Meteor.call('SaveJS',text,templateId,userId,handleResponse);
 }
 
 var saveCSS = function(text,templateId,userId){
+  text = deflate(text);
   Meteor.call('SaveCSS',text,templateId,userId,handleResponse);
 }
 
 var saveJSON = function(text,templateId,userId){
+  text = deflate(text);
   Meteor.call('SaveJSON',text,templateId,userId,handleResponse);
 }
 

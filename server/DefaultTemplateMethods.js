@@ -17,7 +17,8 @@ Meteor.methods({
   CreateDefaultTemplate : function(){
 
     if(!TemplateCollection.findOne()){
-      
+
+
       TemplateCollection.insert(defaultTemplate);
       
     }
@@ -46,11 +47,11 @@ Meteor.methods({
 
 defaultTemplate = {
   created: new Date(),
-  css: MockCSS,
-  html: MockHTML,
+  css: pako.deflate(MockCSS),
+  html: pako.deflate(MockHTML),
   likes:0,
-  js : MockJS,
-  json : MockJSON,
+  js : pako.deflate(MockJS),
+  json : pako.deflate(MockJSON),
   modified: new Date(),  // set these dates inside the methods
   lastModifiedBy: 'System',
   name : "Default",

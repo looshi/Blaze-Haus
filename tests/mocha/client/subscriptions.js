@@ -3,6 +3,15 @@ if ((typeof MochaWeb === 'undefined')){
 }
 
 
+var inflate = function(string){
+  string = pako.inflate(string);
+  return String.fromCharCode.apply(null, new Uint16Array(string));
+}
+var deflate = function(string){
+  return pako.deflate(string);
+}
+
+
 MochaWeb.testOnly(function(){
 
   describe("Default Template Data", function(){
@@ -16,12 +25,15 @@ MochaWeb.testOnly(function(){
 
         if (data){
           Router.go("/"+data._id);
-          defaultTemplate = CurrentTemplate.findOne({name:"Default"});
-          selector = data._id;
+          
         }
       });
 
       setInterval(function() { 
+
+        defaultTemplate = CurrentTemplate.findOne({name:"Default"});
+        selector = defaultTemplate._id;
+
         if(  !!$('html'+selector) && !!$('css'+selector) ){
           done();
         }
@@ -30,11 +42,11 @@ MochaWeb.testOnly(function(){
     });
 
     it("should contain default html", function(){
-      chai.assert.equal(defaultTemplate.html,MockHTML);
+      chai.assert.equal(inflate(defaultTemplate.html),MockHTML);
     });
 
     it("should contain default css", function(){
-      chai.assert.equal(defaultTemplate.css,MockCSS);
+      chai.assert.equal(inflate(defaultTemplate.css),MockCSS);
     });
 
     it("should set Codemirror html editor", function(){

@@ -2,6 +2,11 @@ if ((typeof MochaWeb === 'undefined')){
 return;
 }
 
+var inflate = function(string){
+  string = pako.inflate(string);
+  return String.fromCharCode.apply(null, new Uint16Array(string));
+}
+
 MochaWeb.testOnly(function(){
 
 
@@ -10,7 +15,7 @@ MochaWeb.testOnly(function(){
     var response;
     var name = "myname";
     var newTemplate;
-    
+
     before(function(done){  
       
       Meteor.call('CreateNewTemplate',name,function(err,res){
@@ -32,19 +37,19 @@ MochaWeb.testOnly(function(){
     });
 
     it("should contain default html", function(){
-      chai.assert(newTemplate.html.indexOf("Today is : {{currentDate}}")!==-1);
+      chai.assert(inflate(newTemplate.html).indexOf("Today is : {{currentDate}}")!==-1);
     });
 
     it("should contain default css", function(){
-      chai.assert.equal(newTemplate.css,MockCSS);
+      chai.assert.equal(inflate(newTemplate.css),MockCSS);
     });
 
      it("should contain default js", function(){
-      chai.assert.equal(newTemplate.js,MockJS);
+      chai.assert.equal(inflate(newTemplate.js),MockJS);
     });
 
     it("should contain default json", function(){
-      chai.assert.equal(newTemplate.json,MockJSON);
+      chai.assert.equal(inflate(newTemplate.json),MockJSON);
     });
 
   });
@@ -79,12 +84,10 @@ MochaWeb.testOnly(function(){
     });
 
     it("should create template with identical values" , function(){
-      
-      for(var k in originalTemplate){
-        if(k!=="_id"&&k!=="modified"&&k!=="created"&&k!=="name"&&k!=="owner"){
-          chai.assert.equal( duplicateTemplate[k] , originalTemplate[k] );
-        }     
-      }
+      chai.assert.equal( inflate(duplicateTemplate.html) , inflate(originalTemplate.html) );
+      chai.assert.equal( inflate(duplicateTemplate.css) , inflate(originalTemplate.css) );
+      chai.assert.equal( inflate(duplicateTemplate.js) , inflate(originalTemplate.js) );
+      chai.assert.equal( inflate(duplicateTemplate.json) , inflate(originalTemplate.json) );
     });
 
     it("should set owner to anonymous since user not logged in" , function(){
@@ -112,11 +115,11 @@ MochaWeb.testOnly(function(){
 
     var options = {
         created: new Date(),
-        css: 'mycss',
-        dataContext: 'mydata', 
-        html: 'myhtml',
-        js: 'myjs',
-        json : "myjson",
+        css: pako.deflate('mycss'),
+        dataContext: pako.deflate('mydata'), 
+        html: pako.deflate('myhtml'),
+        js: pako.deflate('myjs'),
+        json : pako.deflate("myjson"),
         likes:0,
         modified: new Date(), 
         lastModifiedBy: 'System',
