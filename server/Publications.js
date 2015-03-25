@@ -50,7 +50,7 @@ summaryTemplateData
 Publishes the entire list of all Templates, limited to a few fields.
 */ 
 Meteor.publish("summaryTemplateData", function () {
-  return TemplateCollection.find({}, {fields: {'name': 1,'likes':1,'owner':1,'created':1,'published':1 }} );
+  return TemplateCollection.find({}, {fields: {'name': 1,'likes':1,'owner':1,'created':1,'published':1,'screenshot':1 }} );
 });
 
 
