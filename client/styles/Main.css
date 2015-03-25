@@ -268,7 +268,10 @@ a#toggle-directions {
 .template-list-owner a:hover img{ 
   margin: -2px; 
 }
-
+.template-list-screenshot{
+  width:100px;
+  height:100px;
+}
 
 .editor-instructions h4{
   margin-bottom:0px;
@@ -392,6 +395,8 @@ div.avatar-link{
   padding:0px 0 0 0;
   margin:18px 0 0 0;
   display:inline-block;
+  width:100px;
+  height:100px;
 }
 
 
