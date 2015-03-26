@@ -82,6 +82,9 @@ var UserProfileController=RouteController.extend({
 Router.route('UserProfile', {
   path:'/user/:_id',
   controller:UserProfileController,
+  subscriptions : function(){
+    return Meteor.subscribe("userProfileTemplates",this.params._id);
+  },
   action:function(){
     this.render('UserProfile');
   }     
