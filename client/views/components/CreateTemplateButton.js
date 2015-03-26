@@ -30,7 +30,7 @@ Template.CreateTemplateButton.events({
       if(err || res === 0){
         console.warn("new template error! ", err,res );
       }else{
-        Router.go('/'+res);  // navigate to the new template
+        Router.go('/template/'+res);  // navigate to the new template
       }
 
     }); 

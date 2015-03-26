@@ -17,10 +17,23 @@
       {{>TemplateListItem}}
     {{/each}}
   </div>
+
   <div class="template-list latest">
     <h4>Recently Added</h4>
     {{#each getLatest }}
       {{>TemplateListItem}}
+    {{/each}}
+  </div>
+
+  <div class="pagination">
+    {{#each getPages}}
+      <a class="paging-link {{getSelectedPage index}}" 
+        href="/browse/{{index}}/{{amount}}" 
+        data-index="{{index}}" 
+        data-amount="{{amount}}"
+        >
+        {{index}}
+      </a>
     {{/each}}
   </div>
 

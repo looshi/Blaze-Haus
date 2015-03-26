@@ -241,8 +241,8 @@ Meteor.methods({
     });
   }
 
-
 });
+
 
 /*
 canUpdate
