@@ -291,6 +291,30 @@ a#toggle-directions {
   min-height:80px;
   margin:8px 0;
 }
+
+/* pagination nav */
+.pagination{
+  width:90%;
+  text-align: center;
+  text-decoration: none;
+  padding:16px 16px 32px;
+  font-size:18px;
+  font-family: monospace;
+}
+.paging-link{
+  text-decoration: none;
+  padding:8px;
+}
+.paging-link:hover{
+  background:blue;
+  color:white;
+}
+.selected-page{
+  background:purple;
+  color:white;
+}
+
+
 @media (max-width: 840px) { 
  .template-list-screenshot{
     min-height:60px;

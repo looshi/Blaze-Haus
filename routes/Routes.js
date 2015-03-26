@@ -13,8 +13,30 @@ Router.onBeforeAction(function () {
   }
 });
 
+
+Router.route('/', function () {
+  this.redirect('/browse/0/8');
+});
+
+
 Router.route('TemplateList', {
-  path:'/',     
+  name:'TemplateList',
+  path:'browse/:index/:amount',
+  subscriptions : function(){
+    var index = parseInt(this.params.index);
+    var amount = parseInt(this.params.amount);
+    return [ 
+      Meteor.subscribe("templateDataByCreated",index,amount),
+      Meteor.subscribe("templateDataByLikes",index,amount)
+    ];
+  },
+  action: function () {
+    if (this.ready()) {
+      this.render();
+    } else {
+      this.render('Loading');
+    }
+  }    
 });
 
 Router.route('About', {
@@ -23,7 +45,7 @@ Router.route('About', {
 
 
 Router.route('Editor', {
-  path:'/:_id',     
+  path:'/template/:_id',     
   subscriptions: function() {
     var userId = Meteor.userId() ? Meteor.userId() + "" + Session.get('AnonymousUserId') : Session.get('AnonymousUserId');
     return Meteor.subscribe("singleTemplateData",this.params._id,userId);
