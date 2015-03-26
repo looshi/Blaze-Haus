@@ -43,10 +43,10 @@ Template.TemplateList.rendered = function(){
 Template.TemplateList.helpers({
 
   getTopRated : function(){
-    return TemplateCollection.find({owner:{$ne:'anonymous'},published:true},{sort:{likes:-1}});
+    return TemplateCollection.find({},{sort:{likes:-1}});
   },
   getLatest : function(){
-    return TemplateCollection.find({owner:{$ne:'anonymous'},published:true},{sort:{created:-1}});
+    return RecentTemplates.find({},{sort:{created:-1}});
   },
   getNumTemplates : function(){
     return Template.instance().numTemplates.get();
