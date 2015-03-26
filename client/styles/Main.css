@@ -313,7 +313,17 @@ a#toggle-directions {
   background:purple;
   color:white;
 }
-
+.page-amount-label{
+    display:block;
+  text-align: center;
+  margin:14px auto;
+}
+#pageAmount{
+  display:block;
+  text-align: center;
+  margin:18px auto;
+  
+}
 
 @media (max-width: 840px) { 
  .template-list-screenshot{

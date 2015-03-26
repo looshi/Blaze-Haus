@@ -37,7 +37,17 @@ Template.TemplateList.rendered = function(){
       }
     }
   });
+  $('#pageAmount').val(amount);
 }
+
+Template.TemplateList.events({
+  'change #pageAmount' : function(e){
+    console.log("changed : " , e );
+    var router = Router.current();
+    var amount = e.currentTarget.value;
+    Router.go('/browse/0/'+amount)
+  }
+})
 
 
 Template.TemplateList.helpers({
