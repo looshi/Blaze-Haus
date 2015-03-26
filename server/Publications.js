@@ -51,6 +51,16 @@ Meteor.publish("userData",function(){
 })
 
 /* 
+User Profile templates
+Publishes all the 'published' templates for a user, to show on their profile page
+*/ 
+Meteor.publish("userProfileTemplates",function(userId){
+  var fields = {'name': 1,'likes':1,'owner':1,'created':1,'published':1,'screenshot':1 };
+  return TemplateCollection.find({owner:userId},{fields:fields});
+})
+
+
+/* 
 templateDataByCreated
 Publishes a list of all published non-anonymous Templates sorted by creation date
 limited to a few fields, and paging parameters
