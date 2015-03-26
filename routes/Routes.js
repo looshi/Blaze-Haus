@@ -15,7 +15,7 @@ Router.onBeforeAction(function () {
 
 
 Router.route('/', function () {
-  this.redirect('/browse/0/8');
+  this.redirect('/browse/0/32');
 });
 
 
