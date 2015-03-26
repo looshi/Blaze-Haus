@@ -50,18 +50,38 @@ Meteor.publish("userData",function(){
   return Meteor.users.find({} , {fields : {'services.github.id':1,'services.github.username':1}} );
 })
 
-
-
 /* 
 templateDataByCreated
 Publishes a list of all published non-anonymous Templates sorted by creation date
 limited to a few fields, and paging parameters
+the reason we publish to a custom client-only collection
+is because there are two lists on the homepage, both showing Documents from the Template Collection
+this allows the two lists to subscribe to Template Collection changes independently of each other.
 */ 
-Meteor.publish("templateDataByCreated", function (index,amount) {
+Meteor.publish("templateDataByCreated", function(index,amount){
+    var self = this;
 
-  return getTemplatesBySort(index,amount,{created:-1});
+    var handle = getTemplatesBySort(index,amount,{created:-1}).observeChanges({
+        added: function(id, fields) {
+          self.added("RecentTemplates",id, fields);
+        },
+        changed: function(id, fields) {
+          self.changed("RecentTemplates",id, fields);
+          self.flush();
+        },
+        removed: function (id) {
+          self.removed("RecentTemplates",id);
+        }
+    });
+
+    this.onStop(function() {
+        handle.stop();
+    });
+    self.ready();
 
 });
+
+
 
 /* 
 templateDataByLikes

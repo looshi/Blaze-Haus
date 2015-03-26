@@ -7,4 +7,5 @@
 if(Meteor.isClient){
 
   CurrentTemplate = new Mongo.Collection("CurrentTemplate");
+  
 }
