@@ -44,7 +44,7 @@ Meteor.publish("singleTemplateData", function (_id,_userId) {
 
 /* 
 userData
-Publishes the current template used in the Editor, including all editable fields.
+Publishes the github id and username for all users.
 */ 
 Meteor.publish("userData",function(){
   return Meteor.users.find({} , {fields : {'services.github.id':1,'services.github.username':1}} );
